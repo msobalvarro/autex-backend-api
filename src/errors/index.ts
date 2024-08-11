@@ -37,3 +37,11 @@ export class ImportModulesErrors extends Error {
     this.message = message
   }
 }
+
+export class AuthenticationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.AUTHENTICATION_ERROR
+    this.message = message
+  }
+}

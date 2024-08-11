@@ -1,5 +1,5 @@
 import { createUser } from 'services/createUser'
-import { findUserByEmail, findUserById } from 'services/findUser'
+import { findUserById } from 'services/findUser'
 import { updateUser } from 'services/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
@@ -12,12 +12,6 @@ export const createUserController = async (req: Request, res: Response) => {
     const { error, message } = existErrors(req)
     if (error) {
       throw new CreateUserError(`${message}`)
-    }
-
-    const userFinded: User | null = await findUserByEmail(dataParams.email)
-    if (userFinded) {
-      console.log('user already exists')
-      throw new CreateUserError('Email already exists')
     }
 
     const dataCreated = await createUser(dataParams)
