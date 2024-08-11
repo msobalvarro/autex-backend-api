@@ -1,3 +1,4 @@
+import { ImportModulesErrors } from 'errors'
 import { Router } from 'express'
 import { readdirSync } from 'fs'
 
@@ -6,14 +7,16 @@ const pathRoute = `${__dirname}`
 
 const FileName = (file: string) => file.replace('.ts', '')
 
-readdirSync(pathRoute).filter(fileName => {
+readdirSync(pathRoute).map(async fileName => {
   const nameRoute = FileName(fileName)
-  
+
   if (nameRoute !== 'index') {
-    console.log(nameRoute)
-    
-    import(`./${nameRoute}`).then((module) => {
+    try {
+      const module = await import(`./${nameRoute}`)
+
       router.use(`/${nameRoute}`, module.router)
-    })
+    } catch (error) {
+      new ImportModulesErrors(`${error}`)
+    }
   }
 })

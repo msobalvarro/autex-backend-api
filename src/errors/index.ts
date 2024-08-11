@@ -21,3 +21,11 @@ export class CreateUserError extends Error {
     this.message = message
   }
 }
+
+export class ImportModulesErrors extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.IMPORT_MODULE_ERROR
+    this.message = message
+  }
+}

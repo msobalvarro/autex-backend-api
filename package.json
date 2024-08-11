@@ -5,7 +5,7 @@
   },
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev": "NODE_PATH=./src nodemon src/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",

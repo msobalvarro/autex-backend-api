@@ -4,7 +4,7 @@ import { Request, Response, Router } from 'express'
 import { User } from 'interfaces'
 import { existErrors, validationCreateUser } from 'validations'
 
-export const router = Router()
+const router = Router()
 
 router.post('/create', validationCreateUser, async (req: Request, res: Response) => {
   const { error, message } = existErrors(req)
@@ -18,3 +18,5 @@ router.post('/create', validationCreateUser, async (req: Request, res: Response)
 
   res.send(dataCreated)
 })
+
+export { router }
