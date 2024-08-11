@@ -2,14 +2,16 @@ import { User } from 'interfaces'
 import { findUserByEmail } from 'services/findUser'
 import { UserModel } from 'models/user.model'
 import { CreateUserError } from 'errors'
+import { createHash } from './authentication'
 
 export const createUser = async (user: User) => {
   const currentUser = await findUserByEmail(user.email)
+  const passwordEncripted = createHash(`${user.password}`)
 
   if (currentUser) {
     throw new CreateUserError(`email already exists`)
   }
 
-  const userCreated = await UserModel.create(user)
+  const userCreated = await UserModel.create({ ...user, password: passwordEncripted })
   return userCreated
 }
