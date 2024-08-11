@@ -1,24 +1,29 @@
-import { createUser } from 'bussinesCases/createUser'
-import { findUserById } from 'bussinesCases/findUser'
-import { updateUser } from 'bussinesCases/updateUser'
+import { createUser } from 'services/createUser'
+import { findUserByEmail, findUserById } from 'services/findUser'
+import { updateUser } from 'services/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
-import { User } from 'interfaces'
-import { existErrors } from 'validations'
+import { User, UserUpdateProps } from 'interfaces'
+import { existErrors } from 'midlewares/params'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
+    const dataParams: User = req.body
     const { error, message } = existErrors(req)
     if (error) {
       throw new CreateUserError(`${message}`)
     }
 
-    const data: User = req.body()
-    const dataCreated = await createUser(data)
+    const userFinded: User | null = await findUserByEmail(dataParams.email)
+    if (userFinded) {
+      console.log('user already exists')
+      throw new CreateUserError('Email already exists')
+    }
 
+    const dataCreated = await createUser(dataParams)
     res.send(dataCreated)
   } catch (error) {
-    res.send(error)
+    res.status(500).send(`${error}`)
   }
 }
 
@@ -29,14 +34,20 @@ export const updateUserController = async (req: Request, res: Response) => {
       throw new UpdateUserError(`${message}`)
     }
 
-    const data: User = req.body()
+    const dataParams: UserUpdateProps = req.body()
+    const userFinded: User | null = await findUserById(dataParams._id)
 
-    const dataUser = await findUserById(data._id)
-    
-    const dataCreated = await updateUser(data)
+    if (!userFinded) {
+      throw new UpdateUserError('User not found')
+    }
 
-    res.send(dataCreated)
+    // is diferent email
+    if (userFinded.email !== dataParams.email) {
+      await updateUser(dataParams)
+    }
+
+    res.send(true)
   } catch (error) {
-    res.send(error)
+    res.status(500).send(`${error}`)
   }
 }

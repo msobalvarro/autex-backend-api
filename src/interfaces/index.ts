@@ -7,6 +7,11 @@ export interface User {
   password?: string;
 }
 
+export interface UserUpdateProps {
+  _id: Types.ObjectId;
+  email: string;
+}
+
 export enum ErrosList {
   CONNECTION_ERROR = 'CONNECTION_ERROR',
   PARAMS_VALIDATION_ERROR = 'PARAMS_VALIDATION_ERROR',

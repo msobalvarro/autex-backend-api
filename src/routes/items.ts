@@ -1,9 +1,7 @@
 import { Request, Response, Router } from 'express';
 
-const router = Router()
+export const router = Router()
 
 router.get('/', (req: Request, res: Response) => {
   res.send({ data: null })
 })
-
-export { router }

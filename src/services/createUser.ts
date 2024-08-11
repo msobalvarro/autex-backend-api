@@ -1,11 +1,13 @@
 import { User } from 'interfaces'
-import { findUserByEmail } from 'bussinesCases/findUser'
+import { findUserByEmail } from 'services/findUser'
 import { UserModel } from 'models/user.model'
 import { CreateUserError } from 'errors'
 
-export const updateUser = async (user: User) => {
+export const createUser = async (user: User) => {
   try {
     const currentUser = await findUserByEmail(user.email)
+    console.log(currentUser)
+    
     if (currentUser) {
       throw `User ${user.email} already exists`
     }

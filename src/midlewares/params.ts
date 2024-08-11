@@ -1,3 +1,4 @@
+
 import { Request } from 'express'
 import { check, validationResult } from 'express-validator'
 import { ErrorResultProps } from 'interfaces'
@@ -11,13 +12,13 @@ export const existErrors = (req: Request): ErrorResultProps => {
   }
 }
 
-export const validationCreateUser = () => [
+export const validationCreateUser = [
   check('name').notEmpty(),
   check('email').notEmpty().isEmail(),
   check('password').notEmpty(),
 ]
 
-export const validationUpdateUser = () => [
+export const validationUpdateUser = [
   check('_id').notEmpty(),
   check('name').notEmpty(),
   check('email').notEmpty().isEmail()
