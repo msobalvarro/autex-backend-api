@@ -1,0 +1,23 @@
+import { ErrosList, GenerateErrorProps } from 'interfaces'
+
+export class DbErrors extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CONNECTION_ERROR
+  }
+}
+
+export class ParamsValidationError extends Error {
+  constructor() {
+    super()
+    this.name = ErrosList.PARAMS_VALIDATION_ERROR
+  }
+}
+
+export class CreateUserError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_USER_ERROR
+    this.message = message
+  }
+}
