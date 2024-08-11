@@ -13,8 +13,8 @@ readdirSync(pathRoute).map(async fileName => {
   if (nameRoute !== 'index') {
     try {
       const module = await import(`./${nameRoute}`)
-
       router.use(`/${nameRoute}`, module.router)
+      console.log(`/${nameRoute} added successfully`)
     } catch (error) {
       new ImportModulesErrors(`${error}`)
     }

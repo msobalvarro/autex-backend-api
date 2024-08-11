@@ -16,3 +16,9 @@ export const validationCreateUser = () => [
   check('email').notEmpty().isEmail(),
   check('password').notEmpty(),
 ]
+
+export const validationUpdateUser = () => [
+  check('_id').notEmpty(),
+  check('name').notEmpty(),
+  check('email').notEmpty().isEmail()
+]

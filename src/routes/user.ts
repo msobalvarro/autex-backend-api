@@ -1,22 +1,10 @@
-import { createUser } from 'bussinesCases/createUser'
-import { CreateUserError } from 'errors'
-import { Request, Response, Router } from 'express'
-import { User } from 'interfaces'
-import { existErrors, validationCreateUser } from 'validations'
+import { createUserController, updateUserController } from 'controllers/user'
+import { Router } from 'express'
+import { validationCreateUser, validationUpdateUser } from 'validations'
 
 const router = Router()
 
-router.post('/create', validationCreateUser, async (req: Request, res: Response) => {
-  const { error, message } = existErrors(req)
-
-  if (error) {
-    throw new CreateUserError(`${message}`)
-  }
-
-  const data: User = req.body()
-  const dataCreated = await createUser(data)
-
-  res.send(dataCreated)
-})
+router.post('/create', validationCreateUser, createUserController)
+router.put('/update', validationUpdateUser, updateUserController)
 
 export { router }

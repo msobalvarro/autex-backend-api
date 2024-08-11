@@ -1,7 +1,7 @@
 import { Types } from 'mongoose'
 
 export interface User {
-  __id?: Types.ObjectId;
+  _id: Types.ObjectId;
   uuid?: string;
   email: string;
   password?: string;

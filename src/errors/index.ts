@@ -1,4 +1,4 @@
-import { ErrosList, GenerateErrorProps } from 'interfaces'
+import { ErrosList } from 'interfaces'
 
 export class DbErrors extends Error {
   constructor(message: string) {
@@ -15,6 +15,14 @@ export class ParamsValidationError extends Error {
 }
 
 export class CreateUserError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_USER_ERROR
+    this.message = message
+  }
+}
+
+export class UpdateUserError extends Error {
   constructor(message: string) {
     super(message)
     this.name = ErrosList.CREATE_USER_ERROR
