@@ -1,11 +1,18 @@
-import { z } from 'zod'
+import { Request } from 'express'
+import { check, validationResult } from 'express-validator'
+import { ErrorResultProps } from 'interfaces'
 
-export const schemaCreateUser = z.object({
-  name: z.string({
-    required_error: 'Name is required',
-  }),
-  email: z.string().email({ message: 'Email is required' }),
-  password: z.string({
-    required_error: 'Password is required'
-  }),
-})
+export const validationCreateUser = () => [
+  check('name').notEmpty(),
+  check('email').notEmpty().isEmail(),
+  check('password').notEmpty(),
+]
+
+export function existErrors(req: Request): ErrorResultProps {
+  const errors = validationResult(req)
+
+  return {
+    error: !errors.isEmpty(),
+    message: `${errors.array()[0]}`
+  }
+}

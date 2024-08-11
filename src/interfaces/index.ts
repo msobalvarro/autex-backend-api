@@ -17,3 +17,8 @@ export interface GenerateErrorProps {
   message: string;
   type: ErrosList;
 }
+
+export interface ErrorResultProps {
+  error: boolean
+  message?: string
+}
