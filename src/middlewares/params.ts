@@ -37,3 +37,7 @@ export const createClientValidationProps = [
   check('documentId', 'Document is Required').notEmpty().isString(),
   check('type', 'Client Type Incorrect').isIn(['Company', 'Person']),
 ]
+
+export const createActivityToDoProps = [
+  check('description', 'Description is Required').notEmpty().isString(),
+]

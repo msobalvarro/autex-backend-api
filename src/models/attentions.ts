@@ -14,4 +14,4 @@ const attentionsSchema = new Schema<AttentionsProperties>(
   }
 )
 
-export const PreliminarManagmentModek = model('attentions', attentionsSchema)
+export const AtentionsModel = model('attentions', attentionsSchema)

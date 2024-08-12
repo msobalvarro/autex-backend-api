@@ -52,6 +52,11 @@ export interface AcivitiesProperties {
   type: SchemaDefinitionProperty<'predictive' | 'prenventive'>
 }
 
+export interface ActivitiesToDoProperties {
+  _id: Types.ObjectId
+  description: string
+}
+
 export interface PreliminaryManagementProperties {
   _id: Types.ObjectId
   isDiagnosed: boolean

@@ -7,17 +7,24 @@ const pathRoute = `${__dirname}`
 
 const FileName = (file: string) => file.replace('.ts', '')
 
-readdirSync(pathRoute).map(async fileName => {
+const allRoutes = readdirSync(pathRoute)
+
+const totalRotes = allRoutes.length - 1 // TODO: -1 because index is not allowed
+let totalAdded = 0
+
+allRoutes.map(async fileName => {
   const nameRoute = FileName(fileName)
 
   if (nameRoute !== 'index') {
     try {
       const module = await import(`./${nameRoute}`)
       router.use(`/${nameRoute}`, module.router)
-      console.log(`/${nameRoute} added successfully`)
+      totalAdded++
     } catch (error) {
-      console.log(error)
-      throw new ImportModulesErrors(`${error}`)
+      console.log(`${nameRoute} is not added`)
+      throw new ImportModulesErrors(`${error} - ${nameRoute} is not added`)
+    } finally {
+      console.log(`[${totalAdded} of ${totalRotes}] ${nameRoute} `)
     }
   }
 })

@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { AcivitiesProperties } from 'interfaces'
+import { AcivitiesProperties, ActivitiesToDoProperties } from 'interfaces'
 
 const activitySchema = new Schema<AcivitiesProperties>(
   {
@@ -18,4 +18,15 @@ const activitySchema = new Schema<AcivitiesProperties>(
   }
 )
 
+const activityToDoSchema = new Schema<ActivitiesToDoProperties>(
+  {
+    description: String
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+)
+
 export const ActivitiesModel = model('activities', activitySchema)
+export const ActivitiesToDoModel = model('activitiesToDo', activityToDoSchema)
