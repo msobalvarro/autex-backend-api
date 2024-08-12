@@ -3,12 +3,12 @@ import { Vehicule, VehiculeBrands } from '../interfaces'
 
 const vehiculeSchema = new Schema<Vehicule>(
   {
-    name: { type: String },
-    color: { type: String },
-    motorNumber: { type: String },
-    chasisNumber: { type: String },
-    km: { type: Number },
-    year: { type: Number },
+    name: String,
+    color: String,
+    motorNumber: String,
+    chasisNumber: String,
+    km: Number,
+    year: Number,
     model: {
       type: Schema.Types.ObjectId,
       ref: 'vehiculeModel'
@@ -26,12 +26,10 @@ const vehiculeSchema = new Schema<Vehicule>(
 
 const vehiculeBrandSchema = new Schema<VehiculeBrands>(
   {
-    description: {
-      type: String,
-    }
+    description: String
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 )
@@ -44,7 +42,7 @@ const vehiculeModelSchema = new Schema<VehiculeBrands>(
     }
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 )

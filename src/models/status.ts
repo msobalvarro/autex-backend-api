@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose'
-import { User } from '../interfaces'
+import { Status } from '../interfaces'
 
-const statusSchema = new Schema<User>(
+const statusSchema = new Schema<Status>(
   {
-    
+    description: String
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 )
 
-export const StatusModel = model('user', statusSchema)
+export const StatusModel = model('status', statusSchema)

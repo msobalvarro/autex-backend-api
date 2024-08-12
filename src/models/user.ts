@@ -1,10 +1,7 @@
-import { Schema, Types, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { User } from '../interfaces'
 
 const userSchema = new Schema<User>({
-  uuid: {
-    type: Types.UUID
-  },
   email: {
     type: String,
     unique: true

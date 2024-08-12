@@ -10,10 +10,15 @@ export interface VehiculeModel {
   description: string
 }
 
+export interface Status {
+  _id: Types.ObjectId
+  description: string
+}
+
 export interface Vehicule {
   _id: Types.ObjectId
-  model: VehiculeModel
-  brand: VehiculeBrands
+  model?: VehiculeModel
+  brand?: VehiculeBrands
   name: string
   color: string
   plate: string
