@@ -4,7 +4,7 @@ import { updateUser } from 'services/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
 import { User, UserUpdateProps } from 'interfaces'
-import { existErrors } from 'midlewares/params'
+import { existErrors } from 'middlewares/params'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {

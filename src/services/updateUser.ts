@@ -1,6 +1,6 @@
 import { UserUpdateProps } from 'interfaces'
 import { findUserByEmail } from 'services/findUser'
-import { UserModel } from 'models/user.model'
+import { UserModel } from 'models/user'
 import { CreateUserError } from 'errors'
 
 export const updateUser = async (user: UserUpdateProps) => {

@@ -1,24 +1,20 @@
-import 'dotenv'
-import crypto from 'crypto'
-import { sign } from 'jsonwebtoken'
-import { User, UserAuthenticationProps, UserAuthenticationResponse } from 'interfaces'
-import { UserModel } from 'models/user.model'
+import { UserAuthenticationProps, UserAuthenticationResponse } from 'interfaces'
+import { UserModel } from 'models/user'
 import { AuthenticationError } from 'errors'
-
-const SECRET_KEY: string = process.env.SECRET_KEY || ''
-
-export const createHash = (data: string): string => crypto.createHash('sha256').update(data).digest('hex')
+import { createHash, generateToken } from 'utils/jwt'
 
 export const authenticateUserService = async ({ email, password }: UserAuthenticationProps): Promise<UserAuthenticationResponse> => {
   const passwordSha256 = createHash(password)
-
-  const user: User | null = await UserModel.findOne({ email, password: passwordSha256 })
+  const user = await UserModel.findOne({ email, password: passwordSha256 })
 
   if (!user) {
     throw new AuthenticationError('User not found')
   }
 
-  const token = sign({ id: user._id }, SECRET_KEY)
-
-  return { ...user, token }
+  const token = generateToken(user.id)
+  return { 
+    _id: user._id,
+    email: user.email,
+    token
+}
 }

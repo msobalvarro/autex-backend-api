@@ -1,5 +1,28 @@
 import { Types } from 'mongoose'
 
+export interface VehiculeBrands {
+  _id: Types.ObjectId
+  description: string
+}
+
+export interface VehiculeModel {
+  _id: Types.ObjectId
+  description: string
+}
+
+export interface Vehicule {
+  _id: Types.ObjectId
+  model: VehiculeModel
+  brand: VehiculeBrands
+  name: string
+  color: string
+  plate: string
+  motorNumber: string
+  chasisNumber: string
+  km: number
+  year: number
+}
+
 export interface User {
   _id: Types.ObjectId
   uuid?: string
@@ -7,7 +30,7 @@ export interface User {
   password?: string
 }
 
-export interface UserAuthenticationResponse extends User{
+export interface UserAuthenticationResponse extends User {
   token: string
 }
 

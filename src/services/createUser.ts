@@ -1,8 +1,8 @@
 import { User } from 'interfaces'
 import { findUserByEmail } from 'services/findUser'
-import { UserModel } from 'models/user.model'
+import { UserModel } from 'models/user'
 import { CreateUserError } from 'errors'
-import { createHash } from './authentication'
+import { createHash } from 'utils/jwt'
 
 export const createUser = async (user: User) => {
   const currentUser = await findUserByEmail(user.email)

@@ -1,5 +1,5 @@
 import { UserAuthenticationProps } from 'interfaces'
-import { UserModel } from 'models/user.model'
+import { UserModel } from 'models/user'
 import { Types } from 'mongoose'
 
 export const findUserByEmailAndPassword = async ({ email, password }: UserAuthenticationProps) => {

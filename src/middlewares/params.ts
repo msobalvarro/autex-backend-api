@@ -12,14 +12,19 @@ export const existErrors = (req: Request): ErrorResultProps => {
   }
 }
 
-export const validationCreateUser = [
+export const createUserValidation = [
   check('name').notEmpty(),
   check('email').notEmpty().isEmail(),
   check('password').notEmpty(),
 ]
 
-export const validationUpdateUser = [
+export const updateUserValidation = [
   check('_id').notEmpty(),
   check('name').notEmpty(),
+  check('email').notEmpty().isEmail()
+]
+
+export const loginValidationProps = [
+  check('password').notEmpty(),
   check('email').notEmpty().isEmail()
 ]

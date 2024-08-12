@@ -16,7 +16,8 @@ readdirSync(pathRoute).map(async fileName => {
       router.use(`/${nameRoute}`, module.router)
       console.log(`/${nameRoute} added successfully`)
     } catch (error) {
-      new ImportModulesErrors(`${error}`)
+      console.log(error)
+      throw new ImportModulesErrors(`${error}`)
     }
   }
 })
