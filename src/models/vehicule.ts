@@ -9,14 +9,14 @@ const vehiculeSchema = new Schema<Vehicule>(
     chasisNumber: { type: String },
     km: { type: Number },
     year: { type: Number },
-    model: [{
+    model: {
       type: Schema.Types.ObjectId,
       ref: 'vehiculeModel'
-    }],
-    brand: [{
+    },
+    brand: {
       type: Schema.Types.ObjectId,
       ref: 'vehiculeBrand'
-    }],
+    },
   },
   {
     timestamps: true,

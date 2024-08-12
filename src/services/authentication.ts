@@ -12,9 +12,9 @@ export const authenticateUserService = async ({ email, password }: UserAuthentic
   }
 
   const token = generateToken(user.id)
-  return { 
+  return {
     _id: user._id,
     email: user.email,
     token
-}
+  }
 }

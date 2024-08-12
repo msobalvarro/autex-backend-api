@@ -1,4 +1,4 @@
-import { Types } from 'mongoose'
+import { SchemaDefinitionProperty, Types } from 'mongoose'
 
 export interface VehiculeBrands {
   _id: Types.ObjectId
@@ -25,9 +25,18 @@ export interface Vehicule {
 
 export interface User {
   _id: Types.ObjectId
-  uuid?: string
   email: string
   password?: string
+}
+
+export interface Client {
+  _id: Types.ObjectId
+  name: string
+  type: 'Company' | 'Person'
+  phoneNumber: string
+  email: string
+  documentId: string
+  vehicules:SchemaDefinitionProperty<Vehicule>[]
 }
 
 export interface UserAuthenticationResponse extends User {
