@@ -6,3 +6,15 @@ export const getAllClients = async (): Promise<Client[]> => {
 
   return clients
 }
+
+export const getAllClientById = async (id: string): Promise<Client | null> => {
+  const client: Client | null = await ClientModel.findById(id)
+
+  return client
+}
+
+export const getAllClientByEmail = async (email: string): Promise<Client | null> => {
+  const client: Client | null = await ClientModel.findOne({ email })
+
+  return client
+}

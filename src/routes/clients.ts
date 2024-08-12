@@ -1,6 +1,7 @@
 import {
   createClientController,
-  getAllClientsController
+  getAllClientsController,
+  getClientById
 } from 'controllers/client'
 import { Router } from 'express'
 import { createClientValidationProps } from 'middlewares/params'
@@ -11,7 +12,7 @@ export const router = Router()
 router.get('/', getAllClientsController)
 
 // get specific client
-router.get('/:id', getAllClientsController)
+router.get('/get/:id', getClientById)
 
 // create new client
 router.post('/create', ...createClientValidationProps, createClientController)

@@ -45,3 +45,11 @@ export class AuthenticationError extends Error {
     this.message = message
   }
 }
+
+export class CreateClientError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_CLIENT_ERROR
+    this.message = message
+  }
+}

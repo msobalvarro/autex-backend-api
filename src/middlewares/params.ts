@@ -8,20 +8,20 @@ export const existErrors = (req: Request): ErrorResultProps => {
 
   return {
     error: !errors.isEmpty(),
-    message: `${errors.array()[0]}`
+    message: `${errors.array()[0].msg}`
   }
 }
 
 export const createUserValidation = [
-  check('name').notEmpty().withMessage('Name is Required'),
-  check('email').notEmpty().isEmail().withMessage('Email is Required'),
-  check('password').notEmpty().withMessage('Password is Required'),
+  check('name', 'Name is Required').notEmpty(),
+  check('email', 'Email is Required').notEmpty().isEmail(),
+  check('password', 'Password is Required').notEmpty(),
 ]
 
 export const updateUserValidation = [
-  check('_id').notEmpty().withMessage('ID is Required'),
-  check('name').notEmpty().withMessage('Name is Required'),
-  check('email').notEmpty().isEmail().withMessage('Email is Required')
+  check('_id', 'ID is Required').notEmpty(),
+  check('name', 'Name is Required').notEmpty(),
+  check('email', 'Email is Required').notEmpty().isEmail(),
 ]
 
 export const loginValidationProps = [
@@ -30,9 +30,9 @@ export const loginValidationProps = [
 ]
 
 export const createClientValidationProps = [
-  check('name').notEmpty().isString().withMessage('Name is Required'),
-  check('email').notEmpty().isEmail().withMessage('Email is Required'),
-  check('phoneNumber').notEmpty().isString().withMessage('Phone Number Required'),
-  check('documentId').notEmpty().isString().withMessage('Document is Required'),
-  check('type').isIn(['Company', 'Person']).withMessage('Client Type Incorrect'),
+  check('name', 'Name is Required').notEmpty().isString(),
+  check('email', 'Email is Required').notEmpty().isEmail(),
+  check('phoneNumber', 'Phone Number Required').notEmpty().isString(),
+  check('documentId', 'Document is Required').notEmpty().isString(),
+  check('type', 'Client Type Incorrect').isIn(['Company', 'Person']),
 ]

@@ -6,9 +6,7 @@ const userSchema = new Schema<User>({
     type: String,
     unique: true
   },
-  password: {
-    type: String,
-  }
+  password: String
 }, {
   timestamps: true,
   versionKey: false,
