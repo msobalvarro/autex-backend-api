@@ -6,7 +6,7 @@ const clientSchema = new Schema<Client>(
     name: String,
     type: {
       type: String,
-      enum: ['Company', 'Person'],
+      enum: ['company', 'person'],
       default: 'Person',
     },
     email: String,

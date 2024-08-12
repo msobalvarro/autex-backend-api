@@ -37,11 +37,47 @@ export interface User {
 export interface Client {
   _id: Types.ObjectId
   name: string
-  type: 'Company' | 'Person'
+  type: SchemaDefinitionProperty<'company' | 'person'>
   phoneNumber: string
   email: string
   documentId: string
-  vehicules:SchemaDefinitionProperty<Vehicule>[]
+  vehicules: SchemaDefinitionProperty<Vehicule>[]
+}
+
+export interface AcivitiesProperties {
+  _id: Types.ObjectId
+  isMaintenance: boolean
+  isService: boolean
+  isMinorMantenance: boolean
+  type: SchemaDefinitionProperty<'predictive' | 'prenventive'>
+}
+
+export interface PreliminaryManagementProperties {
+  _id: Types.ObjectId
+  isDiagnosed: boolean
+  isProven: boolean
+  isKOER: boolean
+  isKOEO: boolean
+  parked: boolean
+  onRoad: boolean
+}
+
+export interface AttentionsProperties {
+  _id: Types.ObjectId
+  isLocal: boolean
+  isExpress: boolean
+  isHome: boolean
+  isRescue: boolean
+}
+
+export interface ServicesProperties {
+  _id: Types.ObjectId
+  isMecanic: boolean
+  isElectrict: boolean
+  isElectroMecanic: boolean
+  isElectronic: boolean
+  isMultiple: boolean
+  isExternal: boolean
 }
 
 export interface UserAuthenticationResponse extends User {
