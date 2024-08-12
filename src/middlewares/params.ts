@@ -5,10 +5,11 @@ import { ErrorResultProps } from 'interfaces'
 
 export const existErrors = (req: Request): ErrorResultProps => {
   const errors = validationResult(req)
+  const existError = errors.array().length > 0
 
   return {
-    error: !errors.isEmpty(),
-    message: `${errors.array()[0].msg}`
+    error: existError,
+    message: existError ? errors.array()[0].msg : null
   }
 }
 

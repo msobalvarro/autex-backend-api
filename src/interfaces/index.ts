@@ -74,5 +74,5 @@ export interface GenerateErrorProps {
 
 export interface ErrorResultProps {
   error: boolean
-  message?: string
+  message?: string | null
 }
