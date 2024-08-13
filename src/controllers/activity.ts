@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ActivitiesToDoProperties } from 'interfaces'
-import { createActitiyToDo } from 'services/createActivitiesToDo'
+import { createActitiyToDo } from 'services/serviceOrder/createActivitiesToDo'
 import { existErrors } from 'middlewares/params'
 import { CreateActivityToDoError } from 'errors'
 

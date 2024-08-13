@@ -14,14 +14,14 @@ import {
 import {
   createMultipleVehiculeBrands,
   createNewBrand
-} from 'services/createVehiculeBrand'
-import { CreateVehiculeModelService } from 'services/createVehiculeModel'
-import { addModelToBrand } from 'services/updateVehiculeBrand'
+} from 'services/vehicule/createVehiculeBrand'
+import { CreateVehiculeModelService } from 'services/vehicule/createVehiculeModel'
+import { addModelToBrand } from 'services/vehicule/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
-import { createVehiculeService } from 'services/createVehicule'
+import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
-import { getVehiculeDetailService } from 'services/getVehicule'
-import { getAllModelsService } from 'services/getVehiculeModel'
+import { getVehiculeDetailService } from 'services/vehicule/getVehicule'
+import { getAllModelsService } from 'services/vehicule/getVehiculeModel'
 
 export const getVehiculeDetailController = async (req: Request, res: Response) => {
   try {

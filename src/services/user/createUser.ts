@@ -1,5 +1,5 @@
 import { User } from 'interfaces'
-import { findUserByEmail } from 'services/findUser'
+import { findUserByEmail } from 'services/user/findUser'
 import { UserModel } from 'models/user'
 import { CreateUserError } from 'errors'
 import { createHash } from 'utils/jwt'

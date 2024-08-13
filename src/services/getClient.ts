@@ -1,5 +1,6 @@
-import { Client } from 'interfaces';
-import { ClientModel } from 'models/client';
+import { Client } from 'interfaces'
+import { ClientModel } from 'models/client'
+import { Types } from 'mongoose'
 
 export const getAllClients = async (): Promise<Client[]> => {
   const clients: Client[] = await ClientModel.find()
@@ -7,7 +8,7 @@ export const getAllClients = async (): Promise<Client[]> => {
   return clients
 }
 
-export const getAllClientById = async (id: string): Promise<Client | null> => {
+export const getClientByIdService = async (id: Types.ObjectId): Promise<Client | null> => {
   const client: Client | null = await ClientModel.findById(id)
 
   return client

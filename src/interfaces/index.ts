@@ -147,6 +147,17 @@ export interface DiagnosticPropierties {
   recommendations: RecommendationsDiagnosticPropierties
 }
 
+export interface DiagnosticProps {
+  _id?: Types.ObjectId
+  clientId: Types.ObjectId
+  vehiculeId: Types.ObjectId
+  unitStatus: UnitStatusDiagnosticModelPropierties
+  previusCheck: PreviusCheckDiagnosticPropierties
+  checksDone: CheckDoneDiagnosticPropierties
+  possibleFailures: PossibleFailuresDiagnosticPropierties
+  recommendations: RecommendationsDiagnosticPropierties
+}
+
 export interface UserAuthenticationResponse extends User {
   token: string
 }

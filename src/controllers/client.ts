@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
-import { getAllClientById, getAllClients } from 'services/getClient'
+import { getClientByIdService, getAllClients } from 'services/getClient'
 import { Client } from 'interfaces'
 import { createClient } from 'services/createClient'
 import { existErrors } from 'middlewares/params'
 import { CreateClientError } from 'errors'
+import { Types } from 'mongoose'
 
 export const getAllClientsController = async (__: Request, res: Response) => {
   try {
@@ -14,10 +15,10 @@ export const getAllClientsController = async (__: Request, res: Response) => {
   }
 }
 
-export const getClientById = async (req: Request, res: Response) => {
+export const getClientByIdController = async (req: Request, res: Response) => {
   try {
-    const id: string = req.params.id
-    const data = await getAllClientById(id)
+    const id = new Types.ObjectId(req.params.id)
+    const data = await getClientByIdService(id)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
