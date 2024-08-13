@@ -1,11 +1,20 @@
-import { CreateVehiculeBrandError, CreateVehiculeModelError, UpdateVehiculeBrandError } from 'errors'
-import { Request, Response } from 'express'
-import { CreateVehiculeProps, NewVehiculeModelProps, VehiculeBrands, VehiculeNewModelToBrandProps } from 'interfaces'
+import {
+  CreateVehiculeBrandError,
+  CreateVehiculeModelError,
+  UpdateVehiculeBrandError
+} from 'errors'
+import {
+  CreateVehiculeProps,
+  NewVehiculeModelProps,
+  VehiculeBrands,
+  VehiculeNewModelToBrandProps
+} from 'interfaces'
 import { createMultipleVehiculeBrands, createNewBrand } from 'services/createVehiculeBrand'
 import { CreateVehiculeModelService } from 'services/createVehiculeModel'
 import { addModelToBrand } from 'services/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/createVehicule'
+import { Request, Response } from 'express'
 
 export const createMultpleBrandsController = async (req: Request, res: Response) => {
   try {
