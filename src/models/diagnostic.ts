@@ -1,30 +1,21 @@
 import { Schema, Types, model } from 'mongoose'
 import {
-  CheckDoneReportPropierties,
-  CheckDoneResultReportPropierties,
-  PreviusCheckReportPropierties,
-  UnitStatusPropierties,
-  UserReportPropierties
+  CheckDoneDiagnosticPropierties,
+  CheckDoneResultDiagnosticPropierties,
+  DiagnosticPropierties,
+  PossibleFailuresDiagnosticPropierties,
+  PreviusCheckDiagnosticPropierties,
+  RecommendationsDiagnosticPropierties,
+  UnitStatusDiagnosticModelPropierties,
+  UserReportDiangnosticPropierties
 } from 'interfaces'
 
-const unitSatatus = new Schema<UnitStatusPropierties>(
+const unitSatatus = new Schema<UnitStatusDiagnosticModelPropierties>(
   {
-    definitiveSolution: {
-      type: Boolean,
-      default: false,
-    },
-    improvisedSolution: {
-      type: Boolean,
-      default: false,
-    },
-    onlyDiagnosis: {
-      type: Boolean,
-      default: false,
-    },
-    transferSolution: {
-      type: Boolean,
-      default: false,
-    },
+    definitiveSolution: Boolean,
+    improvisedSolution: Boolean,
+    onlyDiagnosis: Boolean,
+    transferSolution: Boolean,
   },
   {
     timestamps: false,
@@ -32,7 +23,7 @@ const unitSatatus = new Schema<UnitStatusPropierties>(
   }
 )
 
-const userReport = new Schema<UserReportPropierties>(
+const userDiagnostic = new Schema<UserReportDiangnosticPropierties>(
   {
     description: [String],
     clientType: {
@@ -47,7 +38,7 @@ const userReport = new Schema<UserReportPropierties>(
   }
 )
 
-const previusCheckReport = new Schema<PreviusCheckReportPropierties>(
+const previusCheckDiagnostic = new Schema<PreviusCheckDiagnosticPropierties>(
   {
     description: [String]
   },
@@ -57,32 +48,17 @@ const previusCheckReport = new Schema<PreviusCheckReportPropierties>(
   }
 )
 
-const checksDoneReport = new Schema<CheckDoneReportPropierties>(
+const checksDoneDiagnostic = new Schema<CheckDoneDiagnosticPropierties>(
   {
     description: [{
       type: Types.ObjectId,
-      ref: 'checksDoneResultReports'
+      ref: 'checksDoneResultDiagnostic'
     }],
-    isComponent: {
-      type: Boolean,
-      default: false,
-    },
-    isKOEO: {
-      type: Boolean,
-      default: false,
-    },
-    isKOER: {
-      type: Boolean,
-      default: false,
-    },
-    isMecanism: {
-      type: Boolean,
-      default: false,
-    },
-    onRoad: {
-      type: Boolean,
-      default: false,
-    }
+    isComponent: Boolean,
+    isKOEO: Boolean,
+    isKOER: Boolean,
+    isMecanism: Boolean,
+    onRoad: Boolean
   },
   {
     timestamps: false,
@@ -90,7 +66,7 @@ const checksDoneReport = new Schema<CheckDoneReportPropierties>(
   }
 )
 
-const checksDoneResults = new Schema<CheckDoneResultReportPropierties>(
+const checksDoneResults = new Schema<CheckDoneResultDiagnosticPropierties>(
   {
     description: String,
     result: String
@@ -101,8 +77,73 @@ const checksDoneResults = new Schema<CheckDoneResultReportPropierties>(
   }
 )
 
-export const UserReportModel = model('unitStatus', userReport)
-export const UnitStatusModel = model('unitStatus', unitSatatus)
-export const PreviusCheckReportModel = model('previusCheckReports', previusCheckReport)
-export const ChecksDoneReportModel = model('checksDoneReports', checksDoneReport)
-export const ChecksDoneResultReportModel = model('checksDoneResultReports', checksDoneResults)
+const possibleFailures = new Schema<PossibleFailuresDiagnosticPropierties>(
+  {
+    isCaused: Boolean,
+    isInappropriateManagement: Boolean,
+    isNeglect: Boolean,
+    isNegligence: Boolean,
+    isOmission: Boolean,
+    isTechnique: Boolean,
+  }, 
+  {
+    timestamps: false,
+    versionKey: false,
+  }
+)
+
+const recommendations = new Schema<RecommendationsDiagnosticPropierties>(
+  {
+    descriptions: [String]
+  },
+  {
+    timestamps: false,
+    versionKey: false,
+  }
+)
+
+const DiagnosticReport = new Schema<DiagnosticPropierties>(
+  {
+    checksDone: {
+      type: Types.ObjectId,
+      ref: 'checksDoneDiagnostic'
+    },
+    client: {
+      type: Types.ObjectId,
+      ref: 'client'
+    },
+    possibleFailures: {
+      type: Types.ObjectId,
+      ref: 'PossibleFailiresDiagnostic'
+    },
+    previusCheck: {
+      type: Types.ObjectId,
+      ref: 'previusCheckDiagnostic'
+    },
+    recommendations: {
+      type: Types.ObjectId,
+      ref: 'recomendationsDiagnostic'
+    },
+    unitStatus: {
+      type: Types.ObjectId,
+      ref: 'unitStatusDiagnostic'
+    },
+    vehicule: {
+      type: Types.ObjectId,
+      ref: 'vehicule'
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+)
+
+export const UserDiagnosticModel = model('userStatusDiagnostic', userDiagnostic)
+export const UnitStatusModel = model('unitStatusDiagnostic', unitSatatus)
+export const PreviusCheckDiagnosticModel = model('previusCheckDiagnostic', previusCheckDiagnostic)
+export const ChecksDoneDiagnosticModel = model('checksDoneDiagnostic', checksDoneDiagnostic)
+export const ChecksDoneResultDiagnosticModel = model('checksDoneResultDiagnostic', checksDoneResults)
+export const PossibleFailuresDiagnosticModel = model('PossibleFailiresDiagnostic', possibleFailures)
+export const RecommendationsDiagnosticModel = model('recomendationsDiagnostic', recommendations)
+export const DiagnosticModel = model('diagnostic', DiagnosticReport)

@@ -86,7 +86,7 @@ export interface ServicesProperties {
   isExternal: boolean
 }
 
-export interface UnitStatusPropierties {
+export interface UnitStatusDiagnosticModelPropierties {
   _id: Types.ObjectId
   onlyDiagnosis: boolean
   improvisedSolution: boolean
@@ -94,18 +94,18 @@ export interface UnitStatusPropierties {
   transferSolution: boolean
 }
 
-export interface UserReportPropierties {
+export interface UserReportDiangnosticPropierties {
   _id?: Types.ObjectId
   description: string[]
   clientType: SchemaDefinitionProperty<'user' | 'owner'>
 }
 
-export interface PreviusCheckReportPropierties {
+export interface PreviusCheckDiagnosticPropierties {
   _id?: Types.ObjectId
   description: string[]
 }
 
-export interface CheckDoneReportPropierties {
+export interface CheckDoneDiagnosticPropierties {
   _id?: Types.ObjectId
   description: string[]
   isComponent: boolean
@@ -115,10 +115,36 @@ export interface CheckDoneReportPropierties {
   onRoad: boolean
 }
 
-export interface CheckDoneResultReportPropierties {
+export interface CheckDoneResultDiagnosticPropierties {
   _id?: Types.ObjectId
   description: string
   result: string
+}
+
+export interface PossibleFailuresDiagnosticPropierties {
+  _id?: Types.ObjectId
+  isTechnique: boolean
+  isCaused: boolean
+  isOmission: boolean
+  isNeglect: boolean
+  isNegligence: boolean
+  isInappropriateManagement: boolean
+}
+
+export interface RecommendationsDiagnosticPropierties {
+  _id?: Types.ObjectId
+  descriptions: string[]
+}
+
+export interface DiagnosticPropierties {
+  _id?: Types.ObjectId
+  client: Client
+  vehicule: Vehicule
+  unitStatus: UnitStatusDiagnosticModelPropierties
+  previusCheck: PreviusCheckDiagnosticPropierties
+  checksDone: CheckDoneDiagnosticPropierties
+  possibleFailures: PossibleFailuresDiagnosticPropierties
+  recommendations: RecommendationsDiagnosticPropierties
 }
 
 export interface UserAuthenticationResponse extends User {
