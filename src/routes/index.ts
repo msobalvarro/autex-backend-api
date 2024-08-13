@@ -21,7 +21,7 @@ allRoutes.map(async fileName => {
     } catch (error) {
       throw new ImportModulesErrors(`${error} - ${nameRoute} is not added`)
     } finally {
-      console.log(`[${totalAdded} of ${totalRotes}] ${nameRoute} (${success ? 'added' : 'not added'})`)
+      console.log(`[${totalAdded}/${totalRotes}] ${nameRoute} (${success ? 'added' : 'not added'})`)
     }
   }
 })

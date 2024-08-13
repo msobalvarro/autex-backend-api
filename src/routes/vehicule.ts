@@ -4,7 +4,8 @@ import {
   createMultpleBrandsController,
   createNewModelController,
   createVehiculeController,
-  getVehiculeDetail
+  getAllModelsController,
+  getVehiculeDetailController
 } from 'controllers/vehicule'
 import {
   assignModelToBrandProps,
@@ -18,7 +19,8 @@ import { Router } from 'express'
 
 export const router = Router()
 // GET Requests
-router.get('/detail/:_id', ...getVehiculeDetailProps, getVehiculeDetail)
+router.get('/detail/:_id', ...getVehiculeDetailProps, getVehiculeDetailController)
+router.get('/models/',  getAllModelsController)
 
 // POST Requests
 router.post('/createMultipleBrands', ...createMultipleBrandsProps, createMultpleBrandsController)

@@ -21,8 +21,9 @@ import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/createVehicule'
 import { Request, Response } from 'express'
 import { getVehiculeDetailService } from 'services/getVehicule'
+import { getAllModelsService } from 'services/getVehiculeModel'
 
-export const getVehiculeDetail = async (req: Request, res: Response) => {
+export const getVehiculeDetailController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
     if (error) {
@@ -38,6 +39,15 @@ export const getVehiculeDetail = async (req: Request, res: Response) => {
     res.send(vehicule)
   } catch (error) {
     res.status(404).send(`${error}`)
+  }
+}
+
+export const getAllModelsController = async (req: Request, res: Response) => {
+  try {
+    const models = await getAllModelsService()
+    res.send(models)
+  } catch (error) {
+    res.status(500).send(`${error}`)
   }
 }
 

@@ -6,3 +6,9 @@ export const getVehiculeModelById = async (id: Types.ObjectId): Promise<Vehicule
   const model = await vehiculeCustomModel.findById(id)
   return model
 }
+
+export const getAllModelsService = async (): Promise<VehiculeModel[]> => {
+  const data: VehiculeModel[] = await vehiculeCustomModel.find()
+  
+  return data
+}
