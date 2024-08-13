@@ -3,6 +3,7 @@ import { SchemaDefinitionProperty, Types } from 'mongoose'
 export interface VehiculeBrands {
   _id: Types.ObjectId
   description: string
+  models: VehiculeModel[]
 }
 
 export interface VehiculeModel {
@@ -106,6 +107,8 @@ export enum ErrosList {
   IMPORT_MODULE_ERROR = 'IMPORT_MODULE_ERROR',
   AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR',
   CREATE_CLIENT_ERROR = 'CREATE_CLIENT_ERROR',
+  CREATE_ACTIVITY_TO_DO = 'CREATE_ACTIVITY_TO_DO',
+  UPDATE_VEHICULE_BRAND = 'UPDATE_VEHICULE_BRAND',
 }
 
 export interface GenerateErrorProps {
@@ -116,4 +119,13 @@ export interface GenerateErrorProps {
 export interface ErrorResultProps {
   error: boolean
   message?: string | null
+}
+
+export interface NewVehiculeModelProps {
+  description: string
+}
+
+export interface VehiculeNewModelToBrandProps {
+  brandId: Types.ObjectId
+  modelId: Types.ObjectId
 }

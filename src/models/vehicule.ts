@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose'
-import { Vehicule, VehiculeBrands } from '../interfaces'
+import { Schema, Types, model } from 'mongoose'
+import { Vehicule, VehiculeBrands, VehiculeModel } from '../interfaces'
 
 const vehiculeSchema = new Schema<Vehicule>(
   {
@@ -26,7 +26,14 @@ const vehiculeSchema = new Schema<Vehicule>(
 
 const vehiculeBrandSchema = new Schema<VehiculeBrands>(
   {
-    description: String
+    description: {
+      type: String,
+      unique: true,
+    },
+    models: [{
+      type: Types.ObjectId,
+      ref: 'vehiculeModel',
+    }]
   },
   {
     timestamps: false,
@@ -35,11 +42,12 @@ const vehiculeBrandSchema = new Schema<VehiculeBrands>(
 )
 
 
-const vehiculeModelSchema = new Schema<VehiculeBrands>(
+const vehiculeModelSchema = new Schema<VehiculeModel>(
   {
     description: {
       type: String,
-    }
+      unique: true,
+    },
   },
   {
     timestamps: false,

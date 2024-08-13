@@ -1,6 +1,6 @@
 
 import { Request } from 'express'
-import { check, validationResult } from 'express-validator'
+import { body, check, validationResult } from 'express-validator'
 import { ErrorResultProps } from 'interfaces'
 
 export const existErrors = (req: Request): ErrorResultProps => {
@@ -40,4 +40,21 @@ export const createClientValidationProps = [
 
 export const createActivityToDoProps = [
   check('description', 'Description is Required').notEmpty().isString(),
+]
+
+export const createMultipleBrandsProps = [
+  body().isArray().withMessage('data is not an array'),
+  body('*.description')
+    .isString().withMessage('description is not valid')
+    .notEmpty().withMessage('description is not empty')
+]
+
+export const createStatusProps = [
+  check('description', 'Description is Required').notEmpty().isString(),
+]
+
+
+export const assignModelToBrandProps = [
+  check('modelId', 'Model ID is Required').isMongoId(),
+  check('brandId', 'Brand ID is Required').isMongoId(),
 ]

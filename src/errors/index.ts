@@ -53,3 +53,19 @@ export class CreateClientError extends Error {
     this.message = message
   }
 }
+
+export class CreateActivityToDoError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_ACTIVITY_TO_DO
+    this.message = message
+  }
+}
+
+export class UpdateVehiculeBrandError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.UPDATE_VEHICULE_BRAND
+    this.message = message
+  }
+}
