@@ -11,4 +11,5 @@ const statusSchema = new Schema<Status>(
   }
 )
 
+// global status
 export const StatusModel = model('status', statusSchema)

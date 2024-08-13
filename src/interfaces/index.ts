@@ -86,6 +86,41 @@ export interface ServicesProperties {
   isExternal: boolean
 }
 
+export interface UnitStatusPropierties {
+  _id: Types.ObjectId
+  onlyDiagnosis: boolean
+  improvisedSolution: boolean
+  definitiveSolution: boolean
+  transferSolution: boolean
+}
+
+export interface UserReportPropierties {
+  _id?: Types.ObjectId
+  description: string[]
+  clientType: SchemaDefinitionProperty<'user' | 'owner'>
+}
+
+export interface PreviusCheckReportPropierties {
+  _id?: Types.ObjectId
+  description: string[]
+}
+
+export interface CheckDoneReportPropierties {
+  _id?: Types.ObjectId
+  description: string[]
+  isComponent: boolean
+  isMecanism: boolean
+  isKOEO: boolean
+  isKOER: boolean
+  onRoad: boolean
+}
+
+export interface CheckDoneResultReportPropierties {
+  _id?: Types.ObjectId
+  description: string
+  result: string
+}
+
 export interface UserAuthenticationResponse extends User {
   token: string
 }
