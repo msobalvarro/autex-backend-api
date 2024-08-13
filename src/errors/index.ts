@@ -93,3 +93,11 @@ export class CreateVehiculeError extends Error {
     this.message = message
   }
 }
+
+export class GetVehiculeDetailError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.GET_VEHICULE_DETAIL_ERROR
+    this.message = message
+  }
+}

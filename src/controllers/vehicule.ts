@@ -1,20 +1,47 @@
 import {
   CreateVehiculeBrandError,
   CreateVehiculeModelError,
+  GetVehiculeDetailError,
   UpdateVehiculeBrandError
 } from 'errors'
 import {
   CreateVehiculeProps,
+  DetailVehiculeProps,
   NewVehiculeModelProps,
   VehiculeBrands,
   VehiculeNewModelToBrandProps
 } from 'interfaces'
-import { createMultipleVehiculeBrands, createNewBrand } from 'services/createVehiculeBrand'
+import {
+  createMultipleVehiculeBrands,
+  createNewBrand
+} from 'services/createVehiculeBrand'
 import { CreateVehiculeModelService } from 'services/createVehiculeModel'
 import { addModelToBrand } from 'services/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/createVehicule'
 import { Request, Response } from 'express'
+import { getVehiculeDetailService } from 'services/getVehicule'
+
+export const getVehiculeDetail = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    
+    if (error) {
+      throw new GetVehiculeDetailError(String(message))
+    }
+
+    const { _id }: DetailVehiculeProps = req.params
+
+    if (!_id) {
+      return new GetVehiculeDetailError('id is required')
+    }
+
+    const vehicule = await getVehiculeDetailService(_id)
+    res.send(vehicule)
+  } catch (error) {
+    res.status(404).send(`${error}`)
+  }
+}
 
 export const createMultpleBrandsController = async (req: Request, res: Response) => {
   try {

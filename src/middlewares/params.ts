@@ -61,7 +61,6 @@ export const createStatusProps = [
   check('description', 'Description is required').isString().isEmpty(),
 ]
 
-
 export const assignModelToBrandProps = [
   check('modelId', 'Model Id is required').isMongoId(),
   check('brandId', 'Brand Id is required').isMongoId(),
@@ -78,3 +77,8 @@ export const createVehiculeProps = [
   check('year', 'Year is required').isNumeric(),
   check('type', 'Vehicule type is incorrect').isIn(['auto', 'pickup', 'ban', 'truck', 'motorcycle']),
 ]
+
+export const getVehiculeDetailProps = [
+  check('_id', 'Id is required').isMongoId(),
+]
+

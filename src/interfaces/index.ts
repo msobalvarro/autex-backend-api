@@ -112,6 +112,7 @@ export enum ErrosList {
   CREATE_VEHICULE_BRAND = 'CREATE_VEHICULE_BRAND',
   CREATE_VEHICULE_MODEL = 'CREATE_VEHICULE_MODEL',
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
+  GET_VEHICULE_DETAIL_ERROR = 'GET_VEHICULE_DETAIL_ERROR',
 }
 
 export interface GenerateErrorProps {
@@ -143,4 +144,8 @@ export interface CreateVehiculeProps {
   chasisNumber: string
   km: string
   year: string
+}
+
+export interface DetailVehiculeProps {
+  _id?: Types.ObjectId
 }
