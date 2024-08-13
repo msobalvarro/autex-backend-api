@@ -8,6 +8,6 @@ export const getAllVehicles = async (): Promise<Vehicule[]> => {
 }
 
 export const getVehiculeDetailService = async (id: Types.ObjectId): Promise<Vehicule | null> => {
-  const vehicule = await vehiculeModel.findById(id)
+  const vehicule = await vehiculeModel.findById(id).populate('model').populate('brand', '-models')
   return vehicule
 }

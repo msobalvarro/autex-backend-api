@@ -25,13 +25,11 @@ import { getVehiculeDetailService } from 'services/getVehicule'
 export const getVehiculeDetail = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
-    
     if (error) {
       throw new GetVehiculeDetailError(String(message))
     }
 
     const { _id }: DetailVehiculeProps = req.params
-
     if (!_id) {
       return new GetVehiculeDetailError('id is required')
     }
