@@ -3,12 +3,17 @@ import { Vehicule, VehiculeBrands, VehiculeModel } from '../interfaces'
 
 const vehiculeSchema = new Schema<Vehicule>(
   {
-    name: String,
     color: String,
     motorNumber: String,
     chasisNumber: String,
     km: Number,
     year: Number,
+    plate: String,
+    type: {
+      type: String,
+      enum: ['auto', 'pickup', 'ban', 'truck', 'motorcycle'],
+      default: 'auto',
+    },
     model: {
       type: Schema.Types.ObjectId,
       ref: 'vehiculeModel'

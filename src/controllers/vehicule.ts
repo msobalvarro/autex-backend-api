@@ -1,10 +1,11 @@
-import { CreateVehiculeBrandError, UpdateVehiculeBrandError } from 'errors'
+import { CreateVehiculeBrandError, CreateVehiculeModelError, UpdateVehiculeBrandError } from 'errors'
 import { Request, Response } from 'express'
-import { NewVehiculeModelProps, VehiculeBrands, VehiculeNewModelToBrandProps } from 'interfaces'
+import { CreateVehiculeProps, NewVehiculeModelProps, VehiculeBrands, VehiculeNewModelToBrandProps } from 'interfaces'
 import { createMultipleVehiculeBrands, createNewBrand } from 'services/createVehiculeBrand'
 import { CreateVehiculeModelService } from 'services/createVehiculeModel'
 import { addModelToBrand } from 'services/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
+import { createVehiculeService } from 'services/createVehicule'
 
 export const createMultpleBrandsController = async (req: Request, res: Response) => {
   try {
@@ -47,15 +48,35 @@ export const assignModelToBrandController = async (req: Request, res: Response) 
   }
 }
 
-export const createNewModel = async (req: Request, res: Response) => {
+export const createNewModelController = async (req: Request, res: Response) => {
   try {
+    const { error, message } = existErrors(req)
+    if (error) {
+      throw new CreateVehiculeModelError(String(message))
+    }
+
     const { description }: NewVehiculeModelProps = req.body
     const newBrand = await CreateVehiculeModelService({ description })
     if (!newBrand) {
-      throw new UpdateVehiculeBrandError('Brand cant be created')
+      throw new CreateVehiculeModelError('Brand cant be created')
     }
 
     res.send(newBrand)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const createVehiculeController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) {
+      throw new CreateVehiculeModelError(String(message))
+    }
+
+    const params: CreateVehiculeProps = req.body
+    const vehicule = await createVehiculeService(params)
+    res.send(vehicule)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

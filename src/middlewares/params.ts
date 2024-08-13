@@ -14,15 +14,15 @@ export const existErrors = (req: Request): ErrorResultProps => {
 }
 
 export const createUserValidation = [
-  check('name', 'Name is Required').notEmpty(),
-  check('email', 'Email is Required').notEmpty().isEmail(),
-  check('password', 'Password is Required').notEmpty(),
+  check('name', 'Name is required').notEmpty(),
+  check('email', 'Email is required').notEmpty().isEmail(),
+  check('password', 'Password is required').notEmpty(),
 ]
 
 export const updateUserValidation = [
-  check('_id', 'ID is Required').notEmpty(),
-  check('name', 'Name is Required').notEmpty(),
-  check('email', 'Email is Required').notEmpty().isEmail(),
+  check('_id', 'ID is required').notEmpty(),
+  check('name', 'Name is required').notEmpty(),
+  check('email', 'Email is required').notEmpty().isEmail(),
 ]
 
 export const loginValidationProps = [
@@ -31,15 +31,15 @@ export const loginValidationProps = [
 ]
 
 export const createClientValidationProps = [
-  check('name', 'Name is Required').notEmpty().isString(),
-  check('email', 'Email is Required').notEmpty().isEmail(),
-  check('phoneNumber', 'Phone Number Required').notEmpty().isString(),
-  check('documentId', 'Document is Required').notEmpty().isString(),
+  check('name', 'Name is required').notEmpty().isString(),
+  check('email', 'Email is required').notEmpty().isEmail(),
+  check('phoneNumber', 'Phone Number required').notEmpty().isString(),
+  check('documentId', 'Document is required').notEmpty().isString(),
   check('type', 'Client Type Incorrect').isIn(['Company', 'Person']),
 ]
 
 export const createActivityToDoProps = [
-  check('description', 'Description is Required').notEmpty().isString(),
+  check('description', 'Description is required').notEmpty().isString(),
 ]
 
 export const createMultipleBrandsProps = [
@@ -50,15 +50,31 @@ export const createMultipleBrandsProps = [
 ]
 
 export const createBrandProps = [
-  check('description', 'Description is Required').isString().exists(),
+  check('description', 'Description is required').isString().exists(),
+]
+
+export const createModelProps = [
+  check('description', 'Description is required').isString().exists(),
 ]
 
 export const createStatusProps = [
-  check('description', 'Description is Required').isString().isEmpty(),
+  check('description', 'Description is required').isString().isEmpty(),
 ]
 
 
 export const assignModelToBrandProps = [
-  check('modelId', 'Model ID is Required').isMongoId(),
-  check('brandId', 'Brand ID is Required').isMongoId(),
+  check('modelId', 'Model Id is required').isMongoId(),
+  check('brandId', 'Brand Id is required').isMongoId(),
+]
+
+export const createVehiculeProps = [
+  check('modelId', 'Model Id is required').isMongoId(),
+  check('brandId', 'Brand Id is required').isMongoId(),
+  check('color', 'Color is required').isString(),
+  check('plate', 'Plate is required').isString(),
+  check('motorNumber', 'Motor number is required').isString(),
+  check('chasisNumber', 'Chasis number is required').isString(),
+  check('km', 'kilometers is required').isNumeric(),
+  check('year', 'Year is required').isNumeric(),
+  check('type', 'Vehicule type is incorrect').isIn(['auto', 'pickup', 'ban', 'truck', 'motorcycle']),
 ]

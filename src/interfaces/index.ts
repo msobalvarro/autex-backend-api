@@ -20,7 +20,7 @@ export interface Vehicule {
   _id: Types.ObjectId
   model?: VehiculeModel
   brand?: VehiculeBrands
-  name: string
+  type: SchemaDefinitionProperty<'auto' | 'pickup' | 'ban' | 'truck' | 'motorcycle'>
   color: string
   plate: string
   motorNumber: string
@@ -110,6 +110,8 @@ export enum ErrosList {
   CREATE_ACTIVITY_TO_DO = 'CREATE_ACTIVITY_TO_DO',
   UPDATE_VEHICULE_BRAND = 'UPDATE_VEHICULE_BRAND',
   CREATE_VEHICULE_BRAND = 'CREATE_VEHICULE_BRAND',
+  CREATE_VEHICULE_MODEL = 'CREATE_VEHICULE_MODEL',
+  CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
 }
 
 export interface GenerateErrorProps {
@@ -129,4 +131,16 @@ export interface NewVehiculeModelProps {
 export interface VehiculeNewModelToBrandProps {
   brandId: Types.ObjectId
   modelId: Types.ObjectId
+}
+
+export interface CreateVehiculeProps {
+  modelId: Types.ObjectId
+  brandId: Types.ObjectId
+  type: string
+  color: string
+  plate: string
+  motorNumber: string
+  chasisNumber: string
+  km: string
+  year: string
 }
