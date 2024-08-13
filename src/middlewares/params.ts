@@ -49,8 +49,12 @@ export const createMultipleBrandsProps = [
     .notEmpty().withMessage('description is not empty')
 ]
 
+export const createBrandProps = [
+  check('description', 'Description is Required').isString().exists(),
+]
+
 export const createStatusProps = [
-  check('description', 'Description is Required').notEmpty().isString(),
+  check('description', 'Description is Required').isString().isEmpty(),
 ]
 
 

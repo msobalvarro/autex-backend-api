@@ -1,7 +1,7 @@
-import { UpdateVehiculeBrandError } from 'errors'
+import { CreateVehiculeBrandError, UpdateVehiculeBrandError } from 'errors'
 import { Request, Response } from 'express'
 import { NewVehiculeModelProps, VehiculeBrands, VehiculeNewModelToBrandProps } from 'interfaces'
-import { createMultipleVehiculeBrands } from 'services/createVehiculeBrand'
+import { createMultipleVehiculeBrands, createNewBrand } from 'services/createVehiculeBrand'
 import { CreateVehiculeModelService } from 'services/createVehiculeModel'
 import { addModelToBrand } from 'services/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
@@ -14,6 +14,21 @@ export const createMultpleBrandsController = async (req: Request, res: Response)
     res.send(response)
   } catch (error) {
     res.status(404).send(`${error}`)
+  }
+}
+
+export const createBrandController = async (req: Request, res: Response) => {
+  try {
+    const brand: VehiculeBrands = req.body
+    const { error, message } = existErrors(req)
+    if (error) {
+      throw new CreateVehiculeBrandError(String(message))
+    }
+
+    const response = await createNewBrand(brand)
+    res.send(response)
+  } catch (error) {
+    res.status(500).send(`${error}`)
   }
 }
 

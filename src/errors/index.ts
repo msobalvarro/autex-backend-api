@@ -69,3 +69,11 @@ export class UpdateVehiculeBrandError extends Error {
     this.message = message
   }
 }
+
+export class CreateVehiculeBrandError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_VEHICULE_BRAND
+    this.message = message
+  }
+}
