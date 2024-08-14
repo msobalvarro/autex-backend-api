@@ -135,7 +135,7 @@ const DiagnosticReport = new Schema<DiagnosticPropierties>(
     },
     previousCheck: {
       type: Types.ObjectId,
-      ref: 'previusCheckDiagnostic',
+      ref: 'previousCheckDiagnostic',
       required: true,
     },
     recommendations: {
