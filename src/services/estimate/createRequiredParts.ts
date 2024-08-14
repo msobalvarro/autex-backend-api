@@ -1,8 +1,8 @@
-import { RequiredPartsEstimatePropierties } from 'interfaces'
-import { RequiredPartsModel } from 'models/estimate'
+import { ActivityWithCostToDoItemEstimate } from 'interfaces'
+import { ItemWithCostEstimatedFieldModel } from 'models/estimate'
 
-export const createRequiredPartService = async (parts: RequiredPartsEstimatePropierties): Promise<RequiredPartsEstimatePropierties> => {
-  const dataCreated = await RequiredPartsModel.create(parts)
+export const createRequiredPartService = async (parts: ActivityWithCostToDoItemEstimate[]): Promise<ActivityWithCostToDoItemEstimate[]> => {
+  const dataCreated = await ItemWithCostEstimatedFieldModel.insertMany(parts)
 
   return dataCreated
 }

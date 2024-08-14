@@ -1,7 +1,7 @@
-import { OtherRequirementsEstimatePropierties } from 'interfaces'
-import { OtherRequirementsModel } from 'models/estimate'
+import { ActivityWithCostToDoItemEstimate } from 'interfaces'
+import { ItemWithCostEstimatedFieldModel } from 'models/estimate'
 
-export const createOthersRequirements = async (otherRequirements: OtherRequirementsEstimatePropierties): Promise<OtherRequirementsEstimatePropierties> => {
-  const dataCreated = await OtherRequirementsModel.create(otherRequirements)
+export const createOthersRequirements = async (otherRequirements: ActivityWithCostToDoItemEstimate[]): Promise<ActivityWithCostToDoItemEstimate[]> => {
+  const dataCreated = await ItemWithCostEstimatedFieldModel.insertMany(otherRequirements)
   return dataCreated
 }

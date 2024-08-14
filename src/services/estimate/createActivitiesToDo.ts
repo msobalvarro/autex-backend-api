@@ -1,8 +1,12 @@
 import { ActivityToDoEstimatePropierties } from 'interfaces'
-import { ActivitiesToDoModel } from 'models/estimate'
+import { ActivitiesToDoModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 
 export const createActivityToDoService = async (activities: ActivityToDoEstimatePropierties): Promise<ActivityToDoEstimatePropierties> => {
-  const dataCreated = await ActivitiesToDoModel.create(activities)
+  const activitiesField = await ItemWithCostEstimatedFieldModel.insertMany(activities.activities)
 
+  const dataCreated = await ActivitiesToDoModel.create({
+    ...activities,
+    activities: activitiesField
+  })
   return dataCreated
 }
