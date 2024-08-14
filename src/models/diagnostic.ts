@@ -91,7 +91,10 @@ const possibleFailures = new Schema<PossibleFailuresDiagnosticPropierties>(
 
 const recommendations = new Schema<RecommendationsDiagnosticPropierties>(
   {
-    descriptions: [String]
+    activities: [{
+      type: Types.ObjectId,
+      ref: 'recommendationToDOItem'
+    }]
   },
   {
     timestamps: false,

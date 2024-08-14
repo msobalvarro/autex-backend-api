@@ -8,7 +8,12 @@ export const getDiagnosticDetailService = async (id: Types.ObjectId): Promise<Di
       .populate('client')
       .populate('possibleFailures')
       .populate('previousCheck')
-      .populate('recommendations')
+      .populate({
+        path : 'recommendations',
+        populate : {
+          path : 'activities'
+        }
+      })
       .populate('unitStatus')
       .populate('vehicule')
       .populate('activityType')

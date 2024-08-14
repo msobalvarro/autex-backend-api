@@ -15,7 +15,7 @@ export const createDiagnoticService = async (diagnostic: DiagnosticProps): Promi
   if (!vehicule) {
     throw new CreateDiagnosticError('Vehicule not found')
   }
-  
+
   const client = await getClientByIdService(diagnostic.clientId)
   if (!client) {
     throw new CreateDiagnosticError('Client not found')
@@ -26,13 +26,10 @@ export const createDiagnoticService = async (diagnostic: DiagnosticProps): Promi
     throw new CreateDiagnosticError('Unit status not registered')
   }
 
-  console.log(unitStatus)
-
   const previousCheck = await createPreviousCheck(diagnostic.previousCheck)
   if (!previousCheck) {
     throw new CreateDiagnosticError('Previous check not registered')
   }
-
 
   const checksDone = await createCheckDone(diagnostic.checksDone)
   if (!checksDone) {
@@ -66,6 +63,5 @@ export const createDiagnoticService = async (diagnostic: DiagnosticProps): Promi
   })
 
   return newDiagnostic
-
 }
 

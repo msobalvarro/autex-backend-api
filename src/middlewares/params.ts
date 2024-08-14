@@ -96,7 +96,7 @@ export const createDiagnosticProps = [
   check('checksDone.isKOEO', 'Checks done isKOEO prop is required').isBoolean(),
   check('checksDone.isKOER', 'Checks done isKOER prop is required').isBoolean(),
   check('checksDone.onRoad', 'Checks done onRoad prop is required').isBoolean(),
-  check('recommendations.descriptions', 'Recommendations is required').isArray(),
+  check('recommendations.activities.*.description', 'Recommendations is required').isString(),
   check('activityType.isReactivate', 'Activity type reactivate prop is required').isBoolean(),
   check('activityType.isRestore', 'Activity type restore prop is required').isBoolean(),
   check('activityType.isPreventive', 'Activity type preventive prop is required').isBoolean(),

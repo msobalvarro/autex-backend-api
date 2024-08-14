@@ -130,7 +130,31 @@ export interface PossibleFailuresDiagnosticPropierties {
   isInappropriateManagement: boolean
 }
 
+export interface RecommendationToDoItemEstimate {
+  description?: string
+  unitCost?: number
+  total?: number
+}
+
 export interface RecommendationsDiagnosticPropierties {
+  _id?: Types.ObjectId
+  activities: RecommendationToDoItemEstimate[]
+}
+
+export interface ActivityToDoEstimatePropierties {
+  _id?: Types.ObjectId
+  isService: boolean
+  isMaintenance: boolean
+  isMinorTypeService: boolean
+  acitivties: RecommendationsDiagnosticPropierties
+}
+
+export interface RequiredPartsEstimatePropierties {
+  _id?: Types.ObjectId
+  descriptions: string[]
+}
+
+export interface OtherRequirementsEstimatePropierties {
   _id?: Types.ObjectId
   descriptions: string[]
 }
