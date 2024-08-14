@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { Status } from 'interfaces'
 import { StatusModel } from 'models/status'
-import { createStatus } from 'services/createStatus'
+import { createStatus } from 'services/status/createStatus'
 
 export const getAllStatusController = async (req: Request, res: Response) => {
   try {

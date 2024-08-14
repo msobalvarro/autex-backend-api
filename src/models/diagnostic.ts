@@ -1,10 +1,11 @@
 import { Schema, Types, model } from 'mongoose'
 import {
+  ActivityTypesDiagnosticPropierties,
   CheckDoneDiagnosticPropierties,
   CheckDoneResultDiagnosticPropierties,
   DiagnosticPropierties,
   PossibleFailuresDiagnosticPropierties,
-  PreviusCheckDiagnosticPropierties,
+  PreviousCheckDiagnosticPropierties,
   RecommendationsDiagnosticPropierties,
   UnitStatusDiagnosticModelPropierties,
   UserReportDiangnosticPropierties
@@ -38,7 +39,7 @@ const userDiagnostic = new Schema<UserReportDiangnosticPropierties>(
   }
 )
 
-const previusCheckDiagnostic = new Schema<PreviusCheckDiagnosticPropierties>(
+const previusCheckDiagnostic = new Schema<PreviousCheckDiagnosticPropierties>(
   {
     description: [String]
   },
@@ -85,7 +86,7 @@ const possibleFailures = new Schema<PossibleFailuresDiagnosticPropierties>(
     isNegligence: Boolean,
     isOmission: Boolean,
     isTechnique: Boolean,
-  }, 
+  },
   {
     timestamps: false,
     versionKey: false,
@@ -102,35 +103,60 @@ const recommendations = new Schema<RecommendationsDiagnosticPropierties>(
   }
 )
 
+const activityType = new Schema<ActivityTypesDiagnosticPropierties>(
+  {
+    isCorrective: Boolean,
+    isPreventive: Boolean,
+    isReactivate: Boolean,
+    isRestore: Boolean,
+  },
+  {
+    timestamps: false,
+    versionKey: false,
+  }
+)
+
 const DiagnosticReport = new Schema<DiagnosticPropierties>(
   {
     checksDone: {
       type: Types.ObjectId,
-      ref: 'checksDoneDiagnostic'
+      ref: 'checksDoneDiagnostic',
+      required: true,
     },
     client: {
       type: Types.ObjectId,
-      ref: 'client'
+      ref: 'client',
+      required: true,
     },
     possibleFailures: {
       type: Types.ObjectId,
-      ref: 'PossibleFailiresDiagnostic'
+      ref: 'PossibleFailiresDiagnostic',
+      required: true,
     },
-    previusCheck: {
+    previousCheck: {
       type: Types.ObjectId,
-      ref: 'previusCheckDiagnostic'
+      ref: 'previusCheckDiagnostic',
+      required: true,
     },
     recommendations: {
       type: Types.ObjectId,
-      ref: 'recomendationsDiagnostic'
+      ref: 'recomendationsDiagnostic',
+      required: true,
     },
     unitStatus: {
       type: Types.ObjectId,
-      ref: 'unitStatusDiagnostic'
+      ref: 'unitStatusDiagnostic',
+      required: true,
     },
     vehicule: {
       type: Types.ObjectId,
-      ref: 'vehicule'
+      ref: 'vehicule',
+      required: true,
+    },
+    activityType: {
+      type: Types.ObjectId,
+      ref: 'activityTypeDiagnostic',
+      required: true,
     },
   },
   {
@@ -141,9 +167,10 @@ const DiagnosticReport = new Schema<DiagnosticPropierties>(
 
 export const UserDiagnosticModel = model('userStatusDiagnostic', userDiagnostic)
 export const UnitStatusModel = model('unitStatusDiagnostic', unitSatatus)
-export const PreviusCheckDiagnosticModel = model('previusCheckDiagnostic', previusCheckDiagnostic)
+export const PreviousCheckDiagnosticModel = model('previousCheckDiagnostic', previusCheckDiagnostic)
 export const ChecksDoneDiagnosticModel = model('checksDoneDiagnostic', checksDoneDiagnostic)
 export const ChecksDoneResultDiagnosticModel = model('checksDoneResultDiagnostic', checksDoneResults)
-export const PossibleFailuresDiagnosticModel = model('PossibleFailiresDiagnostic', possibleFailures)
+export const PossibleFailuresDiagnosticModel = model('possibleFailuresDiagnostic', possibleFailures)
 export const RecommendationsDiagnosticModel = model('recomendationsDiagnostic', recommendations)
+export const ActivityTypeDiagnosticModel = model('activityTypeDiagnostic', activityType)
 export const DiagnosticModel = model('diagnostic', DiagnosticReport)

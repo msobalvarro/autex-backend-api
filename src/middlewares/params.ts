@@ -82,3 +82,28 @@ export const getVehiculeDetailProps = [
   check('_id', 'Id is required').isMongoId(),
 ]
 
+export const createDiagnosticProps = [
+  check('clientId', 'Client Id is required').isMongoId(),
+  check('vehiculeId', 'vehicule Id is required').isMongoId(),
+  check('unitStatus.onlyDiagnosis', 'Unit Status fields is incorrect').isBoolean(),
+  check('unitStatus.improvisedSolution', 'Unit Status fields is incorrect').isBoolean(),
+  check('unitStatus.definitiveSolution', 'Unit Status fields is incorrect').isBoolean(),
+  check('unitStatus.transferSolution', 'Unit Status fields is incorrect').isBoolean(),
+  check('previousCheck.description', 'Previus check description is incorrect').isArray(),
+  check('previousCheck.isComponent', 'Previus check component prop is required').isBoolean(),
+  check('previousCheck.isMecanism', 'Previus check mecanism prop is required').isBoolean(),
+  check('previousCheck.isKOEO', 'Previus check isKOEO prop is required').isBoolean(),
+  check('previousCheck.isKOER', 'Previus check isKOER prop is required').isBoolean(),
+  check('previousCheck.onRoad', 'Previus check onRoad prop is required').isBoolean(),
+  check('checksDone.description', 'Checks done description prop is required').isArray(),
+  check('checksDone.isComponent', 'Checks done component prop is required').isBoolean(),
+  check('checksDone.isMecanism', 'Checks done component prop is required').isBoolean(),
+  check('checksDone.isKOEO', 'Checks done isKOEO prop is required').isBoolean(),
+  check('checksDone.isKOER', 'Checks done isKOER prop is required').isBoolean(),
+  check('checksDone.onRoad', 'Checks done onRoad prop is required').isBoolean(),
+  check('recommendations.descriptions', 'Recommendations is required').isArray(),
+  check('activityType.isReactivate', 'Activity type reactivate prop is required').isArray(),
+  check('activityType.isRestore', 'Activity type restore prop is required').isArray(),
+  check('activityType.isPreventive', 'Activity type preventive prop is required').isArray(),
+  check('activityType.isCorrective', 'Activity type corrective prop is required').isArray(),
+]

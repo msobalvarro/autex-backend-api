@@ -100,7 +100,7 @@ export interface UserReportDiangnosticPropierties {
   clientType: SchemaDefinitionProperty<'user' | 'owner'>
 }
 
-export interface PreviusCheckDiagnosticPropierties {
+export interface PreviousCheckDiagnosticPropierties {
   _id?: Types.ObjectId
   description: string[]
 }
@@ -136,26 +136,30 @@ export interface RecommendationsDiagnosticPropierties {
   descriptions: string[]
 }
 
+export interface ActivityTypesDiagnosticPropierties {
+  _id?: Types.ObjectId
+  isReactivate: boolean
+  isRestore: boolean
+  isPreventive: boolean
+  isCorrective: boolean
+}
+
 export interface DiagnosticPropierties {
   _id?: Types.ObjectId
   client: Client
   vehicule: Vehicule
   unitStatus: UnitStatusDiagnosticModelPropierties
-  previusCheck: PreviusCheckDiagnosticPropierties
+  previousCheck: PreviousCheckDiagnosticPropierties
   checksDone: CheckDoneDiagnosticPropierties
   possibleFailures: PossibleFailuresDiagnosticPropierties
   recommendations: RecommendationsDiagnosticPropierties
+  activityType: ActivityTypesDiagnosticPropierties
 }
 
-export interface DiagnosticProps {
+export interface DiagnosticProps extends DiagnosticPropierties {
   _id?: Types.ObjectId
   clientId: Types.ObjectId
   vehiculeId: Types.ObjectId
-  unitStatus: UnitStatusDiagnosticModelPropierties
-  previusCheck: PreviusCheckDiagnosticPropierties
-  checksDone: CheckDoneDiagnosticPropierties
-  possibleFailures: PossibleFailuresDiagnosticPropierties
-  recommendations: RecommendationsDiagnosticPropierties
 }
 
 export interface UserAuthenticationResponse extends User {

@@ -1,7 +1,7 @@
-import { PreviusCheckDiagnosticPropierties } from 'interfaces';
-import { PreviusCheckDiagnosticModel } from 'models/diagnostic';
+import { PreviousCheckDiagnosticPropierties } from 'interfaces';
+import { PreviousCheckDiagnosticModel } from 'models/diagnostic';
 
-export const createPreviousCheck = async (data: PreviusCheckDiagnosticPropierties): Promise<PreviusCheckDiagnosticPropierties> => {
-  const dataCreated = await PreviusCheckDiagnosticModel.create(data)
+export const createPreviousCheck = async (data: PreviousCheckDiagnosticPropierties): Promise<PreviousCheckDiagnosticPropierties> => {
+  const dataCreated = await PreviousCheckDiagnosticModel.create(data)
   return dataCreated
 }
