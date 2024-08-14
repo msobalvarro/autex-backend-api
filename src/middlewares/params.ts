@@ -90,11 +90,6 @@ export const createDiagnosticProps = [
   check('unitStatus.definitiveSolution', 'Unit Status fields is incorrect').isBoolean(),
   check('unitStatus.transferSolution', 'Unit Status fields is incorrect').isBoolean(),
   check('previousCheck.description', 'Previous check description is incorrect').isArray(),
-  check('previousCheck.isComponent', 'Previous check component prop is required').isBoolean(),
-  check('previousCheck.isMecanism', 'Previous check mecanism prop is required').isBoolean(),
-  check('previousCheck.isKOEO', 'Previous check isKOEO prop is required').isBoolean(),
-  check('previousCheck.isKOER', 'Previous check isKOER prop is required').isBoolean(),
-  check('previousCheck.onRoad', 'Previous check onRoad prop is required').isBoolean(),
   check('checksDone.description', 'Checks done description prop is required').isArray(),
   check('checksDone.isComponent', 'Checks done component prop is required').isBoolean(),
   check('checksDone.isMecanism', 'Checks done mecanism prop is required').isBoolean(),
@@ -102,8 +97,12 @@ export const createDiagnosticProps = [
   check('checksDone.isKOER', 'Checks done isKOER prop is required').isBoolean(),
   check('checksDone.onRoad', 'Checks done onRoad prop is required').isBoolean(),
   check('recommendations.descriptions', 'Recommendations is required').isArray(),
-  check('activityType.isReactivate', 'Activity type reactivate prop is required').isArray(),
-  check('activityType.isRestore', 'Activity type restore prop is required').isArray(),
-  check('activityType.isPreventive', 'Activity type preventive prop is required').isArray(),
-  check('activityType.isCorrective', 'Activity type corrective prop is required').isArray(),
+  check('activityType.isReactivate', 'Activity type reactivate prop is required').isBoolean(),
+  check('activityType.isRestore', 'Activity type restore prop is required').isBoolean(),
+  check('activityType.isPreventive', 'Activity type preventive prop is required').isBoolean(),
+  check('activityType.isCorrective', 'Activity type corrective prop is required').isBoolean(),
+]
+
+export const getDiagnosticProps = [
+  check('_id', 'Id is required').isMongoId(),
 ]

@@ -51,10 +51,7 @@ const previusCheckDiagnostic = new Schema<PreviousCheckDiagnosticPropierties>(
 
 const checksDoneDiagnostic = new Schema<CheckDoneDiagnosticPropierties>(
   {
-    description: [{
-      type: Types.ObjectId,
-      ref: 'checksDoneResultDiagnostic'
-    }],
+    description: [String],
     isComponent: Boolean,
     isKOEO: Boolean,
     isKOER: Boolean,
@@ -69,8 +66,7 @@ const checksDoneDiagnostic = new Schema<CheckDoneDiagnosticPropierties>(
 
 const checksDoneResults = new Schema<CheckDoneResultDiagnosticPropierties>(
   {
-    description: String,
-    result: String
+    description: [String],
   },
   {
     timestamps: false,
@@ -130,7 +126,7 @@ const DiagnosticReport = new Schema<DiagnosticPropierties>(
     },
     possibleFailures: {
       type: Types.ObjectId,
-      ref: 'PossibleFailiresDiagnostic',
+      ref: 'possibleFailuresDiagnostic',
       required: true,
     },
     previousCheck: {

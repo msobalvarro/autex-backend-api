@@ -117,8 +117,7 @@ export interface CheckDoneDiagnosticPropierties {
 
 export interface CheckDoneResultDiagnosticPropierties {
   _id?: Types.ObjectId
-  description: string
-  result: string
+  description: string[]
 }
 
 export interface PossibleFailuresDiagnosticPropierties {
