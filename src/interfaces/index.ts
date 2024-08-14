@@ -189,8 +189,8 @@ export interface EstimatePropierties {
   vehicule: Vehicule
   client: Client
   activitiesToDo: ActivityToDoEstimatePropierties
-  requiredParts: RequiredPartsEstimatePropierties
-  otherRequirements: OtherRequirementsEstimatePropierties
+  requiredParts: ActivityWithCostToDoItemEstimate[]
+  otherRequirements: ActivityWithCostToDoItemEstimate[]
   laborCost: number
   partsCost: number
   inputCost: number

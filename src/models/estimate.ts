@@ -1,5 +1,11 @@
 import { Schema, Types, model } from 'mongoose'
-import { ActivityToDoEstimatePropierties, ActivityWithCostToDoItemEstimate, EstimatePropierties, OtherRequirementsEstimatePropierties, RequiredPartsEstimatePropierties } from 'interfaces'
+import {
+  ActivityToDoEstimatePropierties,
+  ActivityWithCostToDoItemEstimate,
+  EstimatePropierties,
+  OtherRequirementsEstimatePropierties,
+  RequiredPartsEstimatePropierties
+} from 'interfaces'
 
 const itemWithCostField = new Schema<ActivityWithCostToDoItemEstimate>(
   {
@@ -19,7 +25,7 @@ const itemWithCostField = new Schema<ActivityWithCostToDoItemEstimate>(
   }
 )
 
-export const activitiesToDo = new Schema<ActivityToDoEstimatePropierties>(
+const activitiesToDo = new Schema<ActivityToDoEstimatePropierties>(
   {
     isService: Boolean,
     isMaintenance: Boolean,
@@ -75,14 +81,14 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'activitiesToDoEstimate'
     },
-    requiredParts: {
+    requiredParts: [{
       type: Types.ObjectId,
-      ref: 'requiredParts'
-    },
-    otherRequirements: {
+      ref: 'itemWithCostEstimatedField'
+    }],
+    otherRequirements: [{
       type: Types.ObjectId,
-      ref: 'otherRequirements'
-    },
+      ref: 'itemWithCostEstimatedField'
+    }],
     inputCost: Number,
     laborCost: Number,
     partsCost: Number,

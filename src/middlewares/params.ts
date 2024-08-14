@@ -106,3 +106,21 @@ export const createDiagnosticProps = [
 export const getDiagnosticProps = [
   check('_id', 'Id is required').isMongoId(),
 ]
+
+export const createEstimateProps = [
+  check('clientId', 'Client Id is required').isMongoId(),
+  check('vehiculeId', 'vehicule Id is required').isMongoId(),
+  check('activitiesToDo.isService', 'Activity service prop is incorrect').isBoolean(),
+  check('activitiesToDo.isMaintenance', 'Activity maintenance prop is incorrect').isBoolean(),
+  check('activitiesToDo.isMinorTypeService', 'Activity type service prop is incorrect').isBoolean(),
+  check('activitiesToDo.activities', 'Activity list prop is incorrect').isArray(),
+  check('activitiesToDo.activities.*.description', 'Activity list description prop is incorrect').isString(),
+  check('requiredParts.descriptions', 'Require part list prop is incorrect').isArray(),
+  check('requiredParts.descriptions.*.description', 'Require part list description prop is incorrect').isString(),
+  check('otherRequirements', 'Other requirements list prop is incorrect').isArray(),
+  check('otherRequirements.*.descriptions', 'Require part list description prop is incorrect').isString(),
+  check('laborCost', 'Labor cost prop is incorrect').isNumeric(),
+  check('partsCost', 'Part cost prop is incorrect').isNumeric(),
+  check('inputCost', 'Input cost prop is incorrect').isNumeric(),
+  check('total', 'Total cost prop is incorrect').isNumeric(),
+]
