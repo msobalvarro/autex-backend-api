@@ -172,7 +172,7 @@ export interface ActivityToDoEstimatePropierties {
   isService: boolean
   isMaintenance: boolean
   isMinorTypeService: boolean
-  acitivties: RecommendationsDiagnosticPropierties
+  activities: ActivityWithCostToDoItemEstimate[]
 }
 
 export interface RequiredPartsEstimatePropierties {
@@ -185,10 +185,11 @@ export interface OtherRequirementsEstimatePropierties {
   descriptions: string[]
 }
 
-export interface DiagnosticPropierties {
+export interface EstimatePropierties {
   vehicule: Vehicule
-  activityToDoEstimatePropierties: ActivityToDoEstimatePropierties
+  activitiesToDo: ActivityToDoEstimatePropierties
   requiredParts: RequiredPartsEstimatePropierties
+  otherRequirements: OtherRequirementsEstimatePropierties
   laborCost: number
   partsCost: number
   inputCost: number

@@ -93,7 +93,7 @@ const recommendations = new Schema<RecommendationsDiagnosticPropierties>(
   {
     activities: [{
       type: Types.ObjectId,
-      ref: 'recommendationToDOItem'
+      ref: 'itemWithCostEstimatedField'
     }]
   },
   {
