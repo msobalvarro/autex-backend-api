@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { RecommendationToDoItemEstimate } from 'interfaces'
+import { ActivityWithCostToDoItemEstimate } from 'interfaces'
 
-const recommendationTodoItemItem = new Schema<RecommendationToDoItemEstimate>(
+const recommendationTodoItemItem = new Schema<ActivityWithCostToDoItemEstimate>(
   {
     description: String,
     total: {

@@ -130,7 +130,7 @@ export interface PossibleFailuresDiagnosticPropierties {
   isInappropriateManagement: boolean
 }
 
-export interface RecommendationToDoItemEstimate {
+export interface ActivityWithCostToDoItemEstimate {
   description?: string
   unitCost?: number
   total?: number
@@ -138,25 +138,7 @@ export interface RecommendationToDoItemEstimate {
 
 export interface RecommendationsDiagnosticPropierties {
   _id?: Types.ObjectId
-  activities: RecommendationToDoItemEstimate[]
-}
-
-export interface ActivityToDoEstimatePropierties {
-  _id?: Types.ObjectId
-  isService: boolean
-  isMaintenance: boolean
-  isMinorTypeService: boolean
-  acitivties: RecommendationsDiagnosticPropierties
-}
-
-export interface RequiredPartsEstimatePropierties {
-  _id?: Types.ObjectId
-  descriptions: string[]
-}
-
-export interface OtherRequirementsEstimatePropierties {
-  _id?: Types.ObjectId
-  descriptions: string[]
+  activities: ActivityWithCostToDoItemEstimate[]
 }
 
 export interface ActivityTypesDiagnosticPropierties {
@@ -183,6 +165,34 @@ export interface DiagnosticProps extends DiagnosticPropierties {
   _id?: Types.ObjectId
   clientId: Types.ObjectId
   vehiculeId: Types.ObjectId
+}
+
+export interface ActivityToDoEstimatePropierties {
+  _id?: Types.ObjectId
+  isService: boolean
+  isMaintenance: boolean
+  isMinorTypeService: boolean
+  acitivties: RecommendationsDiagnosticPropierties
+}
+
+export interface RequiredPartsEstimatePropierties {
+  _id?: Types.ObjectId
+  descriptions: ActivityWithCostToDoItemEstimate[]
+}
+
+export interface OtherRequirementsEstimatePropierties {
+  _id?: Types.ObjectId
+  descriptions: string[]
+}
+
+export interface DiagnosticPropierties {
+  vehicule: Vehicule
+  activityToDoEstimatePropierties: ActivityToDoEstimatePropierties
+  requiredParts: RequiredPartsEstimatePropierties
+  laborCost: number
+  partsCost: number
+  inputCost: number
+  total: number
 }
 
 export interface UserAuthenticationResponse extends User {
