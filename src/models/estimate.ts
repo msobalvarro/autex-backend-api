@@ -61,8 +61,16 @@ export const otherRequirements = new Schema<OtherRequirementsEstimatePropierties
   }
 )
 
-export const estimatedCosts = new Schema<EstimatePropierties>(
+const estimatedCosts = new Schema<EstimatePropierties>(
   {
+    client: {
+      type: Types.ObjectId,
+      ref: 'client'
+    },
+    vehicule: {
+      type: Types.ObjectId,
+      ref: 'vehicule'
+    },
     activitiesToDo: {
       type: Types.ObjectId,
       ref: 'activitiesToDoEstimate'
@@ -75,6 +83,10 @@ export const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'otherRequirements'
     },
+    inputCost: Number,
+    laborCost: Number,
+    partsCost: Number,
+    total: Number,
   },
   {
     timestamps: true,
@@ -86,4 +98,4 @@ export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField
 export const ActivitiesToDoModel = model('activitiesToDoEstimate', activitiesToDo)
 export const RequiredPartsModel = model('requiredParts', requiredParts)
 export const OtherRequirementsModel = model('otherRequirements', otherRequirements)
-export const EstimatedCosts = model('estimatedCosts', estimatedCosts)
+export const EstimatedCostsModel = model('estimatedCosts', estimatedCosts)

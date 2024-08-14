@@ -109,3 +109,12 @@ export class CreateDiagnosticError extends Error {
     this.message = message
   }
 }
+
+export class CreateEstimatedError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.GET_VEHICULE_DETAIL_ERROR
+    this.message = message
+  }
+}
+

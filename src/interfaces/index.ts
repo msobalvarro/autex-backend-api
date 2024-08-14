@@ -187,6 +187,7 @@ export interface OtherRequirementsEstimatePropierties {
 
 export interface EstimatePropierties {
   vehicule: Vehicule
+  client: Client
   activitiesToDo: ActivityToDoEstimatePropierties
   requiredParts: RequiredPartsEstimatePropierties
   otherRequirements: OtherRequirementsEstimatePropierties
@@ -194,6 +195,11 @@ export interface EstimatePropierties {
   partsCost: number
   inputCost: number
   total: number
+}
+
+export interface EstimateParamsPropierties extends EstimatePropierties {
+  vehiculeId: Types.ObjectId
+  clientId: Types.ObjectId
 }
 
 export interface UserAuthenticationResponse extends User {
