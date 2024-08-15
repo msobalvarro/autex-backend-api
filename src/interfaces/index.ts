@@ -167,28 +167,10 @@ export interface DiagnosticProps extends DiagnosticPropierties {
   vehiculeId: Types.ObjectId
 }
 
-export interface ActivityToDoEstimatePropierties {
-  _id?: Types.ObjectId
-  isService: boolean
-  isMaintenance: boolean
-  isMinorTypeService: boolean
-  activities: ActivityWithCostToDoItemEstimate[]
-}
-
-export interface RequiredPartsEstimatePropierties {
-  _id?: Types.ObjectId
-  descriptions: ActivityWithCostToDoItemEstimate[]
-}
-
-export interface OtherRequirementsEstimatePropierties {
-  _id?: Types.ObjectId
-  descriptions: string[]
-}
-
 export interface EstimatePropierties {
   vehicule: Vehicule
   client: Client
-  activitiesToDo: ActivityToDoEstimatePropierties
+  activitiesToDo: ActivityWithCostToDoItemEstimate[]
   requiredParts: ActivityWithCostToDoItemEstimate[]
   otherRequirements: ActivityWithCostToDoItemEstimate[]
   laborCost: number

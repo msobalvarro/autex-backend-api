@@ -1,10 +1,7 @@
 import { Schema, Types, model } from 'mongoose'
 import {
-  ActivityToDoEstimatePropierties,
   ActivityWithCostToDoItemEstimate,
-  EstimatePropierties,
-  OtherRequirementsEstimatePropierties,
-  RequiredPartsEstimatePropierties
+  EstimatePropierties
 } from 'interfaces'
 
 const itemWithCostField = new Schema<ActivityWithCostToDoItemEstimate>(
@@ -25,48 +22,6 @@ const itemWithCostField = new Schema<ActivityWithCostToDoItemEstimate>(
   }
 )
 
-const activitiesToDo = new Schema<ActivityToDoEstimatePropierties>(
-  {
-    isService: Boolean,
-    isMaintenance: Boolean,
-    isMinorTypeService: Boolean,
-    activities: [{
-      type: Types.ObjectId,
-      ref: 'itemWithCostEstimatedField'
-    }],
-  },
-  {
-    timestamps: false,
-    versionKey: false,
-  }
-)
-
-export const requiredParts = new Schema<RequiredPartsEstimatePropierties>(
-  {
-    descriptions: [{
-      type: Types.ObjectId,
-      ref: 'itemWithCostEstimatedField'
-    }],
-  },
-  {
-    timestamps: false,
-    versionKey: false,
-  }
-)
-
-export const otherRequirements = new Schema<OtherRequirementsEstimatePropierties>(
-  {
-    descriptions: [{
-      type: Types.ObjectId,
-      ref: 'itemWithCostEstimatedField'
-    }],
-  },
-  {
-    timestamps: false,
-    versionKey: false,
-  }
-)
-
 const estimatedCosts = new Schema<EstimatePropierties>(
   {
     client: {
@@ -77,10 +32,10 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'vehicule'
     },
-    activitiesToDo: {
+    activitiesToDo: [{
       type: Types.ObjectId,
-      ref: 'activitiesToDoEstimate'
-    },
+      ref: 'itemWithCostEstimatedField'
+    }],
     requiredParts: [{
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'
@@ -101,7 +56,4 @@ const estimatedCosts = new Schema<EstimatePropierties>(
 )
 
 export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField', itemWithCostField)
-export const ActivitiesToDoModel = model('activitiesToDoEstimate', activitiesToDo)
-export const RequiredPartsModel = model('requiredParts', requiredParts)
-export const OtherRequirementsModel = model('otherRequirements', otherRequirements)
 export const EstimatedCostsModel = model('estimatedCosts', estimatedCosts)

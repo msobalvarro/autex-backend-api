@@ -1,8 +1,8 @@
 import { createDiagnosticController, getDiagnosticController } from 'controllers/diagnostic';
 import { Router } from 'express';
-import { createDiagnosticProps, getDiagnosticProps } from 'middlewares/params';
+import { createDiagnosticProps, getDetailIdProp } from 'middlewares/params';
 
 export const router = Router()
 
 router.post('/create', ...createDiagnosticProps, createDiagnosticController)
-router.get('/detail/:id', ...getDiagnosticProps, getDiagnosticController)
+router.get('/detail/:id', ...getDetailIdProp, getDiagnosticController)

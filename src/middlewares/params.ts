@@ -103,7 +103,7 @@ export const createDiagnosticProps = [
   check('activityType.isCorrective', 'Activity type corrective prop is required').isBoolean(),
 ]
 
-export const getDiagnosticProps = [
+export const getDetailIdProp = [
   check('_id', 'Id is required').isMongoId(),
 ]
 
@@ -113,8 +113,8 @@ export const createEstimateProps = [
   check('activitiesToDo.isService', 'Activity service prop is incorrect').isBoolean(),
   check('activitiesToDo.isMaintenance', 'Activity maintenance prop is incorrect').isBoolean(),
   check('activitiesToDo.isMinorTypeService', 'Activity type service prop is incorrect').isBoolean(),
-  check('activitiesToDo.activities', 'Activity list prop is incorrect').isArray(),
-  check('activitiesToDo.activities.*.description', 'Activity list description prop is incorrect').isString(),
+  check('activitiesToDo', 'Activity list prop is incorrect').isArray(),
+  check('activitiesToDo.*.description', 'Activity list description prop is incorrect').isString(),
   check('requiredParts', 'Require part list prop is incorrect').isArray(),
   check('requiredParts.*.description', 'Require part list description prop is incorrect').isString(),
   check('otherRequirements', 'Other requirements list prop is incorrect').isArray(),
