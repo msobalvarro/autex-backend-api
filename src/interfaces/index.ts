@@ -50,7 +50,9 @@ export interface AcivitiesProperties {
   isMaintenance: boolean
   isService: boolean
   isMinorMantenance: boolean
-  type: SchemaDefinitionProperty<'predictive' | 'prenventive'>
+  isPredictive: boolean
+  isPreventive: boolean
+  isCorrective: boolean
 }
 
 export interface ActivitiesToDoProperties {
@@ -76,7 +78,7 @@ export interface AttentionsProperties {
   isRescue: boolean
 }
 
-export interface ServicesProperties {
+export interface ServicesTypesToDoOrderProperties {
   _id: Types.ObjectId
   isMecanic: boolean
   isElectrict: boolean
@@ -184,6 +186,19 @@ export interface EstimateParamsPropierties extends EstimatePropierties {
   clientId: Types.ObjectId
 }
 
+export interface OrderServicePropierties { 
+  _id?: Types.ObjectId
+  attentionType: AttentionsProperties
+  estimateProps: EstimatePropierties
+  preliminarManagment: PreliminaryManagementProperties
+  typesActivitiesToDo: AcivitiesProperties
+  serviceType: ServicesTypesToDoOrderProperties
+}
+
+export interface NewOrderServiceProps extends OrderServicePropierties {
+  estimateId: Types.ObjectId
+}
+
 export interface UserAuthenticationResponse extends User {
   token: string
 }
@@ -211,6 +226,7 @@ export enum ErrosList {
   CREATE_VEHICULE_MODEL = 'CREATE_VEHICULE_MODEL',
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
   GET_VEHICULE_DETAIL_ERROR = 'GET_VEHICULE_DETAIL_ERROR',
+  CREATE_ORDER_SERVICE_ERROR = 'CREATE_ORDER_SERVICE_ERROR',
 }
 
 export interface GenerateErrorProps {

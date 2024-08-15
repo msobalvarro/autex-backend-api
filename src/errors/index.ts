@@ -118,3 +118,11 @@ export class CreateEstimatedError extends Error {
   }
 }
 
+export class CreateOrderServiceError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_ORDER_SERVICE_ERROR
+    this.message = message
+  }
+}
+

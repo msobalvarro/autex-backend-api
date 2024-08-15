@@ -4,7 +4,7 @@ import {
   EstimatePropierties
 } from 'interfaces'
 
-const itemWithCostField = new Schema<ActivityWithCostToDoItemEstimate>(
+const itemWithCostEstimatedField = new Schema<ActivityWithCostToDoItemEstimate>(
   {
     description: String,
     total: {
@@ -55,5 +55,5 @@ const estimatedCosts = new Schema<EstimatePropierties>(
   }
 )
 
-export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField', itemWithCostField)
+export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField', itemWithCostEstimatedField)
 export const EstimatedCostsModel = model('estimatedCosts', estimatedCosts)
