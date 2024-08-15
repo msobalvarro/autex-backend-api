@@ -1,35 +1,50 @@
-import { NewOrderServiceProps, OrderServicePropierties } from 'interfaces'
-import { OrderServiceModel } from 'models/order'
-import { createAttentionTypesService } from './createAtentionType'
+import mongoose from 'mongoose'
+import {
+  NewOrderServiceProps,
+  OrderServicePropierties
+} from 'interfaces'
+import {
+  AtentionsTypesModel,
+  OrderServiceModel,
+  PreliminarManagmentModel,
+  ServiceTypeOrderModel,
+  TypesActivitiesToDoModel
+} from 'models/order'
 import { CreateOrderServiceError } from 'errors'
 import { getDetailEstimateById } from 'services/estimate/getDetail'
-import { createPreliminarManagmentService } from './createPreliminarManagment'
-import { createServiceTypeService } from './createServiceType'
-import { createActivitiesToDoModel } from './createActivitiesToDoModel'
 
 export const createOrder = async (order: NewOrderServiceProps): Promise<OrderServicePropierties> => {
-  const estimateProps = await getDetailEstimateById(order.estimateId)
-  if (!estimateProps) throw new CreateOrderServiceError('Estimate order not found')
+  const session = await mongoose.startSession()
+  session.startTransaction()
 
-  const attentionType = await createAttentionTypesService(order.attentionType)
-  if (!attentionType) throw new CreateOrderServiceError('attention could not be created')
+  try {
+    const estimateProps = await getDetailEstimateById(order.estimateId)
+    if (!estimateProps) throw String('Estimate Service not found')
 
-  const preliminarManagment = await createPreliminarManagmentService(order.preliminarManagment)
-  if (!preliminarManagment) throw new CreateOrderServiceError('Preliminar Managment could not be created')
+    const attentionType = new AtentionsTypesModel(order.attentionType)
+    const preliminarManagment = new PreliminarManagmentModel(order.preliminarManagment)
+    const serviceType = new ServiceTypeOrderModel(order.serviceType)
+    const typesActivitiesToDo = new TypesActivitiesToDoModel(order.typesActivitiesToDo)
+    const dataCreated = new OrderServiceModel({
+      attentionType,
+      estimateProps,
+      preliminarManagment,
+      serviceType,
+      typesActivitiesToDo,
+    })
 
-  const serviceType = await createServiceTypeService(order.serviceType)
-  if (!serviceType) throw new CreateOrderServiceError('Service type could not be created')
+    attentionType.save({ session })
+    preliminarManagment.save({ session })
+    serviceType.save({ session })
+    typesActivitiesToDo.save({ session })
+    dataCreated.save({ session })
 
-  const typesActivitiesToDo = await createActivitiesToDoModel(order.typesActivitiesToDo)
-  if (!typesActivitiesToDo) throw new CreateOrderServiceError('Types activities to do could not be created')
-
-  const dataCreated = await OrderServiceModel.create({
-    attentionType,
-    estimateProps,
-    preliminarManagment,
-    serviceType,
-    typesActivitiesToDo,
-  })
-
-  return dataCreated
+    await session.commitTransaction()
+    return dataCreated
+  } catch (error) {
+    await session.abortTransaction()
+    throw new CreateOrderServiceError(String(error))
+  } finally {
+    session.endSession()
+  }
 }
