@@ -15,7 +15,7 @@ export const createOrder = async (order: NewOrderServiceProps): Promise<OrderSer
   if (!attentionType) throw new CreateOrderServiceError('attention could not be created')
 
   const preliminarManagment = await createPreliminarManagmentService(order.preliminarManagment)
-  if (!attentionType) throw new CreateOrderServiceError('Preliminar Managment could not be created')
+  if (!preliminarManagment) throw new CreateOrderServiceError('Preliminar Managment could not be created')
 
   const serviceType = await createServiceTypeService(order.serviceType)
   if (!serviceType) throw new CreateOrderServiceError('Service type could not be created')
