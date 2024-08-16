@@ -12,10 +12,10 @@ const clientSchema = new Schema<Client>(
     email: String,
     phoneNumber: String,
     documentId: String,
-    vehicules: {
+    vehicules: [{
       type: Types.ObjectId,
       ref: 'vehicule'
-    }
+    }]
   },
   {
     timestamps: true,

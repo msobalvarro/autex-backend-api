@@ -4,6 +4,8 @@ import { Types } from 'mongoose'
 
 export const getAllVehicles = async (): Promise<Vehicule[]> => {
   const data: Vehicule[] = await vehiculeModel.find()
+    .populate('brand', '-models')
+    .populate('model')
   return data
 }
 

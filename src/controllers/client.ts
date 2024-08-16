@@ -15,6 +15,15 @@ export const getAllClientsController = async (__: Request, res: Response) => {
   }
 }
 
+export const getAllClientsWithCarController = async (__: Request, res: Response) => {
+  try {
+    const data = await getAllClients()
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
 export const getClientByIdController = async (req: Request, res: Response) => {
   try {
     const id = new Types.ObjectId(req.params.id)

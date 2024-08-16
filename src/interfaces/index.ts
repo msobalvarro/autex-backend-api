@@ -42,7 +42,7 @@ export interface Client {
   phoneNumber: string
   email: string
   documentId: string
-  vehicules: SchemaDefinitionProperty<Vehicule>[]
+  vehicules: Vehicule[]
 }
 
 export interface AcivitiesProperties {
