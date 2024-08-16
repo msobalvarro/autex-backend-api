@@ -20,7 +20,7 @@ import { addModelToBrand } from 'services/vehicule/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
-import { getVehiculeDetailService } from 'services/vehicule/getVehicule'
+import { getAllVehicles, getVehiculeDetailService } from 'services/vehicule/getVehicule'
 import { getAllModelsService } from 'services/vehicule/getVehiculeModel'
 
 export const getVehiculeDetailController = async (req: Request, res: Response) => {
@@ -121,6 +121,15 @@ export const createVehiculeController = async (req: Request, res: Response) => {
     const params: CreateVehiculeProps = req.body
     const vehicule = await createVehiculeService(params)
     res.send(vehicule)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllVehiculesController = async (req: Request, res: Response) => {
+  try {
+    const data = await getAllVehicles()
+    res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
   }
