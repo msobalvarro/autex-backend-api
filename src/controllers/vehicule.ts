@@ -2,9 +2,11 @@ import {
   CreateVehiculeBrandError,
   CreateVehiculeModelError,
   GetVehiculeDetailError,
-  UpdateVehiculeBrandError
+  UpdateVehiculeBrandError,
+  UpdateVehiculeClient
 } from 'errors'
 import {
+  AssignVehiculeToClientProps,
   CreateVehiculeProps,
   DetailVehiculeProps,
   NewVehiculeModelProps,
@@ -22,6 +24,7 @@ import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
 import { getAllVehicles, getVehiculeDetailService } from 'services/vehicule/getVehicule'
 import { getAllModelsService } from 'services/vehicule/getVehiculeModel'
+import { assignVehiculeToClientService } from 'services/vehicule/assignVehiculeToClient'
 
 export const getVehiculeDetailController = async (req: Request, res: Response) => {
   try {
@@ -91,6 +94,24 @@ export const assignModelToBrandController = async (req: Request, res: Response) 
     res.status(404).send(`${error}`)
   }
 }
+
+
+export const assignVehiculeToClientController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    const { clientId, vehiculeId }: AssignVehiculeToClientProps = req.body
+    if (error) {
+      throw new UpdateVehiculeClient(String(message))
+    }
+
+    await assignVehiculeToClientService({ clientId, vehiculeId })
+
+    res.send(true)
+  } catch (error) {
+    res.status(404).send(`${error}`)
+  }
+}
+
 
 export const createNewModelController = async (req: Request, res: Response) => {
   try {

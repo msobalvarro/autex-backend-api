@@ -222,6 +222,7 @@ export enum ErrosList {
   CREATE_CLIENT_ERROR = 'CREATE_CLIENT_ERROR',
   CREATE_ACTIVITY_TO_DO = 'CREATE_ACTIVITY_TO_DO',
   UPDATE_VEHICULE_BRAND = 'UPDATE_VEHICULE_BRAND',
+  UPDATE_VEHICULE_CLIENT = 'UPDATE_VEHICULE_CLIENT',
   CREATE_VEHICULE_BRAND = 'CREATE_VEHICULE_BRAND',
   CREATE_VEHICULE_MODEL = 'CREATE_VEHICULE_MODEL',
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
@@ -246,6 +247,11 @@ export interface NewVehiculeModelProps {
 export interface VehiculeNewModelToBrandProps {
   brandId: Types.ObjectId
   modelId: Types.ObjectId
+}
+
+export interface AssignVehiculeToClientProps {
+  clientId: Types.ObjectId
+  vehiculeId: Types.ObjectId
 }
 
 export interface CreateVehiculeProps {

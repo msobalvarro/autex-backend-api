@@ -66,6 +66,11 @@ export const assignModelToBrandProps = [
   check('brandId', 'Brand Id is required').isMongoId(),
 ]
 
+export const assignVehiculeToClientProps = [
+  check('clientId', 'Client Id is required').isMongoId(),
+  check('vehiculeId', 'Vehicule D Id is required').isMongoId(),
+]
+
 export const createVehiculeProps = [
   check('modelId', 'Model Id is required').isMongoId(),
   check('brandId', 'Brand Id is required').isMongoId(),

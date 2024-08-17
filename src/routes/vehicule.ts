@@ -1,5 +1,6 @@
 import {
   assignModelToBrandController,
+  assignVehiculeToClientController,
   createBrandController,
   createMultpleBrandsController,
   createNewModelController,
@@ -10,6 +11,7 @@ import {
 } from 'controllers/vehicule'
 import {
   assignModelToBrandProps,
+  assignVehiculeToClientProps,
   createBrandProps,
   createModelProps,
   createMultipleBrandsProps,
@@ -27,6 +29,7 @@ router.get('/getAll', getAllVehiculesController)
 // POST Requests
 router.post('/createMultipleBrands', ...createMultipleBrandsProps, createMultpleBrandsController)
 router.post('/assignModelToBrand', ...assignModelToBrandProps, assignModelToBrandController)
+router.post('/assignVehiculeToClient', ...assignVehiculeToClientProps, assignVehiculeToClientController)
 router.post('/createBrand', ...createBrandProps, createBrandController)
 router.post('/createModel', ...createModelProps, createNewModelController)
 router.post('/create', ...createVehiculeProps, createVehiculeController)
