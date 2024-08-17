@@ -35,7 +35,7 @@ export const createClientValidationProps = [
   check('email', 'Email is required').notEmpty().isEmail(),
   check('phoneNumber', 'Phone Number required').notEmpty().isString(),
   check('documentId', 'Document is required').notEmpty().isString(),
-  check('type', 'Client Type Incorrect').isIn(['Company', 'Person']),
+  check('type', 'Client Type Incorrect').isIn(['company', 'person']),
 ]
 
 export const createActivityToDoProps = [
@@ -120,10 +120,19 @@ export const createEstimateProps = [
   check('activitiesToDo.isMinorTypeService', 'Activity type service prop is incorrect').isBoolean(),
   check('activitiesToDo', 'Activity list prop is incorrect').isArray(),
   check('activitiesToDo.*.description', 'Activity list description prop is incorrect').isString(),
+  check('activitiesToDo.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
+  check('activitiesToDo.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
+  check('activitiesToDo.*.total', 'Activity total prop is incorrect').isFloat(),
   check('requiredParts', 'Require part list prop is incorrect').isArray(),
   check('requiredParts.*.description', 'Require part list description prop is incorrect').isString(),
+  check('requiredParts.*.unitCost', 'Part required unit cost prop is incorrect').isFloat(),
+  check('requiredParts.*.quantity', 'Part required quantity prop is incorrect').isFloat(),
+  check('requiredParts.*.total', 'Part required total prop is incorrect').isFloat(),
   check('otherRequirements', 'Other requirements list prop is incorrect').isArray(),
   check('otherRequirements.*.description', 'Require part list description prop is incorrect').isString(),
+  check('otherRequirements.*.unitCost', 'Other required unit cost prop is incorrect').isFloat(),
+  check('otherRequirements.*.quantity', 'Other required quantity prop is incorrect').isFloat(),
+  check('otherRequirements.*.total', 'Other required total prop is incorrect').isFloat(),
   check('laborCost', 'Labor cost prop is incorrect').isNumeric(),
   check('partsCost', 'Part cost prop is incorrect').isNumeric(),
   check('inputCost', 'Input cost prop is incorrect').isNumeric(),

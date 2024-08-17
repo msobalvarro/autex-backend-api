@@ -135,6 +135,7 @@ export interface PossibleFailuresDiagnosticPropierties {
 export interface ActivityWithCostToDoItemEstimate {
   description?: string
   unitCost?: number
+  quantity?: number
   total?: number
 }
 

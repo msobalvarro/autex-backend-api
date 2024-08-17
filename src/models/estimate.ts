@@ -7,11 +7,15 @@ import {
 const itemWithCostEstimatedField = new Schema<ActivityWithCostToDoItemEstimate>(
   {
     description: String,
-    total: {
+    quantity: {
       type: Number,
       default: 0,
     },
     unitCost: {
+      type: Number,
+      default: 0,
+    },
+    total: {
       type: Number,
       default: 0,
     }
