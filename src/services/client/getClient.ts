@@ -3,8 +3,23 @@ import { ClientModel } from 'models/client'
 import { Types } from 'mongoose'
 
 export const getAllClients = async (): Promise<Client[]> => {
-  const clients: Client[] = await ClientModel.find().populate('vehicules')
+  const clients: Client[] = await ClientModel.find()
+  return clients
+}
 
+export const getAllClientsWithCars = async (): Promise<Client[]> => {
+  const clients: Client[] = await ClientModel.find()
+    .populate({
+      path: 'vehicules',
+      populate: [
+        {
+          path: 'model'
+        },
+        {
+          path: 'brand'
+        }
+      ]
+    })
   return clients
 }
 

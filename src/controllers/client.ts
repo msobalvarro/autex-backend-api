@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { getClientByIdService, getAllClients } from 'services/client/getClient'
+import { getClientByIdService, getAllClients, getAllClientsWithCars } from 'services/client/getClient'
 import { Client } from 'interfaces'
 import { createClient } from 'services/client/createClient'
 import { existErrors } from 'middlewares/params'
@@ -17,7 +17,7 @@ export const getAllClientsController = async (__: Request, res: Response) => {
 
 export const getAllClientsWithCarController = async (__: Request, res: Response) => {
   try {
-    const data = await getAllClients()
+    const data = await getAllClientsWithCars()
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
