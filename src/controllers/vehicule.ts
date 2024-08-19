@@ -23,7 +23,7 @@ import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
 import { getAllVehicles, getVehiculeDetailService } from 'services/vehicule/getVehicule'
-import { getAllModelsService } from 'services/vehicule/getVehiculeModel'
+import { getAllBrandsAndModel, getAllModelsService } from 'services/vehicule/getVehiculeModel'
 import { assignVehiculeToClientService } from 'services/vehicule/assignVehiculeToClient'
 
 export const getVehiculeDetailController = async (req: Request, res: Response) => {
@@ -48,6 +48,15 @@ export const getVehiculeDetailController = async (req: Request, res: Response) =
 export const getAllModelsController = async (req: Request, res: Response) => {
   try {
     const models = await getAllModelsService()
+    res.send(models)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllBrandsController = async (req: Request, res: Response) => {
+  try {
+    const models = await getAllBrandsAndModel()
     res.send(models)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -95,7 +104,6 @@ export const assignModelToBrandController = async (req: Request, res: Response) 
   }
 }
 
-
 export const assignVehiculeToClientController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
@@ -111,7 +119,6 @@ export const assignVehiculeToClientController = async (req: Request, res: Respon
     res.status(404).send(`${error}`)
   }
 }
-
 
 export const createNewModelController = async (req: Request, res: Response) => {
   try {

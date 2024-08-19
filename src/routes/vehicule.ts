@@ -5,6 +5,7 @@ import {
   createMultpleBrandsController,
   createNewModelController,
   createVehiculeController,
+  getAllBrandsController,
   getAllModelsController,
   getAllVehiculesController,
   getVehiculeDetailController
@@ -25,6 +26,7 @@ export const router = Router()
 router.get('/detail/:_id', ...getVehiculeDetailProps, getVehiculeDetailController)
 router.get('/models/',  getAllModelsController)
 router.get('/getAll', getAllVehiculesController)
+router.get('/getAll/brands',  getAllBrandsController)
 
 // POST Requests
 router.post('/createMultipleBrands', ...createMultipleBrandsProps, createMultpleBrandsController)
