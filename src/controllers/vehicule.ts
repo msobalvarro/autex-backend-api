@@ -127,8 +127,8 @@ export const createNewModelController = async (req: Request, res: Response) => {
       throw new CreateVehiculeModelError(String(message))
     }
 
-    const { description }: NewVehiculeModelProps = req.body
-    const newBrand = await CreateVehiculeModelService({ description })
+    const { description, brandId }: NewVehiculeModelProps = req.body
+    const newBrand = await CreateVehiculeModelService({ description, brandId })
     if (!newBrand) {
       throw new CreateVehiculeModelError('Brand cant be created')
     }

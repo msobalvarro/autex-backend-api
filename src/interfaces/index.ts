@@ -242,6 +242,7 @@ export interface ErrorResultProps {
 }
 
 export interface NewVehiculeModelProps {
+  brandId: Types.ObjectId
   description: string
 }
 

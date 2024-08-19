@@ -51,9 +51,12 @@ export const createMultipleBrandsProps = [
 
 export const createBrandProps = [
   check('description', 'Description is required').isString().exists(),
+  check('models', 'Model list is required').isArray(),
+  check('models.*.description', 'Description model is required').isString().exists(),
 ]
 
 export const createModelProps = [
+  check('brandId', 'Brand Id is required').isMongoId(),
   check('description', 'Description is required').isString().exists(),
 ]
 
