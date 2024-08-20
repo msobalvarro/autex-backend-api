@@ -1,3 +1,4 @@
+import { JwtPayload } from 'jsonwebtoken'
 import { SchemaDefinitionProperty, Types } from 'mongoose'
 
 export interface VehiculeBrands {
@@ -215,6 +216,7 @@ export interface UserUpdateProps {
 }
 
 export enum ErrosList {
+  AUTHORIZATION_ERROR = 'AUTHORIZATION_ERROR',
   CONNECTION_ERROR = 'CONNECTION_ERROR',
   PARAMS_VALIDATION_ERROR = 'PARAMS_VALIDATION_ERROR',
   CREATE_USER_ERROR = 'CREATE_USER_ERROR',
@@ -277,4 +279,14 @@ export interface CreateVehiculeProps {
 
 export interface DetailVehiculeProps {
   _id?: Types.ObjectId
+}
+
+export interface PropsAuth {
+  fileName: string
+  routeName: string
+  isProtected: boolean
+}
+
+export interface IGetUserAuthInfoRequest extends Request {
+  user: string | JwtPayload
 }

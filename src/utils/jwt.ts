@@ -9,4 +9,4 @@ export const createHash = (data: string): string => crypto.createHash('sha256').
 
 export const verifyToken = (jwt: string) => verify(jwt, SECRET_KEY)
 
-export const generateToken = (id: Types.ObjectId) => sign({ id }, SECRET_KEY)
+export const generateToken = (id: Types.ObjectId) => sign({ id }, SECRET_KEY, { expiresIn: '24h' })

@@ -141,3 +141,11 @@ export class CreateMultipleBrandsServiceError extends Error {
     this.message = message
   }
 }
+
+export class AuthorizationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.AUTHORIZATION_ERROR
+    this.message = message
+  }
+}
