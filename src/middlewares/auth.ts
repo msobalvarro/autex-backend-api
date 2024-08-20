@@ -6,15 +6,16 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   try {
     const token = req.headers['authorization']
 
-    if (!token) { 
+    if (!token) {
       throw new AuthorizationError('Token is required')
     }
 
     const bearer = token.split(' ')[1]
     const data = verifyToken(bearer)
-    console.log(data)
+
+    req.cookies = data
     next()
   } catch (error) {
-    res.status(401).send(error)
+    res.status(401).send(`${error}`)
   }
 }

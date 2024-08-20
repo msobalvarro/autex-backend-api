@@ -290,3 +290,7 @@ export interface PropsAuth {
 export interface IGetUserAuthInfoRequest extends Request {
   user: string | JwtPayload
 }
+
+export interface TokenIdProps {
+  id: string
+}
