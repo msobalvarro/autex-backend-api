@@ -134,3 +134,10 @@ export class CreateOrderServiceError extends Error {
   }
 }
 
+export class CreateMultipleBrandsServiceError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CERATE_MULTIPLE_BRANDS
+    this.message = message
+  }
+}

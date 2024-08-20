@@ -60,6 +60,12 @@ export const createModelProps = [
   check('description', 'Description is required').isString().exists(),
 ]
 
+export const createMultipleModelsProps = [
+  check('brandId', 'Brand Id is required').isMongoId(),
+  check('models', 'Model list is required').isArray(),
+  check('models.*.description', 'Description is required').isString().exists(),
+]
+
 export const createStatusProps = [
   check('description', 'Description is required').isString().isEmpty(),
 ]

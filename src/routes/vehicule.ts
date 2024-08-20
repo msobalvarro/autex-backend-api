@@ -2,6 +2,7 @@ import {
   assignModelToBrandController,
   assignVehiculeToClientController,
   createBrandController,
+  createMultipleModelsController,
   createMultpleBrandsController,
   createNewModelController,
   createVehiculeController,
@@ -16,6 +17,7 @@ import {
   createBrandProps,
   createModelProps,
   createMultipleBrandsProps,
+  createMultipleModelsProps,
   createVehiculeProps,
   getVehiculeDetailProps
 } from 'middlewares/params'
@@ -34,4 +36,5 @@ router.post('/assignModelToBrand', ...assignModelToBrandProps, assignModelToBran
 router.post('/assignVehiculeToClient', ...assignVehiculeToClientProps, assignVehiculeToClientController)
 router.post('/create/brand', ...createBrandProps, createBrandController)
 router.post('/create/model', ...createModelProps, createNewModelController)
+router.post('/create/multiple/models', ...createMultipleModelsProps, createMultipleModelsController)
 router.post('/create', ...createVehiculeProps, createVehiculeController)

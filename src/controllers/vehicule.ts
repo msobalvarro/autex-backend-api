@@ -1,4 +1,5 @@
 import {
+  CreateMultipleBrandsServiceError,
   CreateVehiculeBrandError,
   CreateVehiculeModelError,
   GetVehiculeDetailError,
@@ -9,6 +10,7 @@ import {
   AssignVehiculeToClientProps,
   CreateVehiculeProps,
   DetailVehiculeProps,
+  NewMultipleModelsProps,
   NewVehiculeModelProps,
   VehiculeBrands,
   VehiculeNewModelToBrandProps
@@ -18,7 +20,7 @@ import {
   createNewBrand
 } from 'services/vehicule/createVehiculeBrand'
 import { CreateVehiculeModelService } from 'services/vehicule/createVehiculeModel'
-import { addModelToBrand } from 'services/vehicule/updateVehiculeBrand'
+import { addModelToBrand, addMultipleModels } from 'services/vehicule/updateVehiculeBrand'
 import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
@@ -158,6 +160,21 @@ export const getAllVehiculesController = async (req: Request, res: Response) => 
   try {
     const data = await getAllVehicles()
     res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const createMultipleModelsController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    const params: NewMultipleModelsProps = req.body
+    if (error) {
+      throw new CreateMultipleBrandsServiceError(String(message))
+    }
+
+    const response = await addMultipleModels(params)
+    res.send(response)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

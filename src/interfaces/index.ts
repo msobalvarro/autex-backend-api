@@ -229,6 +229,7 @@ export enum ErrosList {
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
   GET_VEHICULE_DETAIL_ERROR = 'GET_VEHICULE_DETAIL_ERROR',
   CREATE_ORDER_SERVICE_ERROR = 'CREATE_ORDER_SERVICE_ERROR',
+  CERATE_MULTIPLE_BRANDS = 'CERATE_MULTIPLE_BRANDS',
 }
 
 export interface GenerateErrorProps {
@@ -249,6 +250,12 @@ export interface NewVehiculeModelProps {
 export interface VehiculeNewModelToBrandProps {
   brandId: Types.ObjectId
   modelId: Types.ObjectId
+}
+
+
+export interface NewMultipleModelsProps {
+  brandId: Types.ObjectId
+  models: VehiculeModel[]
 }
 
 export interface AssignVehiculeToClientProps {

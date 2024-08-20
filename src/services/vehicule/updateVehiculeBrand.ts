@@ -1,5 +1,5 @@
 import { UpdateVehiculeBrandError } from 'errors'
-import { VehiculeNewModelToBrandProps } from 'interfaces'
+import { NewMultipleModelsProps, VehiculeNewModelToBrandProps } from 'interfaces'
 import { vehiculeBrandModel, vehiculeCustomModel } from 'models/vehicule'
 
 export const addModelToBrand = async ({brandId, modelId}: VehiculeNewModelToBrandProps) => {
@@ -18,6 +18,21 @@ export const addModelToBrand = async ({brandId, modelId}: VehiculeNewModelToBran
     {
       $push: {
         models: model
+      }
+    }
+  )
+
+  return response
+}
+
+export const addMultipleModels = async (props: NewMultipleModelsProps) => {
+  const models = await vehiculeCustomModel.insertMany(props.models)
+
+  const response = await vehiculeBrandModel.updateOne(
+    { _id: props.brandId },
+    {
+      $push: {
+        models: models
       }
     }
   )
