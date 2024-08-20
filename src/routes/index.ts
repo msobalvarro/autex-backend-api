@@ -1,45 +1,43 @@
 import { ImportModulesErrors } from 'errors'
 import { Router } from 'express'
 import { readdirSync } from 'fs'
-import { PropsAuth } from 'interfaces'
 import { authMiddleware } from 'middlewares/auth'
 
-export const router = Router()
-const FileName = (file: string): PropsAuth => {
-  const PRIVATE = '[private]'
-  const isProtected = file.search(PRIVATE) > -1
-  const fileName = file.replace('.ts', '')
-  
-  console.log(file.search(PRIVATE), fileName)
-  return {
-    isProtected,
-    fileName: fileName,
-    routeName: isProtected ? fileName.replace(PRIVATE, '').trim() : fileName,
-  }
-}
+const PRIVATE = 'private'
+const PUBLIC = 'public'
+
 const pathRoute = `${__dirname}`
-const allRoutes = readdirSync(pathRoute)
-const totalRotes = allRoutes.length - 1 // TODO: -1 because index is not allowed
+const privateRoutes = readdirSync(`${pathRoute}/${PRIVATE}`)
+const publicRoutes = readdirSync(`${pathRoute}/${PUBLIC}`)
+const totalRotes = (privateRoutes.length + publicRoutes.length) - 1 // TODO: -1 because index is not allowed
 let totalAdded = 0
 
-allRoutes.map(async fileName => {
+export const router = Router()
+const FileName = (file: string): string => file.replace('.ts', '')
+
+const mapFiles = async (fileName: string, path: string) => {
   const routeFile = FileName(fileName)
   let success = false
-  if (routeFile.fileName !== 'index') {
+
+  if (routeFile !== 'index') {
     try {
-      const module = await import(`./${routeFile.fileName}`)
-      if (routeFile.isProtected) {
-        router.use(`/${routeFile.routeName}`, authMiddleware, module.router)
+      const module = await import(`./${path}/${routeFile}`)
+      
+      if (path === PRIVATE) {
+        router.use(`/${routeFile}`, authMiddleware, module.router)
       } else {
-        router.use(`/${routeFile.routeName}`, module.router)
+        router.use(`/${routeFile}`, module.router)
       }
 
       totalAdded++
       success = true
     } catch (error) {
-      throw new ImportModulesErrors(`${error} - ${routeFile.fileName} is not added`)
+      throw new ImportModulesErrors(`${error} - ${routeFile} is not added`)
     } finally {
-      console.log(`[${totalAdded}/${totalRotes}] ${routeFile.fileName} (${success ? 'added' : 'not added'})`)
+      console.log(`[${totalAdded}/${totalRotes}] ${routeFile} (${success ? 'added' : 'not added'})`)
     }
   }
-})
+}
+
+privateRoutes.map(e => mapFiles(e, PRIVATE))
+publicRoutes.map(e => mapFiles(e, PUBLIC))
