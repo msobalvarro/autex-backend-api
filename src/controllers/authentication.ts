@@ -14,10 +14,14 @@ export const loginController = async (req: Request, res: Response) => {
     const data: UserAuthenticationProps = req.body
     const response: UserAuthenticationResponse = await authenticateUserService(data)
 
-    res.cookie('token', response.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production'
-    }).send(response)
+    res.cookie(
+      'token',
+      response.token,
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production'
+      }
+    ).send(response)
   } catch (error) {
     console.log(error)
     res.status(500).send(`${error}`)

@@ -15,6 +15,7 @@ export const authenticateUserService = async ({ email, password }: UserAuthentic
   return {
     _id: user._id,
     email: user.email,
-    token
+    name: user.name,
+    token,
   }
 }
