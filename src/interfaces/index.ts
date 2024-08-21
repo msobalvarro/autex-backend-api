@@ -173,6 +173,7 @@ export interface DiagnosticProps extends DiagnosticPropierties {
 }
 
 export interface EstimatePropierties {
+  estimateNumber?: number
   vehicule: Vehicule
   client: Client
   activitiesToDo: ActivityWithCostToDoItemEstimate[]
@@ -196,6 +197,7 @@ export interface OrderServicePropierties {
   preliminarManagment: PreliminaryManagementProperties
   typesActivitiesToDo: AcivitiesProperties
   serviceType: ServicesTypesToDoOrderProperties
+  estimatedCosts: EstimatePropierties
 }
 
 export interface NewOrderServiceProps extends OrderServicePropierties {

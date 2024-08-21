@@ -7,20 +7,6 @@ import {
   ServicesTypesToDoOrderProperties
 } from 'interfaces'
 
-const activitySchema = new Schema<AcivitiesProperties>(
-  {
-    isMaintenance: Boolean,
-    isMinorMantenance: Boolean,
-    isService: Boolean,
-    isCorrective: Boolean,
-    isPredictive: Boolean,
-    isPreventive: Boolean,
-  },
-  {
-    timestamps: false,
-    versionKey: false,
-  }
-)
 
 const atentionType = new Schema<AttentionsProperties>(
   {
@@ -50,21 +36,6 @@ const preliminarManagment = new Schema<PreliminaryManagementProperties>(
   },
 )
 
-const typesActivitiesToDo = new Schema<AcivitiesProperties>(
-  {
-    isCorrective: Boolean,
-    isMaintenance: Boolean,
-    isMinorMantenance: Boolean,
-    isPredictive: Boolean,
-    isPreventive: Boolean,
-    isService: Boolean,
-  },
-  {
-    timestamps: false,
-    versionKey: false,
-  },
-)
-
 const serviceType = new Schema<ServicesTypesToDoOrderProperties>(
   {
     isElectrict: Boolean,
@@ -80,6 +51,21 @@ const serviceType = new Schema<ServicesTypesToDoOrderProperties>(
   },
 )
 
+const typesActivitiesToDo = new Schema<AcivitiesProperties>(
+  {
+    isCorrective: Boolean,
+    isMaintenance: Boolean,
+    isMinorMantenance: Boolean,
+    isPredictive: Boolean,
+    isPreventive: Boolean,
+    isService: Boolean,
+  },
+  {
+    timestamps: false,
+    versionKey: false,
+  },
+)
+
 const orderService = new Schema<OrderServicePropierties>(
   {
     attentionType: { type: Types.ObjectId, ref: 'atentionsTypes' },
@@ -87,6 +73,7 @@ const orderService = new Schema<OrderServicePropierties>(
     preliminarManagment: { type: Types.ObjectId, ref: 'preliminarManagmentOrder' },
     serviceType: { type: Types.ObjectId, ref: 'serviceType' },
     typesActivitiesToDo: { type: Types.ObjectId, ref: 'typesActivitiesToDo' },
+    estimatedCosts: { type: Types.ObjectId, ref: 'estimatedCosts' }
   },
   {
     timestamps: true,
@@ -94,7 +81,6 @@ const orderService = new Schema<OrderServicePropierties>(
   }
 )
 
-export const ActivitiesModel = model('activities', activitySchema)
 export const AtentionsTypesModel = model('atentionsTypes', atentionType)
 export const PreliminarManagmentModel = model('preliminarManagmentOrder', preliminarManagment)
 export const TypesActivitiesToDoModel = model('typesActivitiesToDo', typesActivitiesToDo)
