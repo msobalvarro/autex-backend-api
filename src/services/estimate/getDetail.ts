@@ -5,6 +5,18 @@ import { EstimatedCostsModel } from 'models/estimate'
 export const getDetailEstimateById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimatedCostsModel.findById(id)
     .populate('activitiesToDo')
+    .populate('client')
+    .populate({
+      path: 'vehicule',
+      populate: [
+        {
+          path: 'model',
+        },
+        {
+          path: 'brand',
+        }
+      ]
+    })
     .populate('requiredParts')
     .populate('otherRequirements')
 
