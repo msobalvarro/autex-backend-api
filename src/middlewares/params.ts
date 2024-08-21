@@ -81,6 +81,7 @@ export const assignVehiculeToClientProps = [
 ]
 
 export const createVehiculeProps = [
+  check('clientId', 'Model Id is required').isMongoId(),
   check('modelId', 'Model Id is required').isMongoId(),
   check('brandId', 'Brand Id is required').isMongoId(),
   check('color', 'Color is required').isString(),

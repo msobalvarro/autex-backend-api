@@ -267,6 +267,7 @@ export interface AssignVehiculeToClientProps {
 }
 
 export interface CreateVehiculeProps {
+  clientId: Types.ObjectId
   modelId: Types.ObjectId
   brandId: Types.ObjectId
   type: string

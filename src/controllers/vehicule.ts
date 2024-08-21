@@ -150,6 +150,12 @@ export const createVehiculeController = async (req: Request, res: Response) => {
 
     const params: CreateVehiculeProps = req.body
     const vehicule = await createVehiculeService(params)
+
+    await assignVehiculeToClientService({
+      clientId: params.clientId,
+      vehiculeId: vehicule._id
+    })
+
     res.send(vehicule)
   } catch (error) {
     res.status(500).send(`${error}`)
