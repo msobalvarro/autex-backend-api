@@ -173,6 +173,7 @@ export interface DiagnosticProps extends DiagnosticPropierties {
 }
 
 export interface EstimatePropierties {
+  _id: Types.ObjectId,
   estimateNumber?: number
   vehicule: Vehicule
   client: Client
@@ -183,6 +184,10 @@ export interface EstimatePropierties {
   partsCost: number
   inputCost: number
   total: number
+}
+
+export interface EstimateWithOrderPropierties extends EstimatePropierties {
+  order: OrderServicePropierties | null
 }
 
 export interface EstimateParamsPropierties extends EstimatePropierties {
