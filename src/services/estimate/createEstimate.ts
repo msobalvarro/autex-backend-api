@@ -44,7 +44,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
     requiredParts,
     partsCost,
     total,
-    vehicule
+    vehicule,
   })
 
   return estimateCreated

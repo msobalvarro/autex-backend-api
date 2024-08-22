@@ -198,6 +198,7 @@ export interface OrderServicePropierties {
   typesActivitiesToDo: AcivitiesProperties
   serviceType: ServicesTypesToDoOrderProperties
   estimatedCosts: EstimatePropierties
+  status: SchemaDefinitionProperty<'pending' | 'process' | 'finished' | 'canceled'>
 }
 
 export interface NewOrderServiceProps extends OrderServicePropierties {

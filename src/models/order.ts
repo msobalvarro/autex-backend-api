@@ -73,7 +73,13 @@ const orderService = new Schema<OrderServicePropierties>(
     preliminarManagment: { type: Types.ObjectId, ref: 'preliminarManagmentOrder' },
     serviceType: { type: Types.ObjectId, ref: 'serviceType' },
     typesActivitiesToDo: { type: Types.ObjectId, ref: 'typesActivitiesToDo' },
-    estimatedCosts: { type: Types.ObjectId, ref: 'estimatedCosts' }
+    estimatedCosts: { type: Types.ObjectId, ref: 'estimatedCosts' },
+    status: {
+      type: String,
+      enum: ['pending', 'process', 'finished', 'canceled'],
+      default: 'pending',
+      required: true
+    },
   },
   {
     timestamps: true,
