@@ -1,20 +1,52 @@
-import { OrderServicePropierties } from 'interfaces';
-import { OrderServiceModel } from 'models/order';
-import { Types } from 'mongoose';
+import { OrderServicePropierties } from 'interfaces'
+import { OrderServiceModel } from 'models/order'
+import { Types } from 'mongoose'
 
-export const getOrderByIdService = (id: Types.ObjectId): Promise<OrderServicePropierties | null> => {
-  const order = OrderServiceModel.findById(id)
+export const getAllOrders = async (): Promise<OrderServicePropierties[]> => {
+  const order = await OrderServiceModel.find()
     .populate('attentionType')
-    .populate('estimateProps')
+    .populate({
+      path: 'estimateProps',
+      populate: [{
+        path: 'vehicule',
+        populate: [{ path: 'brand' }, { path: 'model' }]
+      }]
+    })
     .populate('preliminarManagment')
     .populate('serviceType')
     .populate('typesActivitiesToDo')
   return order
 }
 
+export const getOrderByIdService = async (id: Types.ObjectId): Promise<OrderServicePropierties | null> => {
+  const order = await OrderServiceModel.findById(id)
+    .populate('attentionType')
+    .populate({
+      path: 'estimateProps',
+      populate: [
+        { path: 'client', select: '-vehicules' },
+        {
+          path: 'vehicule',
+          populate: [
+            { path: 'brand', select: '-models' },
+            { path: 'model', select: '-vehicules' },
+          ]
+        },
+        { path: 'activitiesToDo' },
+        { path: 'requiredParts' },
+        { path: 'otherRequirements' },
+      ]
+    })
+    .populate('preliminarManagment')
+    .populate('serviceType')
+    .populate('typesActivitiesToDo')
 
-export const getOrderByEstimateId = (id: Types.ObjectId): Promise<OrderServicePropierties | null> => {
-  const order = OrderServiceModel.findOne({ estimateProps: id })
+  return order
+}
+
+
+export const getOrderByEstimateId = async (id: Types.ObjectId): Promise<OrderServicePropierties | null> => {
+  const order = await OrderServiceModel.findOne({ estimateProps: id })
     .populate('attentionType')
     .populate('preliminarManagment')
     .populate('serviceType')

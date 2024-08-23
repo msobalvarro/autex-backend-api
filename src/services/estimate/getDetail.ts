@@ -1,7 +1,6 @@
 import { Types } from 'mongoose'
-import { EstimatePropierties, EstimateWithOrderPropierties } from 'interfaces'
+import { EstimatePropierties } from 'interfaces'
 import { EstimatedCostsModel } from 'models/estimate'
-import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const getDetailEstimateById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimatedCostsModel.findById(id)
