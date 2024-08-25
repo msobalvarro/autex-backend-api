@@ -174,3 +174,16 @@ export const createOrderProps = [
   check('serviceType.isMultiple', 'Service type multiple prop is not valid').isBoolean(),
   check('serviceType.isExternal', 'Service type externa prop is not valid').isBoolean(),
 ]
+
+export const checkUpdateListOrder = [
+  check('id', 'Order ID is required').isMongoId(),
+  check('list', 'list prop is incorrect').isArray(),
+]
+
+export const updateResumeListOrder = [
+  check('id', 'Order ID is required').isMongoId(),
+    check('list.*.description', 'Activity list description prop is incorrect').isString(),
+    check('list.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
+    check('list.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
+    check('list.*.total', 'Activity total prop is incorrect').isFloat(),
+]

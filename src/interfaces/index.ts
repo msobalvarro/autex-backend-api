@@ -195,7 +195,7 @@ export interface EstimateParamsPropierties extends EstimatePropierties {
   clientId: Types.ObjectId
 }
 
-export interface OrderServicePropierties { 
+export interface OrderServicePropierties {
   _id?: Types.ObjectId
   attentionType: AttentionsProperties
   estimateProps: EstimatePropierties
@@ -203,6 +203,9 @@ export interface OrderServicePropierties {
   typesActivitiesToDo: AcivitiesProperties
   serviceType: ServicesTypesToDoOrderProperties
   estimatedCosts: EstimatePropierties
+  resumeService: ActivityWithCostToDoItemEstimate[]
+  findings: string[]
+  observations: string[]
   status: SchemaDefinitionProperty<'pending' | 'process' | 'finished' | 'canceled'>
 }
 
@@ -303,4 +306,9 @@ export interface IGetUserAuthInfoRequest extends Request {
 
 export interface TokenIdProps {
   id: string
+}
+
+export interface ListItemOrderFieldsProps {
+  id: Types.ObjectId
+  list: string[]
 }
