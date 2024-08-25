@@ -182,8 +182,8 @@ export const checkUpdateListOrder = [
 
 export const updateResumeListOrder = [
   check('id', 'Order ID is required').isMongoId(),
-    check('list.*.description', 'Activity list description prop is incorrect').isString(),
-    check('list.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
-    check('list.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
-    check('list.*.total', 'Activity total prop is incorrect').isFloat(),
+  check('list.*.description', 'Activity list description prop is incorrect').isString(),
+  check('list.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
+  check('list.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
+  check('list.*.total', 'Activity total prop is incorrect').isFloat(),
 ]

@@ -1,9 +1,10 @@
 import { CreateOrderServiceError } from 'errors'
 import { Request, Response } from 'express'
-import { ListItemOrderFieldsProps, NewOrderServiceProps } from 'interfaces'
+import { ActivityWithCostToDoItemEstimate, ListItemOrderFieldsProps, NewOrderServiceProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createOrder } from 'services/order/createOrder'
+import { createResumeList } from 'services/order/createResume'
 import { updateFindingsListService } from 'services/order/findingsListUpdate'
 import { getAllOrders, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
@@ -55,9 +56,17 @@ export const UpdateFindingsListController = async (req: Request, res: Response) 
 export const UpdateObservationListController = async (req: Request, res: Response) => {
   try {
     const params: ListItemOrderFieldsProps = req.body
-
     await updateObservationListService(params)
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
 
+export const CreateResumeListController = async (req: Request, res: Response) => {
+  try {
+    const list: ActivityWithCostToDoItemEstimate[] = req.body
+    await createResumeList(list)
     res.send(true)
   } catch (error) {
     res.status(500).send(`${error}`)
