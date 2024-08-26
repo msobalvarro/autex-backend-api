@@ -50,6 +50,10 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'
     }],
+    externalActivities: [{
+      type: Types.ObjectId,
+      ref: 'itemWithCostEstimatedField'
+    }],
     inputCost: Number,
     laborCost: Number,
     partsCost: Number,

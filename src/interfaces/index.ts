@@ -180,6 +180,7 @@ export interface EstimatePropierties {
   activitiesToDo: ActivityWithCostToDoItemEstimate[]
   requiredParts: ActivityWithCostToDoItemEstimate[]
   otherRequirements: ActivityWithCostToDoItemEstimate[]
+  externalActivities: ActivityWithCostToDoItemEstimate[]
   laborCost: number
   partsCost: number
   inputCost: number
