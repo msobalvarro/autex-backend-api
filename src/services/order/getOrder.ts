@@ -40,10 +40,10 @@ export const getOrderByIdService = async (id: Types.ObjectId): Promise<OrderServ
     .populate('preliminarManagment')
     .populate('serviceType')
     .populate('typesActivitiesToDo')
+    .populate('additionalTask')
 
   return order
 }
-
 
 export const getOrderByEstimateId = async (id: Types.ObjectId): Promise<OrderServicePropierties | null> => {
   const order = await OrderServiceModel.findOne({ estimateProps: id })

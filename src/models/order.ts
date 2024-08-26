@@ -74,7 +74,8 @@ const orderService = new Schema<OrderServicePropierties>(
     serviceType: { type: Types.ObjectId, ref: 'serviceType' },
     typesActivitiesToDo: { type: Types.ObjectId, ref: 'typesActivitiesToDo' },
     estimatedCosts: { type: Types.ObjectId, ref: 'estimatedCosts' },
-    resumeService: [{ type: Types.ObjectId, ref: 'itemWithCostEstimatedField' }],
+    additionalTask: [{ type: Types.ObjectId, ref: 'itemWithCostEstimatedField' }],
+    resume: String,
     findings: [String],
     observations: [String],
     status: {

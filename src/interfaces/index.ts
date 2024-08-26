@@ -203,9 +203,10 @@ export interface OrderServicePropierties {
   typesActivitiesToDo: AcivitiesProperties
   serviceType: ServicesTypesToDoOrderProperties
   estimatedCosts: EstimatePropierties
-  resumeService: ActivityWithCostToDoItemEstimate[]
+  additionalTask: ActivityWithCostToDoItemEstimate[]
   findings: string[]
   observations: string[]
+  resume: string
   status: SchemaDefinitionProperty<'pending' | 'process' | 'finished' | 'canceled'>
 }
 
@@ -311,4 +312,15 @@ export interface TokenIdProps {
 export interface ListItemOrderFieldsProps {
   id: Types.ObjectId
   list: string[]
+}
+
+export interface UpdateResumeProps {
+  id: Types.ObjectId
+  description: string[]
+}
+
+
+export interface ListItemOrderResumeFieldsProps {
+  id: Types.ObjectId
+  list: ActivityWithCostToDoItemEstimate[]
 }

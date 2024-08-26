@@ -1,13 +1,19 @@
 import { CreateOrderServiceError } from 'errors'
 import { Request, Response } from 'express'
-import { ActivityWithCostToDoItemEstimate, ListItemOrderFieldsProps, NewOrderServiceProps } from 'interfaces'
+import {
+  ListItemOrderFieldsProps,
+  ListItemOrderResumeFieldsProps,
+  NewOrderServiceProps,
+  UpdateResumeProps
+} from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createOrder } from 'services/order/createOrder'
-import { createResumeList } from 'services/order/createResume'
+import { createOrAddAdditionalTask } from 'services/order/createAdditionalTask'
 import { updateFindingsListService } from 'services/order/findingsListUpdate'
 import { getAllOrders, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
+import { updateResumeService } from 'services/order/updateResume'
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
@@ -63,11 +69,21 @@ export const UpdateObservationListController = async (req: Request, res: Respons
   }
 }
 
-export const CreateResumeListController = async (req: Request, res: Response) => {
+export const UpdateResumeController = async (req: Request, res: Response) => {
   try {
-    const list: ActivityWithCostToDoItemEstimate[] = req.body
-    await createResumeList(list)
+    const params: UpdateResumeProps = req.body
+    await updateResumeService(params)
     res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const CreateAdditionalTaskListController = async (req: Request, res: Response) => {
+  try {
+    const props: ListItemOrderResumeFieldsProps = req.body
+    const response = await createOrAddAdditionalTask(props.list, props.id)
+    res.send(response)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

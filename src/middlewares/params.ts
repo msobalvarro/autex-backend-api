@@ -175,12 +175,17 @@ export const createOrderProps = [
   check('serviceType.isExternal', 'Service type externa prop is not valid').isBoolean(),
 ]
 
+export const checkUpdateResume = [
+  check('id', 'Order ID is required').isMongoId(),
+  check('description', 'description prop is incorrect').isString(),
+]
+
 export const checkUpdateListOrder = [
   check('id', 'Order ID is required').isMongoId(),
   check('list', 'list prop is incorrect').isArray(),
 ]
 
-export const updateResumeListOrder = [
+export const updateAdditionalTaskListOrder = [
   check('id', 'Order ID is required').isMongoId(),
   check('list.*.description', 'Activity list description prop is incorrect').isString(),
   check('list.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
