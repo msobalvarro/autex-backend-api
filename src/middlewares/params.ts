@@ -146,6 +146,7 @@ export const createEstimateProps = [
   check('externalActivities.*.total', 'Other required total prop is incorrect').isFloat(),
   check('partsCost', 'Part cost prop is incorrect').isNumeric(),
   check('inputCost', 'Input cost prop is incorrect').isNumeric(),
+  check('externalCost', 'Input cost prop is incorrect').isNumeric(),
   check('total', 'Total cost prop is incorrect').isNumeric(),
   check('traveled.distance', 'distance prop is not valid').isNumeric(),
   check('traveled.type', 'distance traveled type is incorrect').isIn(['km', 'miles']),

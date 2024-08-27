@@ -157,6 +157,7 @@ const DiagnosticReport = new Schema<DiagnosticPropierties>(
       ref: 'activityTypeDiagnostic',
       required: true,
     },
+    traveled: { type: Types.ObjectId, ref: 'vehiculeDistance' },
   },
   {
     timestamps: true,

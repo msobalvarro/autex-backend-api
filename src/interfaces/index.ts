@@ -170,6 +170,7 @@ export interface DiagnosticPropierties {
   possibleFailures: PossibleFailuresDiagnosticPropierties
   recommendations: RecommendationsDiagnosticPropierties
   activityType: ActivityTypesDiagnosticPropierties
+  traveled: DistanceTraveledPropierties
 }
 
 export interface DiagnosticProps extends DiagnosticPropierties {
@@ -191,6 +192,7 @@ export interface EstimatePropierties {
   laborCost: number
   partsCost: number
   inputCost: number
+  externalCost: number
   total: number
 }
 

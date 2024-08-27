@@ -6,6 +6,7 @@ export const getDetailEstimateById = async (id: Types.ObjectId): Promise<Estimat
   const dataResult = await EstimatedCostsModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
+    .populate('traveled')
     .populate({
       path: 'vehicule',
       populate: [

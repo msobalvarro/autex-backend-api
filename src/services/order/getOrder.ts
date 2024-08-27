@@ -42,6 +42,7 @@ export const getOrderByIdService = async (id: Types.ObjectId): Promise<OrderServ
     .populate('serviceType')
     .populate('typesActivitiesToDo')
     .populate('additionalTask')
+    .populate('traveled')
 
   return order
 }
