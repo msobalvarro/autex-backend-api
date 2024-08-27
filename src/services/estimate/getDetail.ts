@@ -19,12 +19,12 @@ export const getDetailEstimateById = async (id: Types.ObjectId): Promise<Estimat
     })
     .populate('requiredParts')
     .populate('otherRequirements')
+    .populate('externalActivities')
 
   return dataResult
 }
 
 export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
-
   const dataResult = await EstimatedCostsModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
@@ -41,6 +41,7 @@ export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promis
     })
     .populate('requiredParts')
     .populate('otherRequirements')
+    .populate('externalActivities')
 
   return dataResult
 }
@@ -49,5 +50,6 @@ export const getAllEstimatesService = async (): Promise<EstimatePropierties[]> =
   const dataResult = await EstimatedCostsModel.find()
     .populate('client')
     .populate('vehicule')
+    .sort({ createdAt: -1 })
   return dataResult
 }

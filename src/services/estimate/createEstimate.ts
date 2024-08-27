@@ -4,6 +4,7 @@ import { EstimateParamsPropierties, EstimatePropierties } from 'interfaces'
 import { getClientByIdService } from 'services/client/getClient'
 import { getVehiculeById } from 'services/vehicule/getVehicule'
 import { EstimatedCostsModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
+import { vehiculeDistanceModel } from 'models/vehicule'
 
 export const createEstimateService = async (estimate: EstimateParamsPropierties): Promise<EstimatePropierties> => {
   const session = await mongoose.startSession()
@@ -23,6 +24,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
     const requiredParts = await estimate.requiredParts.map(a => new ItemWithCostEstimatedFieldModel(a))
     const otherRequirements = await estimate.otherRequirements.map(a => new ItemWithCostEstimatedFieldModel(a))
     const externalActivities = await estimate.externalActivities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const traveled = new vehiculeDistanceModel(estimate.traveled)
 
     const { inputCost, laborCost, partsCost, total } = estimate
 
@@ -37,12 +39,14 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
       total,
       vehicule,
       externalActivities,
+      traveled,
     })
 
     activitiesToDo.map(e => e.save({ session }))
     requiredParts.map(e => e.save({ session }))
     otherRequirements.map(e => e.save({ session }))
     externalActivities.map(e => e.save({ session }))
+    traveled.save({ session })
     estimateCreated.save({ session })
 
     await session.commitTransaction()

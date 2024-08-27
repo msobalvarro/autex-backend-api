@@ -3,7 +3,7 @@ import { ClientModel } from 'models/client'
 import { Types } from 'mongoose'
 
 export const getAllClients = async (): Promise<Client[]> => {
-  const clients: Client[] = await ClientModel.find()
+  const clients: Client[] = await ClientModel.find().sort({ createdAt: -1 })
   return clients
 }
 
@@ -20,6 +20,7 @@ export const getAllClientsWithCars = async (): Promise<Client[]> => {
         }
       ]
     })
+    .sort({ createdAt: -1 })
   return clients
 }
 

@@ -1,5 +1,5 @@
 import { Schema, Types, model } from 'mongoose'
-import { Vehicule, VehiculeBrands, VehiculeModel } from '../interfaces'
+import { DistanceTraveledPropierties, Vehicule, VehiculeBrands, VehiculeModel } from '../interfaces'
 
 const vehiculeSchema = new Schema<Vehicule>(
   {
@@ -83,6 +83,26 @@ const vehiculeModelSchema = new Schema<VehiculeModel>(
   }
 )
 
+const distanceTraveled = new Schema<DistanceTraveledPropierties>(
+  {
+    distance: {
+      type: Number,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: ['km', 'miles'],
+      default: 'km',
+      required: true,
+    },
+  },
+  {
+    timestamps: false,
+    versionKey: false,
+  }
+)
+
 export const vehiculeModel = model('vehicule', vehiculeSchema)
 export const vehiculeBrandModel = model('vehiculeBrand', vehiculeBrandSchema)
+export const vehiculeDistanceModel = model('vehiculeDistance', distanceTraveled)
 export const vehiculeCustomModel = model('vehiculeModel', vehiculeModelSchema)

@@ -15,6 +15,7 @@ export const getAllOrders = async (): Promise<OrderServicePropierties[]> => {
     .populate('preliminarManagment')
     .populate('serviceType')
     .populate('typesActivitiesToDo')
+    .sort({ createdAt: -1 })
   return order
 }
 

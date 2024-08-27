@@ -147,6 +147,8 @@ export const createEstimateProps = [
   check('partsCost', 'Part cost prop is incorrect').isNumeric(),
   check('inputCost', 'Input cost prop is incorrect').isNumeric(),
   check('total', 'Total cost prop is incorrect').isNumeric(),
+  check('traveled.distance', 'distance prop is not valid').isNumeric(),
+  check('traveled.type', 'distance traveled type is incorrect').isIn(['km', 'miles']),
 ]
 
 export const createOrderProps = [
@@ -173,6 +175,8 @@ export const createOrderProps = [
   check('serviceType.isElectronic', 'Service type electronic prop is not valid').isBoolean(),
   check('serviceType.isMultiple', 'Service type multiple prop is not valid').isBoolean(),
   check('serviceType.isExternal', 'Service type externa prop is not valid').isBoolean(),
+  check('traveled.distance', 'distance prop is not valid').isNumeric(),
+  check('traveled.type', 'distance traveled type is incorrect').isIn(['km', 'miles']),
 ]
 
 export const checkUpdateResume = [

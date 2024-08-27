@@ -3,7 +3,6 @@ import {
   ActivityWithCostToDoItemEstimate,
   EstimatePropierties
 } from 'interfaces'
-import { AutoIncrementSimple } from '@typegoose/auto-increment'
 
 const itemWithCostEstimatedField = new Schema<ActivityWithCostToDoItemEstimate>(
   {
@@ -29,7 +28,6 @@ const itemWithCostEstimatedField = new Schema<ActivityWithCostToDoItemEstimate>(
 
 const estimatedCosts = new Schema<EstimatePropierties>(
   {
-    estimateNumber: Number,
     client: {
       type: Types.ObjectId,
       ref: 'client'
@@ -54,6 +52,7 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'
     }],
+    traveled: { type: Types.ObjectId, ref: 'vehiculeDistance' },
     inputCost: Number,
     laborCost: Number,
     partsCost: Number,
@@ -64,8 +63,6 @@ const estimatedCosts = new Schema<EstimatePropierties>(
     versionKey: false,
   }
 )
-
-estimatedCosts.plugin(AutoIncrementSimple, [{ field: 'estimateNumber' }])
 
 export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField', itemWithCostEstimatedField)
 export const EstimatedCostsModel = model('estimatedCosts', estimatedCosts)

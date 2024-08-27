@@ -12,6 +12,12 @@ export interface VehiculeModel {
   description: string
 }
 
+export interface DistanceTraveledPropierties {
+  _id: Types.ObjectId
+  distance: number
+  type: SchemaDefinitionProperty<'km' | 'miles'>
+}
+
 export interface Status {
   _id: Types.ObjectId
   description: string
@@ -181,6 +187,7 @@ export interface EstimatePropierties {
   requiredParts: ActivityWithCostToDoItemEstimate[]
   otherRequirements: ActivityWithCostToDoItemEstimate[]
   externalActivities: ActivityWithCostToDoItemEstimate[]
+  traveled: DistanceTraveledPropierties
   laborCost: number
   partsCost: number
   inputCost: number
@@ -194,6 +201,7 @@ export interface EstimateWithOrderPropierties extends EstimatePropierties {
 export interface EstimateParamsPropierties extends EstimatePropierties {
   vehiculeId: Types.ObjectId
   clientId: Types.ObjectId
+  traveled: DistanceTraveledPropierties
 }
 
 export interface OrderServicePropierties {
@@ -203,8 +211,8 @@ export interface OrderServicePropierties {
   preliminarManagment: PreliminaryManagementProperties
   typesActivitiesToDo: AcivitiesProperties
   serviceType: ServicesTypesToDoOrderProperties
-  estimatedCosts: EstimatePropierties
   additionalTask: ActivityWithCostToDoItemEstimate[]
+  traveled: DistanceTraveledPropierties
   findings: string[]
   observations: string[]
   resume: string
