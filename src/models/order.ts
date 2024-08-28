@@ -81,7 +81,7 @@ const orderService = new Schema<OrderServicePropierties>(
     status: {
       type: String,
       enum: ['pending', 'process', 'finished', 'canceled'],
-      default: 'pending',
+      default: 'process',
       required: true
     },
   },

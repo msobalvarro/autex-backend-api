@@ -335,3 +335,7 @@ export interface ListItemOrderResumeFieldsProps {
   id: Types.ObjectId
   list: ActivityWithCostToDoItemEstimate[]
 }
+
+export interface UpdateServiceProps {
+  id: Types.ObjectId
+}

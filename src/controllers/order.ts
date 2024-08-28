@@ -4,7 +4,8 @@ import {
   ListItemOrderFieldsProps,
   ListItemOrderResumeFieldsProps,
   NewOrderServiceProps,
-  UpdateResumeProps
+  UpdateResumeProps,
+  UpdateServiceProps
 } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
@@ -14,6 +15,7 @@ import { updateFindingsListService } from 'services/order/findingsListUpdate'
 import { getAllOrders, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
+import { closeOrderService } from 'services/order/updateStatusOrder'
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
@@ -84,6 +86,16 @@ export const CreateAdditionalTaskListController = async (req: Request, res: Resp
     const props: ListItemOrderResumeFieldsProps = req.body
     const response = await createOrAddAdditionalTask(props.list, props.id)
     res.send(response)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const CloseOrderController = async (req: Request, res: Response) => {
+  try {
+    const { id }: UpdateServiceProps = req.body
+    await closeOrderService(id)
+    res.send(true)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

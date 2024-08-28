@@ -1,5 +1,5 @@
-import { CreateAdditionalTaskListController, UpdateFindingsListController, UpdateObservationListController, UpdateResumeController, createOrderController, getAllOrdersController, getDetailByIdController } from 'controllers/order'
-import { checkUpdateListOrder, checkUpdateResume, createOrderProps, getDetailIdProp, updateAdditionalTaskListOrder } from 'middlewares/params'
+import { CloseOrderController, CreateAdditionalTaskListController, UpdateFindingsListController, UpdateObservationListController, UpdateResumeController, createOrderController, getAllOrdersController, getDetailByIdController } from 'controllers/order'
+import { UpdateStatusOrder, checkUpdateListOrder, checkUpdateResume, createOrderProps, getDetailIdProp, updateAdditionalTaskListOrder } from 'middlewares/params'
 import { Router } from 'express'
 
 export const router = Router()
@@ -13,6 +13,7 @@ router.post('/create', ...createOrderProps, createOrderController)
 router.post('/create/addtionalTask', ...updateAdditionalTaskListOrder, CreateAdditionalTaskListController)
 
 // updates
+router.put('/closeOrder', ...UpdateStatusOrder, CloseOrderController)
 router.put('/update/resume', ...checkUpdateResume, UpdateResumeController)
 router.put('/update/observations', ...checkUpdateListOrder, UpdateObservationListController)
 router.put('/update/findings', ...checkUpdateListOrder, UpdateFindingsListController)

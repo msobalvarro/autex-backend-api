@@ -197,3 +197,7 @@ export const updateAdditionalTaskListOrder = [
   check('list.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
   check('list.*.total', 'Activity total prop is incorrect').isFloat(),
 ]
+
+export const UpdateStatusOrder = [
+  check('id', 'Order ID is required').isMongoId(),
+]
