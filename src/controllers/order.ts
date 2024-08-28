@@ -52,9 +52,7 @@ export const getAllOrdersController = async (req: Request, res: Response) => {
 export const UpdateFindingsListController = async (req: Request, res: Response) => {
   try {
     const params: ListItemOrderFieldsProps = req.body
-
     await updateFindingsListService(params)
-
     res.send(true)
   } catch (error) {
     res.status(500).send(`${error}`)

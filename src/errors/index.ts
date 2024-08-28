@@ -137,7 +137,7 @@ export class CreateOrderServiceError extends Error {
 export class CreateMultipleBrandsServiceError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = ErrosList.CERATE_MULTIPLE_BRANDS
+    this.name = ErrosList.CREATE_MULTIPLE_BRANDS
     this.message = message
   }
 }
@@ -146,6 +146,14 @@ export class AuthorizationError extends Error {
   constructor(message: string) {
     super(message)
     this.name = ErrosList.AUTHORIZATION_ERROR
+    this.message = message
+  }
+}
+
+export class UpdateOrderError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.UPDATE_STATUS_ORDEE
     this.message = message
   }
 }
