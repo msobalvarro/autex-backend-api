@@ -17,5 +17,7 @@ export const authenticateUserService = async ({ email, password }: UserAuthentic
     email: user.email,
     name: user.name,
     token,
+    isAdmin: false,
+    isRoot: false,
   }
 }

@@ -227,6 +227,8 @@ export interface NewOrderServiceProps extends OrderServicePropierties {
 
 export interface UserAuthenticationResponse extends User {
   token: string
+  isAdmin: boolean
+  isRoot: boolean
 }
 
 export interface UserAuthenticationProps {
