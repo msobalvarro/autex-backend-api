@@ -340,3 +340,12 @@ export interface ListItemOrderResumeFieldsProps {
 export interface UpdateServiceProps {
   id: Types.ObjectId
 }
+
+export interface WorkshopPropierties {
+  _id: Types.ObjectId
+  name: string
+  slogan: string  
+  pictureUrl: string | null
+  administrators: User[]
+  users: User[]
+}
