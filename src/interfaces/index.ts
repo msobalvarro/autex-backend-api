@@ -41,6 +41,8 @@ export interface User {
   name: string
   email: string
   password?: string
+  isAdmin: boolean
+  isRoot: boolean
 }
 
 export interface Client {
@@ -348,6 +350,6 @@ export interface WorkshopPropierties {
   name: string
   slogan: string  
   pictureUrl: string | null
-  administrators: User[]
-  users: User[]
+  administrators?: User[]
+  users?: User[]
 }

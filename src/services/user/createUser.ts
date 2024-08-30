@@ -12,6 +12,9 @@ export const createUser = async (user: User) => {
     throw new CreateUserError(`email already exists`)
   }
 
-  const userCreated = await UserModel.create({ ...user, password: passwordEncripted })
+  const userCreated = await UserModel.create({
+    ...user,
+    password: passwordEncripted
+  })
   return userCreated
 }

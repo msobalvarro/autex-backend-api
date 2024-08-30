@@ -198,6 +198,11 @@ export const updateAdditionalTaskListOrder = [
   check('list.*.total', 'Activity total prop is incorrect').isFloat(),
 ]
 
-export const UpdateStatusOrder = [
+export const checkUpdateStatusOrder = [
   check('id', 'Order ID is required').isMongoId(),
+]
+
+export const checkCreateWorkshop = [
+  check('name', 'Name prop is required').isString(),
+  check('slogan', 'Slogan prop is required').isString(),
 ]

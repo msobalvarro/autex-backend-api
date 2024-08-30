@@ -18,7 +18,10 @@ const workshop = new Schema<WorkshopPropierties>(
       ref: 'user'
     }],
   },
-  {}
+  {
+    versionKey: false,
+    timestamps: true,
+  }
 )
 
 export const WorkshopModel = model('workshop', workshop)
