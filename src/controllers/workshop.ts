@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { AssignUserToWorkshopProps, WorkshopPropierties } from 'interfaces';
+import { updateAdminUserService } from 'services/user/updateUser';
 import { assignUserAdminToWorkshopService, assignUserToWorkshopService } from 'services/workshop/assignUserToWorkshop';
 import { createWorkshopService } from 'services/workshop/createWorkshop';
 import { getAllWorkshops } from 'services/workshop/getWorkshops';
@@ -37,6 +38,7 @@ export const assignUserToWorkshopController = async (req: Request, res: Response
 export const assignUserAdminToWorkshopController = async (req: Request, res: Response) => {
   try {
     const params: AssignUserToWorkshopProps = req.body
+    await updateAdminUserService(params.userId, true)
     await assignUserAdminToWorkshopService(params.userId, params.workshopId) 
 
     res.send(true)
