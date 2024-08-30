@@ -1,6 +1,6 @@
-import { createWorkshopController, getAllWorkshopsController } from 'controllers/workshop'
+import { assignUserAdminToWorkshopController, assignUserToWorkshopController, createWorkshopController, getAllWorkshopsController } from 'controllers/workshop'
 import { Router } from 'express'
-import { checkCreateWorkshop } from 'middlewares/params'
+import { checkAssignUserToWorkshop, checkCreateWorkshop } from 'middlewares/params'
 
 export const router = Router()
 
@@ -8,4 +8,6 @@ export const router = Router()
 router.get('/getAll', getAllWorkshopsController)
 
 // POST / 
-router.post('/create', checkCreateWorkshop, createWorkshopController)
+router.post('/create', ...checkCreateWorkshop, createWorkshopController)
+router.post('/user/assign', ...checkAssignUserToWorkshop, assignUserToWorkshopController)
+router.post('/admin/assign', ...checkAssignUserToWorkshop, assignUserAdminToWorkshopController)

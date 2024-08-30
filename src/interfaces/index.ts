@@ -353,3 +353,8 @@ export interface WorkshopPropierties {
   administrators?: User[]
   users?: User[]
 }
+
+export interface AssignUserToWorkshopProps {
+  userId: Types.ObjectId
+  workshopId: Types.ObjectId
+}

@@ -206,3 +206,8 @@ export const checkCreateWorkshop = [
   check('name', 'Name prop is required').isString(),
   check('slogan', 'Slogan prop is required').isString(),
 ]
+
+export const checkAssignUserToWorkshop = [
+  check('userId', 'User id prop is required').isMongoId(),
+  check('workshopId', 'Workshop id prop is required').isMongoId(),
+]

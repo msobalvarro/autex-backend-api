@@ -9,5 +9,7 @@ export const getWorkshopDetailService = async (id: Types.ObjectId): Promise<Work
 
 export const getAllWorkshops = async (): Promise<WorkshopPropierties[]> => {
   const data = await WorkshopModel.find()
+    .populate('administrators')
+    .populate('users')
   return data
 }
