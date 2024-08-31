@@ -3,12 +3,27 @@ import { findUserById } from 'services/user/findUser'
 import { updateUser } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
-import { User, UserUpdateProps } from 'interfaces'
+import { NewUserWithWorkshopIdProps, User, UserUpdateProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
     const dataParams: User = req.body
+    const { error, message } = existErrors(req)
+    if (error) {
+      throw new CreateUserError(`${message}`)
+    }
+
+    const dataCreated = await createUser(dataParams)
+    res.send(dataCreated)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const createUserAndAddToWorkshopController = async (req: Request, res: Response) => {
+  try {
+    const dataParams: NewUserWithWorkshopIdProps = req.body
     const { error, message } = existErrors(req)
     if (error) {
       throw new CreateUserError(`${message}`)

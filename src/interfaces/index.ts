@@ -37,12 +37,19 @@ export interface Vehicule {
 }
 
 export interface User {
-  _id: Types.ObjectId
+  _id?: Types.ObjectId
   name: string
   email: string
   password?: string
-  isAdmin: boolean
-  isRoot: boolean
+  isAdmin?: boolean
+  isRoot?: boolean
+}
+
+export interface NewUserWithWorkshopIdProps {
+  workshopId: Types.ObjectId
+  name: string
+  email: string
+  password?: string
 }
 
 export interface Client {

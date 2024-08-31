@@ -19,6 +19,13 @@ export const createUserValidation = [
   check('password', 'Password is required').notEmpty(),
 ]
 
+export const createUserAndWorkshopIdValidation = [
+  check('workshopId', 'Workshop id is required').isMongoId(),
+  check('name', 'Name is required').notEmpty(),
+  check('email', 'Email is required').notEmpty().isEmail(),
+  check('password', 'Password is required').notEmpty(),
+]
+
 export const updateUserValidation = [
   check('_id', 'ID is required').notEmpty(),
   check('name', 'Name is required').notEmpty(),
