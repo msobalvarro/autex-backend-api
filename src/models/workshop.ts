@@ -9,6 +9,9 @@ const workshop = new Schema<WorkshopPropierties>(
     },
     slogan: String,
     pictureUrl: String,
+    representative: String,
+    phoneNumber: String,
+    location: String,
     administrators: [{
       type: Schema.Types.ObjectId,
       ref: 'user'

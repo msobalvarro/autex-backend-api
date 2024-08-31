@@ -261,6 +261,7 @@ export enum ErrosList {
   CREATE_ORDER_SERVICE_ERROR = 'CREATE_ORDER_SERVICE_ERROR',
   CREATE_MULTIPLE_BRANDS = 'CERATE_MULTIPLE_BRANDS',
   UPDATE_STATUS_ORDEE = 'UPDATE_STATUS_ORDEE',
+  CREATE_WORKSHOP = 'CREATE_WORKSHOP',
 }
 
 export interface GenerateErrorProps {
@@ -350,6 +351,9 @@ export interface WorkshopPropierties {
   name: string
   slogan: string  
   pictureUrl: string | null
+  representative: string
+  phoneNumber: string
+  location: string
   administrators?: User[]
   users?: User[]
 }

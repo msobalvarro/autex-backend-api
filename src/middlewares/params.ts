@@ -205,6 +205,9 @@ export const checkUpdateStatusOrder = [
 export const checkCreateWorkshop = [
   check('name', 'Name prop is required').isString(),
   check('slogan', 'Slogan prop is required').isString(),
+  check('representative', 'Representative name prop is required').isString(),
+  check('phoneNumber', 'Phone Number prop is required').isString(),
+  check('location', 'Location prop is required').isString(),
 ]
 
 export const checkAssignUserToWorkshop = [

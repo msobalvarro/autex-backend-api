@@ -157,3 +157,11 @@ export class UpdateOrderError extends Error {
     this.message = message
   }
 }
+
+export class CreateWorkshopError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_WORKSHOP
+    this.message = message
+  }
+}
