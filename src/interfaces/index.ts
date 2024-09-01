@@ -249,6 +249,7 @@ export interface UserAuthenticationProps {
 export interface UserUpdateProps {
   _id: Types.ObjectId
   email: string
+  name: string
 }
 
 export enum ErrosList {
@@ -256,6 +257,7 @@ export enum ErrosList {
   CONNECTION_ERROR = 'CONNECTION_ERROR',
   PARAMS_VALIDATION_ERROR = 'PARAMS_VALIDATION_ERROR',
   CREATE_USER_ERROR = 'CREATE_USER_ERROR',
+  UPDATE_USER_ERROR = 'UPDATE_USER_ERROR',
   IMPORT_MODULE_ERROR = 'IMPORT_MODULE_ERROR',
   AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR',
   CREATE_CLIENT_ERROR = 'CREATE_CLIENT_ERROR',

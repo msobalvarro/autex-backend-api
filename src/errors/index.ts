@@ -25,7 +25,7 @@ export class CreateUserError extends Error {
 export class UpdateUserError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = ErrosList.CREATE_USER_ERROR
+    this.name = ErrosList.UPDATE_USER_ERROR
     this.message = message
   }
 }

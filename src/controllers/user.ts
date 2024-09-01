@@ -1,6 +1,6 @@
 import { createUser, createUserAndAssignToWorkshop } from 'services/user/createUser'
 import { findUserById } from 'services/user/findUser'
-import { updateUser } from 'services/user/updateUser'
+import { updateUserService } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
 import {
@@ -49,7 +49,7 @@ export const updateUserController = async (req: Request, res: Response) => {
       throw new UpdateUserError(`${message}`)
     }
 
-    const dataParams: UserUpdateProps = req.body()
+    const dataParams: UserUpdateProps = req.body
     const userFinded: User | null = await findUserById(dataParams._id)
 
     if (!userFinded) {
@@ -57,8 +57,8 @@ export const updateUserController = async (req: Request, res: Response) => {
     }
 
     // is diferent email
-    if (userFinded.email !== dataParams.email) {
-      await updateUser(dataParams)
+    if (userFinded.email !== dataParams.email || userFinded.name !== dataParams.name) {
+      await updateUserService(dataParams)
     }
 
     res.send(true)
