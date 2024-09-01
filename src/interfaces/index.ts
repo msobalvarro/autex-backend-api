@@ -358,7 +358,7 @@ export interface UpdateServiceProps {
 export interface WorkshopPropierties {
   _id: Types.ObjectId
   name: string
-  slogan: string  
+  slogan: string
   pictureUrl: string | null
   representative: string
   phoneNumber: string
@@ -370,4 +370,9 @@ export interface WorkshopPropierties {
 export interface AssignUserToWorkshopProps {
   userId: Types.ObjectId
   workshopId: Types.ObjectId
+}
+
+export interface UserUpdateStatusProps {
+  userId: Types.ObjectId
+  status: boolean
 }

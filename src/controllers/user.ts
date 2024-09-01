@@ -3,8 +3,9 @@ import { findUserById } from 'services/user/findUser'
 import { updateUser } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
-import { NewUserWithWorkshopIdProps, User, UserUpdateProps } from 'interfaces'
+import { NewUserWithWorkshopIdProps, User, UserUpdateProps, UserUpdateStatusProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
+import { UpdateUserStatus } from 'services/user/updateStatus'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -55,6 +56,16 @@ export const updateUserController = async (req: Request, res: Response) => {
       await updateUser(dataParams)
     }
 
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const updateUserStatusController = async (req: Request, res: Response) => {
+  try {
+    const { status, userId }: UserUpdateStatusProps = req.body
+    await UpdateUserStatus(userId, status)
     res.send(true)
   } catch (error) {
     res.status(500).send(`${error}`)
