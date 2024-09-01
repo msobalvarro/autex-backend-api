@@ -11,6 +11,10 @@ export const authenticateUserService = async ({ email, password }: UserAuthentic
     throw new AuthenticationError('User not found')
   }
 
+  if (user.status !== 'active') { 
+    throw new AuthenticationError('User not available, contact the administrator')
+  }
+
   const token = generateToken(user.id)
   return {
     _id: user._id,

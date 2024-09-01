@@ -3,7 +3,12 @@ import { findUserById } from 'services/user/findUser'
 import { updateUser } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
-import { NewUserWithWorkshopIdProps, User, UserUpdateProps, UserUpdateStatusProps } from 'interfaces'
+import {
+  NewUserWithWorkshopIdProps,
+  User,
+  UserUpdateProps,
+  UserUpdateStatusProps
+} from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { UpdateUserStatus } from 'services/user/updateStatus'
 

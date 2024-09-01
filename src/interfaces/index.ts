@@ -374,5 +374,5 @@ export interface AssignUserToWorkshopProps {
 
 export interface UserUpdateStatusProps {
   userId: Types.ObjectId
-  status: boolean
+  status: string
 }

@@ -34,7 +34,7 @@ export const updateUserValidation = [
 
 export const updateUserStatusValidation = [
   check('_id', 'ID is required').isMongoId(),
-  check('status', 'status is required').isBoolean(),
+  check('status', 'status is required').isIn(['active', 'inactive', 'blocked']),
 ]
 
 export const loginValidationProps = [
