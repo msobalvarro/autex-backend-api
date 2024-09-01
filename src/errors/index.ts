@@ -165,3 +165,12 @@ export class CreateWorkshopError extends Error {
     this.message = message
   }
 }
+
+
+export class CreateUserWorkshopError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_USER_WORKSHOP
+    this.message = message
+  }
+}

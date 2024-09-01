@@ -1,4 +1,4 @@
-import { createUser } from 'services/user/createUser'
+import { createUser, createUserAndAssignToWorkshop } from 'services/user/createUser'
 import { findUserById } from 'services/user/findUser'
 import { updateUser } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
@@ -29,7 +29,7 @@ export const createUserAndAddToWorkshopController = async (req: Request, res: Re
       throw new CreateUserError(`${message}`)
     }
 
-    const dataCreated = await createUser(dataParams)
+    const dataCreated = await createUserAndAssignToWorkshop(dataParams)
     res.send(dataCreated)
   } catch (error) {
     res.status(500).send(`${error}`)
