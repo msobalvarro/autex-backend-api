@@ -43,6 +43,7 @@ export interface User {
   password?: string
   isAdmin?: boolean
   isRoot?: boolean
+  status?: SchemaDefinitionProperty<'active' | 'inactive' | 'blocked'>
 }
 
 export interface NewUserWithWorkshopIdProps {

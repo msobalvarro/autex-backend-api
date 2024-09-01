@@ -10,6 +10,11 @@ const userSchema = new Schema<User>({
   password: String,
   isRoot: Boolean,
   isAdmin: Boolean,
+  status: {
+    type: String,
+    enum: ['active', 'inactive', 'blocked'],
+    default: 'active',
+  },
 }, {
   timestamps: true,
   versionKey: false,
