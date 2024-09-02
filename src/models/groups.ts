@@ -10,8 +10,7 @@ const acitivitiesGroup = new Schema<ActivitiesGroupPropierties>(
     name: {
       type: String,
       required: true,
-    },
-    price: Number
+    }
   },
   {
     timestamps: true,

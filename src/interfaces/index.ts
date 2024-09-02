@@ -203,6 +203,7 @@ export interface EstimatePropierties {
   partsCost: number
   inputCost: number
   externalCost: number
+  activitiesGroupCost: number
   total: number
 }
 
@@ -384,12 +385,10 @@ export interface UserUpdateStatusProps {
 export interface ActivitiesGroupPropierties {
   _id: Types.ObjectId
   name: string
-  price: number
   activities: string[]
 }
 
 export interface ActivitiesGroupProps {
   name: string
-  price: number
   activities: string[]
 }

@@ -229,7 +229,6 @@ export const checkAssignUserToWorkshop = [
 
 export const checkCreateAcitivitiesGroup = [
   check('name', 'name prop is required').isString(),
-  check('price', 'price prop is requerid').isFloat(),
   check('activities', 'activities is not valid').isArray({ min: 1 }),
   check('activities.*', 'activity item is not valid').isString(),
 ]
