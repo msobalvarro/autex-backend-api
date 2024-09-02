@@ -174,3 +174,19 @@ export class CreateUserWorkshopError extends Error {
     this.message = message
   }
 }
+
+export class CreateAtivititiesGroupError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_ACTIVITIES_GROUP_ESTIMATE
+    this.message = message
+  }
+}
+
+export class CreateEstimationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_ESTIMATION_ERROR
+    this.message = message
+  }
+}

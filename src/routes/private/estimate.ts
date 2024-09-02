@@ -1,6 +1,16 @@
 import { Router } from 'express'
-import { createEstimateController, getAllEstimatesController, getEstimateAndOrderDetailByIdController, getEstimateDetailByIdController } from 'controllers/estimate'
-import { createEstimateProps, getDetailIdProp } from 'middlewares/params'
+import {
+  createActivitiesGroupController,
+  createEstimateController,
+  getAllEstimatesController,
+  getEstimateAndOrderDetailByIdController,
+  getEstimateDetailByIdController
+} from 'controllers/estimate'
+import {
+  checkCreateAcitivitiesGroup,
+  createEstimateProps,
+  getDetailIdProp
+} from 'middlewares/params'
 
 export const router = Router()
 
@@ -11,3 +21,4 @@ router.get('/all', getAllEstimatesController)
 
 // POST
 router.post('/create', ...createEstimateProps, createEstimateController)
+router.post('/create/activitiesGroup', ...checkCreateAcitivitiesGroup, createActivitiesGroupController)

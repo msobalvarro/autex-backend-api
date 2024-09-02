@@ -273,6 +273,8 @@ export enum ErrosList {
   UPDATE_STATUS_ORDEE = 'UPDATE_STATUS_ORDEE',
   CREATE_WORKSHOP = 'CREATE_WORKSHOP',
   CREATE_USER_WORKSHOP = 'CREATE_USER_WORKSHOP',
+  CREATE_ACTIVITIES_GROUP_ESTIMATE = 'CREATE_ACTIVITIES_GROUP_ESTIMATE',
+  CREATE_ESTIMATION_ERROR = 'CREATE_ESTIMATION_ERROR',
 }
 
 export interface GenerateErrorProps {
@@ -377,4 +379,17 @@ export interface AssignUserToWorkshopProps {
 export interface UserUpdateStatusProps {
   userId: Types.ObjectId
   status: string
+}
+
+export interface ActivitiesGroupPropierties {
+  _id: Types.ObjectId
+  name: string
+  price: number
+  activities: string[]
+}
+
+export interface ActivitiesGroupProps {
+  name: string
+  price: number
+  activities: string[]
 }
