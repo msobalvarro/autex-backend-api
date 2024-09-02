@@ -199,6 +199,7 @@ export interface EstimatePropierties {
   otherRequirements: ActivityWithCostToDoItemEstimate[]
   externalActivities: ActivityWithCostToDoItemEstimate[]
   traveled: DistanceTraveledPropierties
+  activitiesGroups: ActivitiesGroupPropierties[]
   laborCost: number
   partsCost: number
   inputCost: number
