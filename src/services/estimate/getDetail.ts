@@ -1,6 +1,7 @@
 import { Types } from 'mongoose'
-import { EstimatePropierties } from 'interfaces'
+import { ActivitiesGroupPropierties, EstimatePropierties } from 'interfaces'
 import { EstimatedCostsModel } from 'models/estimate'
+import { ActivitiesGroupModel } from 'models/groups'
 
 export const getDetailEstimateById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimatedCostsModel.findById(id)
@@ -53,4 +54,9 @@ export const getAllEstimatesService = async (): Promise<EstimatePropierties[]> =
     .populate('vehicule')
     .sort({ createdAt: -1 })
   return dataResult
+}
+
+export const getActivitiesGroupService = async (): Promise<ActivitiesGroupPropierties[]> => {
+  const data = await ActivitiesGroupModel.find()
+  return data
 }

@@ -5,7 +5,7 @@ import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
-import { getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getDetail'
+import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getDetail'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const createEstimateController = async (req: Request, res: Response) => {
@@ -44,7 +44,6 @@ export const getEstimateAndOrderDetailByIdController = async (req: Request, res:
   }
 }
 
-
 export const getAllEstimatesController = async (req: Request, res: Response) => {
   try {
     const data = await getAllEstimatesService()
@@ -64,6 +63,15 @@ export const createActivitiesGroupController = async (req: Request, res: Respons
     const data: ActivitiesGroupProps = req.body
     const acitivities: ActivitiesGroupPropierties = await createAcitivitiesGroupService(data)
 
+    res.send(acitivities)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getActivitiesGroupController = async (__: Request, res: Response) => {
+  try {
+    const acitivities: ActivitiesGroupPropierties[] = await getActivitiesGroupService()
     res.send(acitivities)
   } catch (error) {
     res.status(500).send(`${error}`)
