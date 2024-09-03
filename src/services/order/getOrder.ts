@@ -36,6 +36,7 @@ export const getOrderByIdService = async (id: Types.ObjectId): Promise<OrderServ
         { path: 'activitiesToDo' },
         { path: 'requiredParts' },
         { path: 'otherRequirements' },
+        { path: 'externalActivities' },
       ]
     })
     .populate('preliminarManagment')
