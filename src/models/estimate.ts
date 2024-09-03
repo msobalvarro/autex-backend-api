@@ -52,10 +52,10 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'
     }],
-    activitiesGroups: [{
+    activitiesGroup: {
       type: Types.ObjectId,
       ref: 'activitiesGroupEstimate'
-    }],
+    },
     traveled: { type: Types.ObjectId, ref: 'vehiculeDistance' },
     activitiesGroupCost: Number,
     externalCost: Number,

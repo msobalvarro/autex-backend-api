@@ -137,9 +137,6 @@ export const getDetailIdProp = [
 export const createEstimateProps = [
   check('clientId', 'Client Id is required').isMongoId(),
   check('vehiculeId', 'vehicule Id is required').isMongoId(),
-  check('activitiesToDo.isService', 'Activity service prop is incorrect').isBoolean(),
-  check('activitiesToDo.isMaintenance', 'Activity maintenance prop is incorrect').isBoolean(),
-  check('activitiesToDo.isMinorTypeService', 'Activity type service prop is incorrect').isBoolean(),
   check('activitiesToDo', 'Activity list prop is incorrect').isArray(),
   check('activitiesToDo.*.description', 'Activity list description prop is incorrect').isString(),
   check('activitiesToDo.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),

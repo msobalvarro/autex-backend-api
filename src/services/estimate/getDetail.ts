@@ -22,6 +22,7 @@ export const getDetailEstimateById = async (id: Types.ObjectId): Promise<Estimat
     .populate('requiredParts')
     .populate('otherRequirements')
     .populate('externalActivities')
+    .populate('activitiesGroup')
 
   return dataResult
 }
@@ -44,6 +45,7 @@ export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promis
     .populate('requiredParts')
     .populate('otherRequirements')
     .populate('externalActivities')
+    .populate('activitiesGroup')
 
   return dataResult
 }

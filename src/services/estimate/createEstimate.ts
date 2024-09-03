@@ -25,9 +25,8 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
     const requiredParts = await estimate.requiredParts.map(a => new ItemWithCostEstimatedFieldModel(a))
     const otherRequirements = await estimate.otherRequirements.map(a => new ItemWithCostEstimatedFieldModel(a))
     const externalActivities = await estimate.externalActivities.map(a => new ItemWithCostEstimatedFieldModel(a))
-    const activitiesGroups = await estimate.activitiesGroups.map(act  => new ActivitiesGroupModel(act))
     const traveled = new vehiculeDistanceModel(estimate.traveled)
-
+    const activitiesGroup = await ActivitiesGroupModel.findById(estimate.activitiesGroupId)
     const { inputCost, laborCost, partsCost, total, externalCost, activitiesGroupCost } = estimate
 
     const estimateCreated = new EstimatedCostsModel({
@@ -43,7 +42,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
       vehicule,
       externalActivities,
       traveled,
-      activitiesGroups,
+      activitiesGroup,
       activitiesGroupCost,
     })
 

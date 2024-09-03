@@ -199,7 +199,7 @@ export interface EstimatePropierties {
   otherRequirements: ActivityWithCostToDoItemEstimate[]
   externalActivities: ActivityWithCostToDoItemEstimate[]
   traveled: DistanceTraveledPropierties
-  activitiesGroups: ActivitiesGroupPropierties[]
+  activitiesGroup?: ActivitiesGroupPropierties
   laborCost: number
   partsCost: number
   inputCost: number
@@ -214,6 +214,7 @@ export interface EstimateWithOrderPropierties extends EstimatePropierties {
 
 export interface EstimateParamsPropierties extends EstimatePropierties {
   vehiculeId: Types.ObjectId
+  activitiesGroupId: Types.ObjectId
   clientId: Types.ObjectId
   traveled: DistanceTraveledPropierties
 }
