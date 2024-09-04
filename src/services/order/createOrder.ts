@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 import {
   NewOrderServiceProps,
   OrderServicePropierties
@@ -11,16 +11,19 @@ import {
   TypesActivitiesToDoModel
 } from 'models/order'
 import { CreateOrderServiceError } from 'errors'
-import { getDetailEstimateById } from 'services/estimate/getDetail'
+import { getDetailEstimateById } from 'services/estimate/getEstimations'
 import { vehiculeDistanceModel } from 'models/vehicule'
+import { WorkshopModel } from 'models/workshop'
 
-export const createOrder = async (order: NewOrderServiceProps): Promise<OrderServicePropierties> => {
+export const createOrder = async (order: NewOrderServiceProps, workshopId: Types.ObjectId): Promise<OrderServicePropierties> => {
   const session = await mongoose.startSession()
   session.startTransaction()
 
   try {
     const estimateProps = await getDetailEstimateById(order.estimateId)
     if (!estimateProps) throw String('Estimate Service not found')
+    const workshop = await WorkshopModel.findById(workshopId)
+    if (!workshop) throw String('Workshop not found')
 
     const attentionType = new AtentionsTypesModel(order.attentionType)
     const preliminarManagment = new PreliminarManagmentModel(order.preliminarManagment)

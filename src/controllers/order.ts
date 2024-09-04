@@ -1,6 +1,7 @@
 import { CreateOrderServiceError } from 'errors'
 import { Request, Response } from 'express'
 import {
+  GenerateTokenFnProps,
   ListItemOrderFieldsProps,
   ListItemOrderResumeFieldsProps,
   NewOrderServiceProps,
@@ -21,9 +22,9 @@ export const createOrderController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
     if (error) throw new CreateOrderServiceError(String(message))
-
+    const { workshopId }: GenerateTokenFnProps = req.cookies
     const params: NewOrderServiceProps = req.body
-    const newOrder = await createOrder(params)
+    const newOrder = await createOrder(params, workshopId)
     res.send(newOrder)
   } catch (error) {
     res.status(500).send(`${error}`)

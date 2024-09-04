@@ -13,6 +13,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const bearer = token.split(' ')[1]
     const data = verifyToken(bearer)
 
+    console.log(data)
+
     req.cookies = data
     next()
   } catch (error) {

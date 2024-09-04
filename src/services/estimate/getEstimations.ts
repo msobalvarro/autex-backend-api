@@ -50,8 +50,9 @@ export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promis
   return dataResult
 }
 
-export const getAllEstimatesService = async (): Promise<EstimatePropierties[]> => {
-  const dataResult = await EstimatedCostsModel.find()
+export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promise<EstimatePropierties[]> => {
+  const dataResult = await EstimatedCostsModel.find({ workshop: { _id: workshopId } })
+    // const dataResult = await EstimatedCostsModel.find()
     .populate('client')
     .populate('vehicule')
     .sort({ createdAt: -1 })

@@ -63,6 +63,7 @@ const estimatedCosts = new Schema<EstimatePropierties>(
     laborCost: Number,
     partsCost: Number,
     total: Number,
+    workshop: { type: Types.ObjectId, ref: 'workshop' },
   },
   {
     timestamps: true,

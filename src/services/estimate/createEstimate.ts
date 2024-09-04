@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 import { CreateEstimatedError } from 'errors'
 import { EstimateParamsPropierties, EstimatePropierties } from 'interfaces'
 import { getClientByIdService } from 'services/client/getClient'
@@ -6,8 +6,9 @@ import { getVehiculeById } from 'services/vehicule/getVehicule'
 import { EstimatedCostsModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { ActivitiesGroupModel } from 'models/groups'
+import { WorkshopModel } from 'models/workshop'
 
-export const createEstimateService = async (estimate: EstimateParamsPropierties): Promise<EstimatePropierties> => {
+export const createEstimateService = async (estimate: EstimateParamsPropierties, workshopId: Types.ObjectId): Promise<EstimatePropierties> => {
   const session = await mongoose.startSession()
   session.startTransaction()
   try {
@@ -19,6 +20,11 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
     const client = await getClientByIdService(estimate.clientId)
     if (!client) {
       throw new CreateEstimatedError('Client not found')
+    }
+    
+    const workshop = await WorkshopModel.findById(workshopId)
+    if (!workshop) { 
+      throw new CreateEstimatedError('Workshop not found')
     }
 
     const activitiesToDo = await estimate.activitiesToDo.map(a => new ItemWithCostEstimatedFieldModel(a))
@@ -44,6 +50,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties)
       traveled,
       activitiesGroup,
       activitiesGroupCost,
+      workshop
     })
 
     activitiesToDo.map(e => e.save({ session }))

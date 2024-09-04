@@ -1,11 +1,11 @@
 import { CreateAtivititiesGroupError, CreateEstimationError } from 'errors'
 import { Request, Response } from 'express'
-import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties } from 'interfaces'
+import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
-import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getDetail'
+import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getEstimations'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const createEstimateController = async (req: Request, res: Response) => {
@@ -14,9 +14,9 @@ export const createEstimateController = async (req: Request, res: Response) => {
     if (error) {
       throw new CreateEstimationError(String(message))
     }
-
+    const { workshopId }: GenerateTokenFnProps = req.cookies
     const newEstimateParams: EstimateParamsPropierties = req.body
-    const newEstimate = await createEstimateService(newEstimateParams)
+    const newEstimate = await createEstimateService(newEstimateParams, workshopId)
     res.send(newEstimate)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -46,7 +46,8 @@ export const getEstimateAndOrderDetailByIdController = async (req: Request, res:
 
 export const getAllEstimatesController = async (req: Request, res: Response) => {
   try {
-    const data = await getAllEstimatesService()
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const data = await getAllEstimatesService(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)

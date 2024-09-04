@@ -78,6 +78,7 @@ const orderService = new Schema<OrderServicePropierties>(
     resume: String,
     findings: [String],
     observations: [String],
+    workshop: { type: Types.ObjectId, ref: 'workshop' },
     status: {
       type: String,
       enum: ['pending', 'process', 'finished', 'canceled'],

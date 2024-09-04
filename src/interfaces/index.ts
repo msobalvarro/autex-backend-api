@@ -206,6 +206,7 @@ export interface EstimatePropierties {
   externalCost: number
   activitiesGroupCost: number
   total: number
+  workshop: WorkshopPropierties
 }
 
 export interface EstimateWithOrderPropierties extends EstimatePropierties {
@@ -231,6 +232,7 @@ export interface OrderServicePropierties {
   findings: string[]
   observations: string[]
   resume: string
+  workshop: WorkshopPropierties
   status: SchemaDefinitionProperty<'pending' | 'process' | 'finished' | 'canceled'>
 }
 
@@ -242,6 +244,7 @@ export interface UserAuthenticationResponse extends User {
   token: string
   isAdmin: boolean
   isRoot: boolean
+  workshop: WorkshopPropierties | null
 }
 
 export interface UserAuthenticationProps {
@@ -393,4 +396,9 @@ export interface ActivitiesGroupPropierties {
 export interface ActivitiesGroupProps {
   name: string
   activities: string[]
+}
+
+export interface GenerateTokenFnProps {
+  id: Types.ObjectId
+  workshopId: Types.ObjectId
 }
