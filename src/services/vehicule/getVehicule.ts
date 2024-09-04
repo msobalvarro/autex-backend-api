@@ -2,8 +2,8 @@ import { Vehicule } from 'interfaces'
 import { vehiculeModel } from 'models/vehicule'
 import { Types } from 'mongoose'
 
-export const getAllVehicles = async (): Promise<Vehicule[]> => {
-  const data: Vehicule[] = await vehiculeModel.find()
+export const getAllVehicles = async (workshopId: Types.ObjectId): Promise<Vehicule[]> => {
+  const data: Vehicule[] = await vehiculeModel.find({ workshop: { _id: workshopId } })
     .populate('brand', '-models')
     .populate('model')
   return data

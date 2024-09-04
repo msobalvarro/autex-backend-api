@@ -12,7 +12,7 @@ export const createClient = async (client: Client, workshopId: Types.ObjectId): 
   }
 
   const workshop = await WorkshopModel.findById(workshopId)
-  if (!workshop) throw new Error('workshop not found')
+  if (!workshop) throw new CreateClientError('workshop not found')
 
   const dataCreated = await ClientModel.create({ ...client, workshop })
   return dataCreated

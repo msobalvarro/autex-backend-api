@@ -45,6 +45,7 @@ const vehiculeSchema = new Schema<Vehicule>(
       ref: 'vehiculeBrand',
       required: true,
     },
+    workshop: { type: Types.ObjectId, ref: 'workshop' },
   },
   {
     timestamps: true,

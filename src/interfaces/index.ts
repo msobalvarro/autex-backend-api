@@ -34,6 +34,7 @@ export interface Vehicule {
   chasisNumber: string
   km: number
   year: number
+  workshop: WorkshopPropierties
 }
 
 export interface User {
@@ -401,5 +402,7 @@ export interface ActivitiesGroupProps {
 
 export interface GenerateTokenFnProps {
   id: Types.ObjectId
+  isAdmin: boolean
+  isRoot: boolean
   workshopId: Types.ObjectId
 }
