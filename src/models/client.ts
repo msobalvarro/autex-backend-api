@@ -15,7 +15,8 @@ const clientSchema = new Schema<Client>(
     vehicules: [{
       type: Types.ObjectId,
       ref: 'vehicule'
-    }]
+    }],
+    workshop: { type: Types.ObjectId, ref: 'workshop' },
   },
   {
     timestamps: true,

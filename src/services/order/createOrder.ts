@@ -37,6 +37,7 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
       serviceType,
       typesActivitiesToDo,
       traveled,
+      workshop,
     })
 
     attentionType.save({ session })

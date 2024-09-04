@@ -43,7 +43,8 @@ export const getDetailByIdController = async (req: Request, res: Response) => {
 
 export const getAllOrdersController = async (req: Request, res: Response) => {
   try {
-    const data = await getAllOrders()
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const data = await getAllOrders(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)

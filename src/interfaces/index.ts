@@ -61,6 +61,7 @@ export interface Client {
   email: string
   documentId: string
   vehicules: Vehicule[]
+  workshop: WorkshopPropierties
 }
 
 export interface AcivitiesProperties {

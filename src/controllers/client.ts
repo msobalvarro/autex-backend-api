@@ -1,23 +1,25 @@
 import { Request, Response } from 'express'
 import { getClientByIdService, getAllClients, getAllClientsWithCars } from 'services/client/getClient'
-import { Client } from 'interfaces'
+import { Client, GenerateTokenFnProps } from 'interfaces'
 import { createClient } from 'services/client/createClient'
 import { existErrors } from 'middlewares/params'
 import { CreateClientError } from 'errors'
 import { Types } from 'mongoose'
 
-export const getAllClientsController = async (__: Request, res: Response) => {
+export const getAllClientsController = async (req: Request, res: Response) => {
   try {
-    const data = await getAllClients()
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const data = await getAllClients(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
   }
 }
 
-export const getAllClientsWithCarController = async (__: Request, res: Response) => {
+export const getAllClientsWithCarController = async (req: Request, res: Response) => {
   try {
-    const data = await getAllClientsWithCars()
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const data = await getAllClientsWithCars(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -36,13 +38,14 @@ export const getClientByIdController = async (req: Request, res: Response) => {
 
 export const createClientController = async (req: Request, res: Response) => {
   try {
+    const { workshopId }: GenerateTokenFnProps = req.cookies
     const { error, message } = existErrors(req)
-    if (error) {      
+    if (error) {
       throw new CreateClientError(`${message}`)
     }
 
     const dataParams: Client = req.body
-    const dataCreated = await createClient(dataParams)
+    const dataCreated = await createClient(dataParams, workshopId)
     res.send(dataCreated)
   } catch (error) {
     res.status(500).send(`${error}`)

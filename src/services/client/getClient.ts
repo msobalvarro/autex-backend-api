@@ -2,13 +2,13 @@ import { Client } from 'interfaces'
 import { ClientModel } from 'models/client'
 import { Types } from 'mongoose'
 
-export const getAllClients = async (): Promise<Client[]> => {
-  const clients: Client[] = await ClientModel.find().sort({ createdAt: -1 })
+export const getAllClients = async (workshopId: Types.ObjectId): Promise<Client[]> => {
+  const clients: Client[] = await ClientModel.find({ workshop: { _id: workshopId } }).sort({ createdAt: -1 })
   return clients
 }
 
-export const getAllClientsWithCars = async (): Promise<Client[]> => {
-  const clients: Client[] = await ClientModel.find()
+export const getAllClientsWithCars = async (workshopId: Types.ObjectId): Promise<Client[]> => {
+  const clients: Client[] = await ClientModel.find({ workshop: { _id: workshopId } })
     .populate({
       path: 'vehicules',
       populate: [

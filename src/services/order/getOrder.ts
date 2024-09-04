@@ -2,8 +2,8 @@ import { OrderServicePropierties } from 'interfaces'
 import { OrderServiceModel } from 'models/order'
 import { Types } from 'mongoose'
 
-export const getAllOrders = async (): Promise<OrderServicePropierties[]> => {
-  const order = await OrderServiceModel.find()
+export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderServicePropierties[]> => {
+  const order = await OrderServiceModel.find({ workshop: { _id: workshopId } })
     .populate('attentionType')
     .populate({
       path: 'estimateProps',
@@ -54,5 +54,6 @@ export const getOrderByEstimateId = async (id: Types.ObjectId): Promise<OrderSer
     .populate('preliminarManagment')
     .populate('serviceType')
     .populate('typesActivitiesToDo')
+
   return order
 }

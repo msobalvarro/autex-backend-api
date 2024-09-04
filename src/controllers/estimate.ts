@@ -35,8 +35,14 @@ export const getEstimateDetailByIdController = async (req: Request, res: Respons
 
 export const getEstimateAndOrderDetailByIdController = async (req: Request, res: Response) => {
   try {
+    const { workshopId }: GenerateTokenFnProps = req.cookies
     const id = new Types.ObjectId(req.params.id)
     const estimate = await getDetailEstimateById(id)
+
+    if (String(workshopId) !== estimate?.workshop._id.toString()) {
+      return res.status(403).send('You not have permission')
+    }
+
     const order = await getOrderByEstimateId(new Types.ObjectId(estimate?._id))
     res.send({ estimate, order })
   } catch (error) {
