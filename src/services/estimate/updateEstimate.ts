@@ -3,11 +3,14 @@ import { UpdateEstimateError } from 'errors'
 import { ActivityWithCostToDoItemEstimate } from 'interfaces'
 import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import mongoose, { Types } from 'mongoose'
+import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
   const session = await mongoose.startSession()
   session.startTransaction()
   try {
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
     const estimate = await EstimateModel.findById(estimateId)
     if (!estimate) throw String('estimate not found')
     const itemCost = await ItemWithCostEstimatedFieldModel.findById(acitivityId)
@@ -39,6 +42,8 @@ export const addActivityToDoService = async (activities: ActivityWithCostToDoIte
   try {
     const estimate = await EstimateModel.findById(estimateId)
     if (!estimate) throw new Error('estimate not found')
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
 
     const activitiesModels = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
     const totalAcum = _.sumBy(activities, (a) => Number(a.total))
@@ -65,6 +70,8 @@ export const addActivityToDoService = async (activities: ActivityWithCostToDoIte
 }
 
 export const deleteRequiredPart = async (requiredPartId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const order = await getOrderByEstimateId(estimateId)
+  if (order) throw String('Could not be update, because existing order')
   const estimate = await EstimateModel.findById(estimateId)
   if (!estimate) throw new Error('estimate not found')
   const itemCost = await ItemWithCostEstimatedFieldModel.findById(requiredPartId)
@@ -79,6 +86,8 @@ export const deleteRequiredPart = async (requiredPartId: Types.ObjectId, estimat
 }
 
 export const deleteOtherRequirement = async (otherRequirementId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const order = await getOrderByEstimateId(estimateId)
+  if (order) throw String('Could not be update, because existing order')
   const estimate = await EstimateModel.findById(estimateId)
   if (!estimate) throw new Error('estimate not found')
   const itemCost = await ItemWithCostEstimatedFieldModel.findById(otherRequirementId)
@@ -93,6 +102,8 @@ export const deleteOtherRequirement = async (otherRequirementId: Types.ObjectId,
 }
 
 export const deleteExternalActivities = async (externalActivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const order = await getOrderByEstimateId(estimateId)
+  if (order) throw String('Could not be update, because existing order')
   const estimate = await EstimateModel.findById(estimateId)
   if (!estimate) throw new Error('estimate not found')
   const itemCost = await ItemWithCostEstimatedFieldModel.findById(externalActivityId)
