@@ -1,8 +1,8 @@
+import mongoose, { Types } from 'mongoose'
 import _ from 'lodash'
 import { UpdateEstimateError } from 'errors'
 import { ActivityWithCostToDoItemEstimate } from 'interfaces'
 import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
-import mongoose, { Types } from 'mongoose'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
@@ -50,11 +50,7 @@ export const addActivityToDoService = async (activities: ActivityWithCostToDoIte
 
     await EstimateModel.updateOne(
       { _id: estimateId },
-      { $push: { activitiesToDo: activitiesModels } }
-    )
-
-    await EstimateModel.updateOne(
-      { _id: estimateId },
+      { $push: { activitiesToDo: activitiesModels } },
       { total: (estimate.total + totalAcum) }
     )
 
@@ -69,50 +65,177 @@ export const addActivityToDoService = async (activities: ActivityWithCostToDoIte
   }
 }
 
-export const deleteRequiredPart = async (requiredPartId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
-  const order = await getOrderByEstimateId(estimateId)
-  if (order) throw String('Could not be update, because existing order')
-  const estimate = await EstimateModel.findById(estimateId)
-  if (!estimate) throw new Error('estimate not found')
-  const itemCost = await ItemWithCostEstimatedFieldModel.findById(requiredPartId)
-  if (!itemCost) throw new Error('item cost not found')
-  await EstimateModel.updateOne({ _id: estimateId }, {
-    $pull: {
-      requiredParts: { _id: requiredPartId },
-    },
-    total: (estimate.total - Number(itemCost?.total))
-  })
-  return true
+export const deleteRequiredPartService = async (requiredPartId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+
+  try {
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const itemCost = await ItemWithCostEstimatedFieldModel.findById(requiredPartId)
+    if (!itemCost) throw new Error('item cost not found')
+
+    await ItemWithCostEstimatedFieldModel.deleteOne({ _id: requiredPartId }, { session })
+
+    await EstimateModel.updateOne({ _id: estimateId }, {
+      $pull: {
+        activitiesToDo: { _id: itemCost._id },
+      },
+      total: (estimate.total - Number(itemCost?.total))
+    })
+
+    await session.commitTransaction()
+    return true
+  } catch (error) {
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
 }
 
-export const deleteOtherRequirement = async (otherRequirementId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
-  const order = await getOrderByEstimateId(estimateId)
-  if (order) throw String('Could not be update, because existing order')
-  const estimate = await EstimateModel.findById(estimateId)
-  if (!estimate) throw new Error('estimate not found')
-  const itemCost = await ItemWithCostEstimatedFieldModel.findById(otherRequirementId)
-  if (!itemCost) throw new Error('item cost not found')
-  await EstimateModel.updateOne({ _id: estimateId }, {
-    $pull: {
-      otherRequirements: { _id: otherRequirementId },
-    },
-    total: (estimate.total - Number(itemCost?.total))
-  })
-  return true
+export const addRequiredPartsService = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+  try {
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+
+    const items = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const totalAcum = _.sumBy(activities, (a) => Number(a.total))
+
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { $push: { requiredParts: items } },
+      { total: (estimate.total + totalAcum) }
+    )
+
+    await items.map(a => a.save({ session }))
+    await session.commitTransaction()
+    return true
+  } catch (error) {
+    await session.abortTransaction()
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
 }
 
-export const deleteExternalActivities = async (externalActivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
-  const order = await getOrderByEstimateId(estimateId)
-  if (order) throw String('Could not be update, because existing order')
-  const estimate = await EstimateModel.findById(estimateId)
-  if (!estimate) throw new Error('estimate not found')
-  const itemCost = await ItemWithCostEstimatedFieldModel.findById(externalActivityId)
-  if (!itemCost) throw new Error('item cost not found')
-  await EstimateModel.updateOne({ _id: estimateId }, {
-    $pull: {
-      externalActivities: { _id: externalActivityId },
-    },
-    total: (estimate.total - Number(itemCost?.total))
-  })
-  return true
+export const deleteOtherRequirementService = async (otherRequirementId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+
+  try {
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const itemCost = await ItemWithCostEstimatedFieldModel.findById(otherRequirementId)
+    if (!itemCost) throw new Error('item cost not found')
+
+    await ItemWithCostEstimatedFieldModel.deleteOne({ _id: otherRequirementId }, { session })
+
+    await EstimateModel.updateOne({ _id: estimateId }, {
+      $pull: {
+        otherRequirements: { _id: otherRequirementId },
+      },
+      total: (estimate.total - Number(itemCost?.total))
+    })
+    await session.commitTransaction()
+    return true
+  } catch (error) {
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
+}
+
+export const addOthersRequirements = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+  try {
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+
+    const items = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const totalAcum = _.sumBy(activities, (a) => Number(a.total))
+
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { $push: { otherRequirements: items } },
+      { total: (estimate.total + totalAcum) }
+    )
+
+    await items.map(a => a.save({ session }))
+    await session.commitTransaction()
+    return true
+  } catch (error) {
+    await session.abortTransaction()
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
+}
+
+export const deleteExternalActivitiesService = async (externalActivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+
+  try {
+
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const itemCost = await ItemWithCostEstimatedFieldModel.findById(externalActivityId)
+    if (!itemCost) throw new Error('item cost not found')
+
+    await ItemWithCostEstimatedFieldModel.deleteOne({ _id: externalActivityId }, { session })
+
+    await EstimateModel.updateOne({ _id: estimateId }, {
+      $pull: {
+        externalActivities: { _id: externalActivityId },
+      },
+      total: (estimate.total - Number(itemCost?.total))
+    })
+    return true
+  } catch (error) {
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
+}
+
+export const addExternalActivitiesServices = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
+  const session = await mongoose.startSession()
+  session.startTransaction()
+  try {
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw new Error('estimate not found')
+    const order = await getOrderByEstimateId(estimateId)
+    if (order) throw String('Could not be update, because existing order')
+
+    const items = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const totalAcum = _.sumBy(activities, (a) => Number(a.total))
+
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { $push: { externalActivities: items } },
+      { total: (estimate.total + totalAcum) }
+    )
+
+    await items.map(a => a.save({ session }))
+    await session.commitTransaction()
+    return true
+  } catch (error) {
+    await session.abortTransaction()
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
 }
