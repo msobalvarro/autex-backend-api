@@ -6,7 +6,7 @@ import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
 import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getEstimations'
-import { addActivityToDoService, deleteActivityToDoService } from 'services/estimate/updateEstimate'
+import { addActivityToDoService, addExternalActivitiesServices, addOthersRequirements, addRequiredPartsService, deleteActivityToDoService, deleteExternalActivitiesService, deleteOtherRequirementService, deleteRequiredPartService } from 'services/estimate/updateEstimate'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const createEstimateController = async (req: Request, res: Response) => {
@@ -107,6 +107,91 @@ export const addActivityToDoController = async (req: Request, res: Response) => 
 
     const params: PushItemCostFieldProps = req.body
     await addActivityToDoService(params.activities, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const deleteRequiredPartController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: UpdateItemCostFieldProps = req.body
+    await deleteRequiredPartService(params.itemId, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const addRequiredPartsControllers = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: PushItemCostFieldProps = req.body
+    await addRequiredPartsService(params.activities, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const deleteOtherRequirementsControllers = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: UpdateItemCostFieldProps = req.body
+    await deleteOtherRequirementService(params.itemId, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const addOtherRequirementsController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: PushItemCostFieldProps = req.body
+    await addOthersRequirements(params.activities, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+
+export const deleteExternalActivityController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: UpdateItemCostFieldProps = req.body
+    await deleteExternalActivitiesService(params.itemId, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const addExternalActivitiesController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: PushItemCostFieldProps = req.body
+    await addExternalActivitiesServices(params.activities, params.estimateId)
 
     res.send(true)
   } catch (error) {
