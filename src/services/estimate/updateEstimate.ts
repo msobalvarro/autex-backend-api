@@ -13,32 +13,24 @@ export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, est
     const itemCost = await ItemWithCostEstimatedFieldModel.findById(acitivityId)
     if (!itemCost) throw String('item cost not found')
 
+    await ItemWithCostEstimatedFieldModel.deleteOne({ _id: acitivityId }, { session })
+
     await EstimateModel.updateOne(
-      { _id: estimateId },
+      { _id: estimate._id },
       {
         $pull: {
-          activitiesToDo: { _id: acitivityId },
-        }
-      },
-      { session }
+          activitiesToDo: { _id: itemCost._id },
+        },
+        total: (estimate.total - Number(itemCost?.total))
+      }, { session }
     )
-
-    await EstimateModel.updateOne(
-      { _id: estimateId },
-      { total: (estimate.total - Number(itemCost?.total)) },
-      { session }
-    )
-
     await session.commitTransaction()
-
     return true
   } catch (error) {
     throw new UpdateEstimateError(String(error))
   } finally {
     session.endSession()
   }
-
-
 }
 
 export const addActivityToDoService = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
