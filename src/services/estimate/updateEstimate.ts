@@ -5,17 +5,40 @@ import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import mongoose, { Types } from 'mongoose'
 
 export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
-  const estimate = await EstimateModel.findById(estimateId)
-  if (!estimate) throw new Error('estimate not found')
-  const itemCost = await ItemWithCostEstimatedFieldModel.findById(acitivityId)
-  if (!itemCost) throw new Error('item cost not found')
-  await EstimateModel.updateOne({ _id: estimateId }, {
-    $pull: {
-      activitiesToDo: { _id: acitivityId },
-    },
-    total: (estimate.total - Number(itemCost?.total))
-  })
-  return true
+  const session = await mongoose.startSession()
+  session.startTransaction()
+  try {
+    const estimate = await EstimateModel.findById(estimateId)
+    if (!estimate) throw String('estimate not found')
+    const itemCost = await ItemWithCostEstimatedFieldModel.findById(acitivityId)
+    if (!itemCost) throw String('item cost not found')
+
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      {
+        $pull: {
+          activitiesToDo: { _id: acitivityId },
+        }
+      },
+      { session }
+    )
+
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { total: (estimate.total - Number(itemCost?.total)) },
+      { session }
+    )
+
+    await session.commitTransaction()
+
+    return true
+  } catch (error) {
+    throw new UpdateEstimateError(String(error))
+  } finally {
+    session.endSession()
+  }
+
+
 }
 
 export const addActivityToDoService = async (acitivities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
