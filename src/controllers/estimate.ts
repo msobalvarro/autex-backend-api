@@ -170,7 +170,6 @@ export const addOtherRequirementsController = async (req: Request, res: Response
   }
 }
 
-
 export const deleteExternalActivityController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)

@@ -1,9 +1,15 @@
 import { Router } from 'express'
 import {
   addActivityToDoController,
+  addExternalActivitiesController,
+  addOtherRequirementsController,
+  addRequiredPartsControllers,
   createActivitiesGroupController,
   createEstimateController,
   deleteAcitityToDoController,
+  deleteExternalActivityController,
+  deleteOtherRequirementsControllers,
+  deleteRequiredPartController,
   getActivitiesGroupController,
   getAllEstimatesController,
   getEstimateAndOrderDetailByIdController,
@@ -31,3 +37,12 @@ router.post('/create/activitiesGroup', ...checkCreateAcitivitiesGroup, createAct
 
 router.post('/delete/acitivitiesToDo', ...checkDeleteItemsFieldEstimate, deleteAcitityToDoController)
 router.post('/add/acitivitiesToDo', ...checkPushItemsFieldEstimate, addActivityToDoController)
+
+router.post('/delete/requiredPart', ...checkDeleteItemsFieldEstimate, deleteRequiredPartController)
+router.post('/add/requiredPart', ...checkPushItemsFieldEstimate, addRequiredPartsControllers)
+
+router.post('/delete/otherRequirement', ...checkDeleteItemsFieldEstimate, deleteOtherRequirementsControllers)
+router.post('/add/otherRequirement', ...checkPushItemsFieldEstimate, addOtherRequirementsController)
+
+router.post('/delete/externalActivity', ...checkDeleteItemsFieldEstimate, deleteExternalActivityController)
+router.post('/add/externalActivity', ...checkPushItemsFieldEstimate, addExternalActivitiesController)
