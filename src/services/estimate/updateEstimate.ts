@@ -41,27 +41,27 @@ export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, est
 
 }
 
-export const addActivityToDoService = async (acitivities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
+export const addActivityToDoService = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
   const session = await mongoose.startSession()
   session.startTransaction()
   try {
     const estimate = await EstimateModel.findById(estimateId)
     if (!estimate) throw new Error('estimate not found')
 
-    const acitivitiesModels = acitivities.map(act => new ItemWithCostEstimatedFieldModel(act))
-    const totalAcum = _.sumBy(acitivities, (a) => Number(a.total))
+    const activitiesModels = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const totalAcum = _.sumBy(activities, (a) => Number(a.total))
 
-    await EstimateModel.updateOne({ _id: estimateId }, {
-      $push: {
-        activitiesToDo: acitivitiesModels
-      }
-    }, { session })
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { $push: { activitiesToDo: activitiesModels } }
+    )
 
-    await EstimateModel.updateOne({ _id: estimateId }, {
-      total: (estimate.total + totalAcum)
-    }, { session })
+    await EstimateModel.updateOne(
+      { _id: estimateId },
+      { total: (estimate.total + totalAcum) }
+    )
 
-    acitivitiesModels.map(act => act.save({ session }))
+    await activitiesModels.map(a => a.save({ session }))
     await session.commitTransaction()
     return true
   } catch (error) {

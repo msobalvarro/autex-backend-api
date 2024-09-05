@@ -413,3 +413,8 @@ export interface UpdateItemCostFieldProps {
   itemId: Types.ObjectId
   estimateId: Types.ObjectId
 }
+
+export interface PushItemCostFieldProps {
+  estimateId: Types.ObjectId
+  activities: ActivityWithCostToDoItemEstimate[]
+}

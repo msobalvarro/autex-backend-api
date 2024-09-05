@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import {
+  addActivityToDoController,
   createActivitiesGroupController,
   createEstimateController,
   deleteAcitityToDoController,
@@ -10,7 +11,8 @@ import {
 } from 'controllers/estimate'
 import {
   checkCreateAcitivitiesGroup,
-  checkUpdateItemsFieldEstimate,
+  checkPushItemsFieldEstimate,
+  checkDeleteItemsFieldEstimate,
   createEstimateProps,
   getDetailIdProp
 } from 'middlewares/params'
@@ -27,4 +29,5 @@ router.get('/all', getAllEstimatesController)
 router.post('/create', ...createEstimateProps, createEstimateController)
 router.post('/create/activitiesGroup', ...checkCreateAcitivitiesGroup, createActivitiesGroupController)
 
-router.post('/delete/acitivitiesToDo', ...checkUpdateItemsFieldEstimate, deleteAcitityToDoController)
+router.post('/delete/acitivitiesToDo', ...checkDeleteItemsFieldEstimate, deleteAcitityToDoController)
+router.post('/add/acitivitiesToDo', ...checkPushItemsFieldEstimate, addActivityToDoController)

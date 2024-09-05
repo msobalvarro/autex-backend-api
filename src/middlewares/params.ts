@@ -231,7 +231,15 @@ export const checkCreateAcitivitiesGroup = [
   check('activities.*', 'activity item is not valid').isString(),
 ]
 
-export const checkUpdateItemsFieldEstimate = [
+export const checkDeleteItemsFieldEstimate = [
   check('itemId', 'item field prop is required').isMongoId(),
   check('estimateId', 'estimate id prop is required').isMongoId(),
+]
+
+export const checkPushItemsFieldEstimate = [
+  check('estimateId', 'estimate id prop is required').isMongoId(),
+  check('acitivities.*.description', 'Activity list description prop is incorrect').isString(),
+  check('acitivities.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
+  check('acitivities.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
+  check('acitivities.*.total', 'Activity total prop is incorrect').isFloat(),
 ]

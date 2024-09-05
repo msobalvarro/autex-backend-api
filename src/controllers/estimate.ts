@@ -1,12 +1,12 @@
 import { CreateAtivititiesGroupError, CreateEstimationError, UpdateEstimateError } from 'errors'
 import { Request, Response } from 'express'
-import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps, UpdateItemCostFieldProps } from 'interfaces'
+import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps, PushItemCostFieldProps, UpdateItemCostFieldProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
 import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getEstimations'
-import { deleteActivityToDoService } from 'services/estimate/updateEstimate'
+import { addActivityToDoService, deleteActivityToDoService } from 'services/estimate/updateEstimate'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const createEstimateController = async (req: Request, res: Response) => {
@@ -88,7 +88,7 @@ export const getActivitiesGroupController = async (__: Request, res: Response) =
 
 export const deleteAcitityToDoController = async (req: Request, res: Response) => {
   try {
-    const {error, message} = existErrors(req)
+    const { error, message } = existErrors(req)
     if (error) throw new UpdateEstimateError(String(message))
 
     const params: UpdateItemCostFieldProps = req.body
@@ -100,3 +100,16 @@ export const deleteAcitityToDoController = async (req: Request, res: Response) =
   }
 }
 
+export const addActivityToDoController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const params: PushItemCostFieldProps = req.body
+    await addActivityToDoService(params.activities, params.estimateId)
+
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
