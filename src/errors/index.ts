@@ -102,6 +102,14 @@ export class CreateVehiculeError extends Error {
   }
 }
 
+export class UpdateEstimateError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.UPDATE_ESTIMATE_ERROR
+    this.message = message
+  }
+}
+
 export class GetVehiculeDetailError extends Error {
   constructor(message: string) {
     super(message)

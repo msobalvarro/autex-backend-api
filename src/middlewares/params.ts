@@ -230,3 +230,8 @@ export const checkCreateAcitivitiesGroup = [
   check('activities', 'activities is not valid').isArray({ min: 1 }),
   check('activities.*', 'activity item is not valid').isString(),
 ]
+
+export const checkUpdateItemsFieldEstimate = [
+  check('itemId', 'item field prop is required').isMongoId(),
+  check('estimateId', 'estimate id prop is required').isMongoId(),
+]

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   createActivitiesGroupController,
   createEstimateController,
+  deleteAcitityToDoController,
   getActivitiesGroupController,
   getAllEstimatesController,
   getEstimateAndOrderDetailByIdController,
@@ -9,6 +10,7 @@ import {
 } from 'controllers/estimate'
 import {
   checkCreateAcitivitiesGroup,
+  checkUpdateItemsFieldEstimate,
   createEstimateProps,
   getDetailIdProp
 } from 'middlewares/params'
@@ -24,3 +26,5 @@ router.get('/all', getAllEstimatesController)
 // POST
 router.post('/create', ...createEstimateProps, createEstimateController)
 router.post('/create/activitiesGroup', ...checkCreateAcitivitiesGroup, createActivitiesGroupController)
+
+router.post('/delete/acitivitiesToDo', ...checkUpdateItemsFieldEstimate, deleteAcitityToDoController)

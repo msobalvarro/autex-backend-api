@@ -275,6 +275,7 @@ export enum ErrosList {
   CREATE_VEHICULE_BRAND = 'CREATE_VEHICULE_BRAND',
   CREATE_VEHICULE_MODEL = 'CREATE_VEHICULE_MODEL',
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
+  UPDATE_ESTIMATE_ERROR = 'UPDATE_ESTIMATE_ERROR',
   GET_VEHICULE_DETAIL_ERROR = 'GET_VEHICULE_DETAIL_ERROR',
   CREATE_ORDER_SERVICE_ERROR = 'CREATE_ORDER_SERVICE_ERROR',
   CREATE_MULTIPLE_BRANDS = 'CERATE_MULTIPLE_BRANDS',
@@ -406,4 +407,9 @@ export interface GenerateTokenFnProps {
   isAdmin: boolean
   isRoot: boolean
   workshopId: Types.ObjectId
+}
+
+export interface UpdateItemCostFieldProps {
+  itemId: Types.ObjectId
+  estimateId: Types.ObjectId
 }
