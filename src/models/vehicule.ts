@@ -74,8 +74,7 @@ const vehiculeBrandSchema = new Schema<VehiculeBrands>(
 const vehiculeModelSchema = new Schema<VehiculeModel>(
   {
     description: {
-      type: String,
-      unique: true,
+      type: String
     },
   },
   {

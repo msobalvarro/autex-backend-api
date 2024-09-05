@@ -375,6 +375,7 @@ export interface WorkshopPropierties {
   representative: string
   phoneNumber: string
   location: string
+  ruc: string
   administrators?: User[]
   users?: User[]
 }

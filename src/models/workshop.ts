@@ -11,6 +11,7 @@ const workshop = new Schema<WorkshopPropierties>(
     pictureUrl: String,
     representative: String,
     phoneNumber: String,
+    ruc: String,
     location: String,
     administrators: [{
       type: Schema.Types.ObjectId,

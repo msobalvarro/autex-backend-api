@@ -177,11 +177,10 @@ export const getAllVehiculesController = async (req: Request, res: Response) => 
 export const createMultipleModelsController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
-    const params: NewMultipleModelsProps = req.body
     if (error) {
       throw new CreateMultipleBrandsServiceError(String(message))
     }
-
+    const params: NewMultipleModelsProps = req.body
     const response = await addMultipleModels(params)
     res.send(response)
   } catch (error) {

@@ -217,6 +217,7 @@ export const checkCreateWorkshop = [
   check('representative', 'Representative name prop is required').isString(),
   check('phoneNumber', 'Phone Number prop is required').isString(),
   check('location', 'Location prop is required').isString(),
+  check('ruc', 'RUC prop is required').isString(),
 ]
 
 export const checkAssignUserToWorkshop = [
