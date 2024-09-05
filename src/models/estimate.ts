@@ -72,4 +72,4 @@ const estimatedCosts = new Schema<EstimatePropierties>(
 )
 
 export const ItemWithCostEstimatedFieldModel = model('itemWithCostEstimatedField', itemWithCostEstimatedField)
-export const EstimatedCostsModel = model('estimatedCosts', estimatedCosts)
+export const EstimateModel = model('estimatedCosts', estimatedCosts)

@@ -3,7 +3,7 @@ import { CreateEstimatedError } from 'errors'
 import { EstimateParamsPropierties, EstimatePropierties } from 'interfaces'
 import { getClientByIdService } from 'services/client/getClient'
 import { getVehiculeById } from 'services/vehicule/getVehicule'
-import { EstimatedCostsModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
+import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { ActivitiesGroupModel } from 'models/groups'
 import { WorkshopModel } from 'models/workshop'
@@ -35,7 +35,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties,
     const activitiesGroup = await ActivitiesGroupModel.findById(estimate.activitiesGroupId)
     const { inputCost, laborCost, partsCost, total, externalCost, activitiesGroupCost } = estimate
 
-    const estimateCreated = new EstimatedCostsModel({
+    const estimateCreated = new EstimateModel({
       activitiesToDo,
       client,
       inputCost,

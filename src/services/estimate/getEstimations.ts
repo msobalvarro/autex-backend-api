@@ -1,10 +1,10 @@
 import { Types } from 'mongoose'
 import { ActivitiesGroupPropierties, EstimatePropierties } from 'interfaces'
-import { EstimatedCostsModel } from 'models/estimate'
+import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
 
 export const getDetailEstimateById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
-  const dataResult = await EstimatedCostsModel.findById(id)
+  const dataResult = await EstimateModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
     .populate('traveled')
@@ -28,7 +28,7 @@ export const getDetailEstimateById = async (id: Types.ObjectId): Promise<Estimat
 }
 
 export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
-  const dataResult = await EstimatedCostsModel.findById(id)
+  const dataResult = await EstimateModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
     .populate({
@@ -51,7 +51,7 @@ export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promis
 }
 
 export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promise<EstimatePropierties[]> => {
-  const dataResult = await EstimatedCostsModel.find({ workshop: { _id: workshopId } })
+  const dataResult = await EstimateModel.find({ workshop: { _id: workshopId } })
     // const dataResult = await EstimatedCostsModel.find()
     .populate('client')
     .populate('vehicule')
