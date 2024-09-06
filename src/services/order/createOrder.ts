@@ -11,7 +11,7 @@ import {
   TypesActivitiesToDoModel
 } from 'models/order'
 import { CreateOrderServiceError } from 'errors'
-import { getDetailEstimateById } from 'services/estimate/getEstimations'
+import { getDetailEstimateByIdService } from 'services/estimate/getEstimations'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { WorkshopModel } from 'models/workshop'
 
@@ -20,7 +20,7 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
   session.startTransaction()
 
   try {
-    const estimateProps = await getDetailEstimateById(order.estimateId)
+    const estimateProps = await getDetailEstimateByIdService(order.estimateId)
     if (!estimateProps) throw String('Estimate Service not found')
     const workshop = await WorkshopModel.findById(workshopId)
     if (!workshop) throw String('Workshop not found')

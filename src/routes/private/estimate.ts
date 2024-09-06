@@ -11,6 +11,7 @@ import {
   deleteOtherRequirementsControllers,
   deleteRequiredPartController,
   getActivitiesGroupController,
+  getAllEstimatesByClientIdController,
   getAllEstimatesController,
   getEstimateAndOrderDetailByIdController,
   getEstimateDetailByIdController
@@ -29,6 +30,7 @@ export const router = Router()
 router.get('/detail/:id', ...getDetailIdProp, getEstimateDetailByIdController)
 router.get('/detailWithOrder/:id', ...getDetailIdProp, getEstimateAndOrderDetailByIdController)
 router.get('/activitiesGroup', getActivitiesGroupController)
+router.get('/get/client/:id', getAllEstimatesByClientIdController)
 router.get('/all', getAllEstimatesController)
 
 // POST

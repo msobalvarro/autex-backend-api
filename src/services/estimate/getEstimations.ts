@@ -3,7 +3,7 @@ import { ActivitiesGroupPropierties, EstimatePropierties } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
 
-export const getDetailEstimateById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
+export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
@@ -27,7 +27,7 @@ export const getDetailEstimateById = async (id: Types.ObjectId): Promise<Estimat
   return dataResult
 }
 
-export const getDetailEstimateWithOrderById = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
+export const getDetailEstimateWithOrderByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
@@ -56,6 +56,14 @@ export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promis
     .populate('client')
     .populate('vehicule')
     .sort({ createdAt: -1 })
+  return dataResult
+}
+
+export const getAllEstimatesByClientIdService = async (clientId: string): Promise<EstimatePropierties[]> => {
+  const dataResult = await EstimateModel.find({ clientId: clientId })
+    .populate('vehicule')
+    .sort({ createdAt: -1 })
+    .select('-client')
   return dataResult
 }
 

@@ -5,16 +5,15 @@ import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
-import { getActivitiesGroupService, getAllEstimatesService, getDetailEstimateById } from 'services/estimate/getEstimations'
+import { getActivitiesGroupService, getAllEstimatesByClientIdService, getAllEstimatesService, getDetailEstimateByIdService } from 'services/estimate/getEstimations'
 import { addActivityToDoService, addExternalActivitiesServices, addOthersRequirements, addRequiredPartsService, deleteActivityToDoService, deleteExternalActivitiesService, deleteOtherRequirementService, deleteRequiredPartService } from 'services/estimate/updateEstimate'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
 export const createEstimateController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
-    if (error) {
-      throw new CreateEstimationError(String(message))
-    }
+    if (error) throw new CreateEstimationError(String(message))
+
     const { workshopId }: GenerateTokenFnProps = req.cookies
     const newEstimateParams: EstimateParamsPropierties = req.body
     const newEstimate = await createEstimateService(newEstimateParams, workshopId)
@@ -27,7 +26,7 @@ export const createEstimateController = async (req: Request, res: Response) => {
 export const getEstimateDetailByIdController = async (req: Request, res: Response) => {
   try {
     const id = new Types.ObjectId(req.params.id)
-    const newEstimate = await getDetailEstimateById(id)
+    const newEstimate = await getDetailEstimateByIdService(id)
     res.send(newEstimate)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -38,7 +37,7 @@ export const getEstimateAndOrderDetailByIdController = async (req: Request, res:
   try {
     const { workshopId }: GenerateTokenFnProps = req.cookies
     const id = new Types.ObjectId(req.params.id)
-    const estimate = await getDetailEstimateById(id)
+    const estimate = await getDetailEstimateByIdService(id)
 
     if (String(workshopId) !== estimate?.workshop._id.toString()) {
       return res.status(403).send('You not have permission')
@@ -55,6 +54,18 @@ export const getAllEstimatesController = async (req: Request, res: Response) => 
   try {
     const { workshopId }: GenerateTokenFnProps = req.cookies
     const data = await getAllEstimatesService(workshopId)
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllEstimatesByClientIdController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new CreateEstimationError(String(message))
+    const { clientId } = req.params
+    const data = await getAllEstimatesByClientIdService(clientId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
