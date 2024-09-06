@@ -277,6 +277,7 @@ export enum ErrosList {
   CREATE_VEHICULE_ERROR = 'CREATE_VEHICULE_ERROR',
   UPDATE_ESTIMATE_ERROR = 'UPDATE_ESTIMATE_ERROR',
   GET_VEHICULE_DETAIL_ERROR = 'GET_VEHICULE_DETAIL_ERROR',
+  GET_VEHICULE_ERROR = 'GET_VEHICULE_ERROR',
   CREATE_ORDER_SERVICE_ERROR = 'CREATE_ORDER_SERVICE_ERROR',
   CREATE_MULTIPLE_BRANDS = 'CERATE_MULTIPLE_BRANDS',
   UPDATE_STATUS_ORDEE = 'UPDATE_STATUS_ORDEE',
@@ -331,7 +332,7 @@ export interface CreateVehiculeProps {
 }
 
 export interface DetailVehiculeProps {
-  _id?: Types.ObjectId
+  _id: Types.ObjectId
 }
 
 export interface PropsAuth {
@@ -417,4 +418,8 @@ export interface UpdateItemCostFieldProps {
 export interface PushItemCostFieldProps {
   estimateId: Types.ObjectId
   activities: ActivityWithCostToDoItemEstimate[]
+}
+
+export interface ListClientVehiculesProps {
+  clientId: Types.ObjectId
 }

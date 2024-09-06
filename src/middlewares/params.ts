@@ -109,6 +109,10 @@ export const getVehiculeDetailProps = [
   check('_id', 'Id is required').isMongoId(),
 ]
 
+export const getClientsVehiculeDetailProps = [
+  check('clientId', 'Client Id is required').isMongoId(),
+]
+
 export const createDiagnosticProps = [
   check('clientId', 'Client Id is required').isMongoId(),
   check('vehiculeId', 'vehicule Id is required').isMongoId(),

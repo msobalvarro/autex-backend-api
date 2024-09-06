@@ -50,8 +50,10 @@ export const addActivityToDoService = async (activities: ActivityWithCostToDoIte
 
     await EstimateModel.updateOne(
       { _id: estimateId },
-      { $push: { activitiesToDo: activitiesModels } },
-      { total: (estimate.total + totalAcum) }
+      {
+        $push: { activitiesToDo: activitiesModels },
+        total: (estimate.total + totalAcum)
+      },
     )
 
     await activitiesModels.map(a => a.save({ session }))
@@ -109,8 +111,10 @@ export const addRequiredPartsService = async (activities: ActivityWithCostToDoIt
 
     await EstimateModel.updateOne(
       { _id: estimateId },
-      { $push: { requiredParts: items } },
-      { total: (estimate.total + totalAcum) }
+      {
+        $push: { requiredParts: items },
+        total: (estimate.total + totalAcum)
+      }
     )
 
     await items.map(a => a.save({ session }))
@@ -167,8 +171,10 @@ export const addOthersRequirements = async (activities: ActivityWithCostToDoItem
 
     await EstimateModel.updateOne(
       { _id: estimateId },
-      { $push: { otherRequirements: items } },
-      { total: (estimate.total + totalAcum) }
+      {
+        $push: { otherRequirements: items },
+        total: (estimate.total + totalAcum)
+      },
     )
 
     await items.map(a => a.save({ session }))
@@ -203,6 +209,8 @@ export const deleteExternalActivitiesService = async (externalActivityId: Types.
       },
       total: (estimate.total - Number(itemCost?.total))
     })
+
+    await session.commitTransaction()
     return true
   } catch (error) {
     throw new UpdateEstimateError(String(error))
@@ -225,8 +233,10 @@ export const addExternalActivitiesServices = async (activities: ActivityWithCost
 
     await EstimateModel.updateOne(
       { _id: estimateId },
-      { $push: { externalActivities: items } },
-      { total: (estimate.total + totalAcum) }
+      {
+        $push: { externalActivities: items },
+        total: (estimate.total + totalAcum)
+      },
     )
 
     await items.map(a => a.save({ session }))

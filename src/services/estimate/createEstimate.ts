@@ -2,7 +2,7 @@ import mongoose, { Types } from 'mongoose'
 import { CreateEstimatedError } from 'errors'
 import { EstimateParamsPropierties, EstimatePropierties } from 'interfaces'
 import { getClientByIdService } from 'services/client/getClient'
-import { getVehiculeById } from 'services/vehicule/getVehicule'
+import { getVehiculeByIdService } from 'services/vehicule/getVehicule'
 import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { ActivitiesGroupModel } from 'models/groups'
@@ -12,7 +12,7 @@ export const createEstimateService = async (estimate: EstimateParamsPropierties,
   const session = await mongoose.startSession()
   session.startTransaction()
   try {
-    const vehicule = await getVehiculeById(estimate.vehiculeId)
+    const vehicule = await getVehiculeByIdService(estimate.vehiculeId)
     if (!vehicule) {
       throw new CreateEstimatedError('Vehicule not found')
     }

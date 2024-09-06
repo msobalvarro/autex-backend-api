@@ -1,5 +1,5 @@
 import { DiagnosticPropierties, DiagnosticProps } from 'interfaces'
-import { getVehiculeById } from '../vehicule/getVehicule'
+import { getVehiculeByIdService } from '../vehicule/getVehicule'
 import { CreateDiagnosticError } from 'errors'
 import { createRecommendation } from './createRecommendations'
 import {
@@ -18,7 +18,7 @@ export const createDiagnoticService = async (diagnostic: DiagnosticProps): Promi
   session.startTransaction()
 
   try {
-    const vehicule = await getVehiculeById(diagnostic.vehiculeId)
+    const vehicule = await getVehiculeByIdService(diagnostic.vehiculeId)
     if (!vehicule) {
       throw new CreateDiagnosticError('Vehicule not found')
     }

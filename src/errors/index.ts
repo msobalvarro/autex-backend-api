@@ -118,6 +118,14 @@ export class GetVehiculeDetailError extends Error {
   }
 }
 
+export class GetVehiculeError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.GET_VEHICULE_ERROR
+    this.message = message
+  }
+}
+
 export class CreateDiagnosticError extends Error {
   constructor(message: string) {
     super(message)

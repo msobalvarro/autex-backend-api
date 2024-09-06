@@ -3,13 +3,13 @@ import {
   CreateVehiculeBrandError,
   CreateVehiculeModelError,
   GetVehiculeDetailError,
+  GetVehiculeError,
   UpdateVehiculeBrandError,
   UpdateVehiculeClient
 } from 'errors'
 import {
   AssignVehiculeToClientProps,
   CreateVehiculeProps,
-  DetailVehiculeProps,
   GenerateTokenFnProps,
   NewMultipleModelsProps,
   NewVehiculeModelProps,
@@ -25,7 +25,7 @@ import { addModelToBrand, addMultipleModels } from 'services/vehicule/updateVehi
 import { existErrors } from 'middlewares/params'
 import { createVehiculeService } from 'services/vehicule/createVehicule'
 import { Request, Response } from 'express'
-import { getAllVehicles, getVehiculeDetailService } from 'services/vehicule/getVehicule'
+import { getAllVehiculesService, getClientAllVehiculeListService, getVehiculeDetailService } from 'services/vehicule/getVehicule'
 import { getAllBrandsAndModel, getAllModelsService } from 'services/vehicule/getVehiculeModel'
 import { assignVehiculeToClientService } from 'services/vehicule/assignVehiculeToClient'
 
@@ -36,11 +36,7 @@ export const getVehiculeDetailController = async (req: Request, res: Response) =
       throw new GetVehiculeDetailError(String(message))
     }
 
-    const { _id }: DetailVehiculeProps = req.params
-    if (!_id) {
-      return new GetVehiculeDetailError('id is required')
-    }
-
+    const { _id } = req.params    
     const vehicule = await getVehiculeDetailService(_id)
     res.send(vehicule)
   } catch (error) {
@@ -167,7 +163,7 @@ export const createVehiculeController = async (req: Request, res: Response) => {
 export const getAllVehiculesController = async (req: Request, res: Response) => {
   try {
     const { workshopId }: GenerateTokenFnProps = req.cookies
-    const data = await getAllVehicles(workshopId)
+    const data = await getAllVehiculesService(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -183,6 +179,20 @@ export const createMultipleModelsController = async (req: Request, res: Response
     const params: NewMultipleModelsProps = req.body
     const response = await addMultipleModels(params)
     res.send(response)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllUserVehiculesController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    const { clientId } = req.params
+    if (error) throw new GetVehiculeError(String(message))
+    if (!clientId) throw new GetVehiculeError('clientId is required')
+
+    const data = await getClientAllVehiculeListService(clientId)
+    res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

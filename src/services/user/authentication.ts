@@ -17,11 +17,12 @@ export const authenticateUserService = async ({ email, password }: UserAuthentic
   }
 
   const workshop = await WorkshopModel.findOne({ users: { _id: user._id } })
+    .select('-administrators -users -createdAt -updatedAt')
 
-  if (!workshop) { 
+  if (!workshop) {
     throw new AuthenticationError('User not activate, contact the administrator')
   }
-  
+
   const token = generateToken({
     id: user._id,
     workshopId: workshop._id,
