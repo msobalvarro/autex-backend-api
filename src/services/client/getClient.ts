@@ -25,7 +25,10 @@ export const getAllClientsWithCars = async (workshopId: Types.ObjectId): Promise
 }
 
 export const getClientByIdService = async (id: Types.ObjectId): Promise<Client | null> => {
-  const client: Client | null = await ClientModel.findById(id)
+  const client: Client | null = await ClientModel.findById(id).populate({
+    path: 'vehicules',
+    populate: [{ path: 'brand' }, { path: 'model', select: '-model' }]
+  })
 
   return client
 }

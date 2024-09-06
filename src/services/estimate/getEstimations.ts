@@ -60,8 +60,11 @@ export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promis
 }
 
 export const getAllEstimatesByClientIdService = async (clientId: string): Promise<EstimatePropierties[]> => {
-  const dataResult = await EstimateModel.find({ clientId: clientId })
-    .populate('vehicule')
+  const dataResult = await EstimateModel.find({ client: { _id: clientId } })
+    .populate({
+      path: 'vehicule',
+      populate: [{ path: 'brand', select: '-model' }, { path: 'model' }]
+    })
     .sort({ createdAt: -1 })
     .select('-client')
   return dataResult
