@@ -13,7 +13,7 @@ import { Types } from 'mongoose'
 import { createOrder } from 'services/order/createOrder'
 import { createOrAddAdditionalTask } from 'services/order/createAdditionalTask'
 import { updateFindingsListService } from 'services/order/findingsListUpdate'
-import { getAllOrders, getOrderByIdService } from 'services/order/getOrder'
+import { getAllOrders, getAllOrdersByClientIdService, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
 import { closeOrderService } from 'services/order/updateStatusOrder'
@@ -45,6 +45,19 @@ export const getAllOrdersController = async (req: Request, res: Response) => {
   try {
     const { workshopId }: GenerateTokenFnProps = req.cookies
     const data = await getAllOrders(workshopId)
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllOrdersByClientController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new CreateOrderServiceError(String(message))
+
+    const { clientId } = req.params    
+    const data = await getAllOrdersByClientIdService(clientId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)

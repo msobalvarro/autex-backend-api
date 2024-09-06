@@ -138,6 +138,10 @@ export const getDetailIdProp = [
   check('_id', 'Id is required').isMongoId(),
 ]
 
+export const getByClientProp = [
+  check('clientId', 'Id is required').isMongoId(),
+]
+
 export const createEstimateProps = [
   check('clientId', 'Client Id is required').isMongoId(),
   check('vehiculeId', 'vehicule Id is required').isMongoId(),

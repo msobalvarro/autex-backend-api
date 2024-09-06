@@ -1,11 +1,30 @@
-import { CloseOrderController, CreateAdditionalTaskListController, UpdateFindingsListController, UpdateObservationListController, UpdateResumeController, createOrderController, getAllOrdersController, getDetailByIdController } from 'controllers/order'
-import { checkUpdateStatusOrder, checkUpdateListOrder, checkUpdateResume, createOrderProps, getDetailIdProp, updateAdditionalTaskListOrder } from 'middlewares/params'
+import {
+  CloseOrderController,
+  CreateAdditionalTaskListController,
+  UpdateFindingsListController,
+  UpdateObservationListController,
+  UpdateResumeController,
+  createOrderController,
+  getAllOrdersByClientController,
+  getAllOrdersController,
+  getDetailByIdController
+} from 'controllers/order'
+import {
+  checkUpdateStatusOrder,
+  checkUpdateListOrder,
+  checkUpdateResume,
+  createOrderProps,
+  getDetailIdProp,
+  updateAdditionalTaskListOrder,
+  getByClientProp
+} from 'middlewares/params'
 import { Router } from 'express'
 
 export const router = Router()
 
 // get api
 router.get('/getAll', getAllOrdersController)
+router.get('/get/client/:clientId', ...getByClientProp, getAllOrdersByClientController)
 router.get('/detail/:_id', ...getDetailIdProp, getDetailByIdController)
 
 // creates

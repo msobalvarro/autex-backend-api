@@ -420,6 +420,6 @@ export interface PushItemCostFieldProps {
   activities: ActivityWithCostToDoItemEstimate[]
 }
 
-export interface ListClientVehiculesProps {
+export interface ListClientDataReportProps {
   clientId: Types.ObjectId
 }
