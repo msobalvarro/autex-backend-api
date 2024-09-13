@@ -17,6 +17,7 @@ export const createUserValidation = [
   check('name', 'Name is required').notEmpty(),
   check('email', 'Email is required').notEmpty().isEmail(),
   check('password', 'Password is required').notEmpty(),
+  check('isAdmin', 'admin prop is required').isBoolean(),
 ]
 
 export const createUserAndWorkshopIdValidation = [
