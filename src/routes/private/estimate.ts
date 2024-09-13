@@ -13,6 +13,7 @@ import {
   getActivitiesGroupController,
   getAllEstimatesByClientIdController,
   getAllEstimatesController,
+  getAllEstimatesRangeDateController,
   getEstimateAndOrderDetailByIdController,
   getEstimateDetailByIdController
 } from 'controllers/estimate'
@@ -32,6 +33,7 @@ router.get('/detailWithOrder/:id', ...getDetailIdProp, getEstimateAndOrderDetail
 router.get('/activitiesGroup', getActivitiesGroupController)
 router.get('/get/client/:clientId', getAllEstimatesByClientIdController)
 router.get('/all', getAllEstimatesController)
+router.get('/all/range', getAllEstimatesRangeDateController)
 
 // POST
 router.post('/create', ...createEstimateProps, createEstimateController)

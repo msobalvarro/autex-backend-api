@@ -1,11 +1,11 @@
 import { CreateAtivititiesGroupError, CreateEstimationError, UpdateEstimateError } from 'errors'
 import { Request, Response } from 'express'
-import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps, PushItemCostFieldProps, UpdateItemCostFieldProps } from 'interfaces'
+import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps, PushItemCostFieldProps, ReportEstimateProps, UpdateItemCostFieldProps } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
-import { getActivitiesGroupService, getAllEstimatesByClientIdService, getAllEstimatesService, getDetailEstimateByIdService } from 'services/estimate/getEstimations'
+import { getActivitiesGroupService, getAllEstimatesByClientIdService, getAllEstimatesService, getDetailEstimateByIdService, getReportEstimationByDateService } from 'services/estimate/getEstimations'
 import { addActivityToDoService, addExternalActivitiesServices, addOthersRequirements, addRequiredPartsService, deleteActivityToDoService, deleteExternalActivitiesService, deleteOtherRequirementService, deleteRequiredPartService } from 'services/estimate/updateEstimate'
 import { getOrderByEstimateId } from 'services/order/getOrder'
 
@@ -204,6 +204,20 @@ export const addExternalActivitiesController = async (req: Request, res: Respons
     await addExternalActivitiesServices(params.activities, params.estimateId)
 
     res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllEstimatesRangeDateController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new Error(String(message))
+
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { from, to }: ReportEstimateProps = req.body
+    const data = await getReportEstimationByDateService({ from, to, workshopId })
+    res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

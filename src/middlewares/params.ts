@@ -252,3 +252,8 @@ export const checkPushItemsFieldEstimate = [
   check('acitivities.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
   check('acitivities.*.total', 'Activity total prop is incorrect').isFloat(),
 ]
+
+export const checkGetAllEstimateByRange = [
+  check('from', 'from prop is required').isDate(),
+  check('to', 'to prop is required').isDate(),
+]

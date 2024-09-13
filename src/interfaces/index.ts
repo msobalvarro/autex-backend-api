@@ -423,3 +423,9 @@ export interface PushItemCostFieldProps {
 export interface ListClientDataReportProps {
   clientId: Types.ObjectId
 }
+
+export interface ReportEstimateProps {
+  from: Date
+  to: Date
+  workshopId: Types.ObjectId
+}
