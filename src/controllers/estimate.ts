@@ -1,13 +1,40 @@
-import { CreateAtivititiesGroupError, CreateEstimationError, UpdateEstimateError } from 'errors'
+import dayjs from 'dayjs'
 import { Request, Response } from 'express'
-import { ActivitiesGroupPropierties, ActivitiesGroupProps, EstimateParamsPropierties, GenerateTokenFnProps, PushItemCostFieldProps, ReportEstimateProps, UpdateItemCostFieldProps } from 'interfaces'
-import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
 import { createAcitivitiesGroupService } from 'services/estimate/createAcitivitiesGroup'
 import { createEstimateService } from 'services/estimate/createEstimate'
-import { getActivitiesGroupService, getAllEstimatesByClientIdService, getAllEstimatesService, getDetailEstimateByIdService, getReportEstimationByDateService } from 'services/estimate/getEstimations'
-import { addActivityToDoService, addExternalActivitiesServices, addOthersRequirements, addRequiredPartsService, deleteActivityToDoService, deleteExternalActivitiesService, deleteOtherRequirementService, deleteRequiredPartService } from 'services/estimate/updateEstimate'
+import { existErrors } from 'middlewares/params'
 import { getOrderByEstimateId } from 'services/order/getOrder'
+import {
+  CreateAtivititiesGroupError,
+  CreateEstimationError,
+  UpdateEstimateError
+} from 'errors'
+import {
+  ActivitiesGroupPropierties,
+  ActivitiesGroupProps,
+  EstimateParamsPropierties,
+  GenerateTokenFnProps,
+  PushItemCostFieldProps,
+  UpdateItemCostFieldProps
+} from 'interfaces'
+import {
+  getActivitiesGroupService,
+  getAllEstimatesByClientIdService,
+  getAllEstimatesService,
+  getDetailEstimateByIdService,
+  getReportEstimationByDateService
+} from 'services/estimate/getEstimations'
+import {
+  addActivityToDoService,
+  addExternalActivitiesServices,
+  addOthersRequirements,
+  addRequiredPartsService,
+  deleteActivityToDoService,
+  deleteExternalActivitiesService,
+  deleteOtherRequirementService,
+  deleteRequiredPartService
+} from 'services/estimate/updateEstimate'
 
 export const createEstimateController = async (req: Request, res: Response) => {
   try {
@@ -213,10 +240,14 @@ export const getAllEstimatesRangeDateController = async (req: Request, res: Resp
   try {
     const { error, message } = existErrors(req)
     if (error) throw new Error(String(message))
-
     const { workshopId }: GenerateTokenFnProps = req.cookies
-    const { from, to }: ReportEstimateProps = req.body
-    const data = await getReportEstimationByDateService({ from, to, workshopId })
+    const { from, to } = req.query
+    if (!from || !to) throw new Error('from and to is required')
+
+    const startDate = dayjs(`${from}`).startOf('day').toDate()
+    const endDate = dayjs(`${to}`).endOf('day').toDate()
+
+    const data = await getReportEstimationByDateService({ from: startDate, to: endDate, workshopId })
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)

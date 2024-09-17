@@ -429,3 +429,8 @@ export interface ReportEstimateProps {
   to: Date
   workshopId: Types.ObjectId
 }
+
+export interface ReportEstimatePropierties {
+  date: Date
+  count: number
+}

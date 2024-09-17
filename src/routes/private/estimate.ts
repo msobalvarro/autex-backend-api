@@ -22,7 +22,8 @@ import {
   checkPushItemsFieldEstimate,
   checkDeleteItemsFieldEstimate,
   createEstimateProps,
-  getDetailIdProp
+  getDetailIdProp,
+  checkGetAllEstimateByRange
 } from 'middlewares/params'
 
 export const router = Router()
@@ -33,7 +34,7 @@ router.get('/detailWithOrder/:id', ...getDetailIdProp, getEstimateAndOrderDetail
 router.get('/activitiesGroup', getActivitiesGroupController)
 router.get('/get/client/:clientId', getAllEstimatesByClientIdController)
 router.get('/all', getAllEstimatesController)
-router.get('/all/range', getAllEstimatesRangeDateController)
+router.get('/all/report', checkGetAllEstimateByRange, getAllEstimatesRangeDateController)
 
 // POST
 router.post('/create', ...createEstimateProps, createEstimateController)

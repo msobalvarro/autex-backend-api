@@ -2,10 +2,12 @@ import { Types } from 'mongoose'
 import {
   ActivitiesGroupPropierties,
   EstimatePropierties,
+  ReportEstimatePropierties,
   ReportEstimateProps
 } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
+import { WorkshopModel } from 'models/workshop'
 
 export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
@@ -78,14 +80,33 @@ export const getActivitiesGroupService = async (): Promise<ActivitiesGroupPropie
   return data
 }
 
-export const getReportEstimationByDateService = async ({ from, to, workshopId }: ReportEstimateProps): Promise<EstimatePropierties[]> => {
-  const dataResult = await EstimateModel.find({
-    workshop: { _id: workshopId },
-    createdAt: {
-      $gte: from,
-      $lte: to
-    }
-  })
+export const getReportEstimationByDateService = async ({ from, to, workshopId }: ReportEstimateProps): Promise<ReportEstimatePropierties[]> => {
+  // const workshop = await WorkshopModel.findById(workshopId)
 
-  return dataResult
+  const result = await EstimateModel.aggregate([
+    {
+      $match: {
+        // workshop,
+        createdAt: {
+          $gte: from,
+          $lte: to
+        }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: '%m-%d-%Y', date: '$createdAt' }
+        },
+        count: { $sum: 1 }
+      }
+    },
+    { 
+      $sort: { _id: 1 }
+    }
+
+  ]);
+
+  const data: ReportEstimatePropierties[] = await result.map(res => ({ count: res.count, date: res._id }))
+  return data
 }

@@ -1,7 +1,11 @@
 
 import { Request } from 'express'
-import { body, check, validationResult } from 'express-validator'
+import { body, check, validationResult, query } from 'express-validator'
 import { ErrorResultProps } from 'interfaces'
+
+// regex for MM-DD-YYY
+// eslint-disable-next-line no-useless-escape
+const regexForDate = `/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/`
 
 export const existErrors = (req: Request): ErrorResultProps => {
   const errors = validationResult(req)
@@ -254,6 +258,6 @@ export const checkPushItemsFieldEstimate = [
 ]
 
 export const checkGetAllEstimateByRange = [
-  check('from', 'from prop is required').isDate(),
-  check('to', 'to prop is required').isDate(),
+  query('from', 'from prop is required').isString(),
+  query('to', 'to prop is required').isString(),
 ]
