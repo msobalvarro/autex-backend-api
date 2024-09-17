@@ -7,6 +7,7 @@ import {
   createOrderController,
   getAllOrdersByClientController,
   getAllOrdersController,
+  getAllOrdersRangeReportController,
   getDetailByIdController
 } from 'controllers/order'
 import {
@@ -23,7 +24,8 @@ import { Router } from 'express'
 export const router = Router()
 
 // get api
-router.get('/getAll', getAllOrdersController)
+router.get('/all', getAllOrdersController)
+router.get('/all/report', getAllOrdersRangeReportController)
 router.get('/get/client/:clientId', ...getByClientProp, getAllOrdersByClientController)
 router.get('/detail/:_id', ...getDetailIdProp, getDetailByIdController)
 

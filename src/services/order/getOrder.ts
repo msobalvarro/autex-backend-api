@@ -20,7 +20,7 @@ export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderSer
   return order
 }
 
-export const getAllOrdersByClientIdService = async (clientId: string): Promise<OrderServicePropierties[]> => {
+export const getAllOrdersByClientIdService = async (clientId: Types.ObjectId): Promise<OrderServicePropierties[]> => {
   const orders: OrderServicePropierties[] = []
 
   const estimates = await EstimateModel.find({ client: { _id: clientId } }).select('_id')

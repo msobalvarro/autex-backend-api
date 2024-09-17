@@ -9,7 +9,7 @@ const PUBLIC = 'public'
 const pathRoute = `${__dirname}`
 const privateRoutes = readdirSync(`${pathRoute}/${PRIVATE}`)
 const publicRoutes = readdirSync(`${pathRoute}/${PUBLIC}`)
-const totalRotes = (privateRoutes.length + publicRoutes.length) - 1 // TODO: -1 because index is not allowed
+const totalRotes = (privateRoutes.length + publicRoutes.length)
 let totalAdded = 0
 
 export const router = Router()
@@ -19,23 +19,21 @@ const mapFiles = async (fileName: string, path: string) => {
   const routeFile = FileName(fileName)
   let success = false
 
-  if (routeFile !== 'index') {
-    try {
-      const module = await import(`./${path}/${routeFile}`)
-      
-      if (path === PRIVATE) {
-        router.use(`/${routeFile}`, authMiddleware, module.router)
-      } else {
-        router.use(`/${routeFile}`, module.router)
-      }
+  try {
+    const module = await import(`./${path}/${routeFile}`)
 
-      totalAdded++
-      success = true
-    } catch (error) {
-      throw new ImportModulesErrors(`${error} - ${routeFile} is not added`)
-    } finally {
-      console.log(`[${totalAdded}/${totalRotes}] ${routeFile} (${success ? 'added' : 'not added'})`)
+    if (path === PRIVATE) {
+      router.use(`/${routeFile}`, authMiddleware, module.router)
+    } else {
+      router.use(`/${routeFile}`, module.router)
     }
+
+    totalAdded++
+    success = true
+  } catch (error) {
+    throw new ImportModulesErrors(`${error} - ${routeFile} is not added`)
+  } finally {
+    console.log(`[${totalAdded}/${totalRotes}] ${routeFile} (${success ? 'added' : 'not added'})`)
   }
 }
 

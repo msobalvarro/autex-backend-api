@@ -424,13 +424,18 @@ export interface ListClientDataReportProps {
   clientId: Types.ObjectId
 }
 
-export interface ReportEstimateProps {
+export interface ReportProps {
   from: Date
   to: Date
   workshopId: Types.ObjectId
 }
 
-export interface ReportEstimatePropierties {
+export interface ReportResponsePropierties {
   date: Date
   count: number
+}
+
+
+export interface OrderDataReportProps {
+  clientId: Types.ObjectId
 }

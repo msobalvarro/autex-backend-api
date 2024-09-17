@@ -13,7 +13,7 @@ export const existErrors = (req: Request): ErrorResultProps => {
 
   return {
     error: existError,
-    message: existError ? errors.array()[0].msg : null
+    message: existError ? errors.array().map(e => e.msg).toString().replaceAll(',', ', ') : null
   }
 }
 
@@ -258,6 +258,6 @@ export const checkPushItemsFieldEstimate = [
 ]
 
 export const checkGetAllEstimateByRange = [
-  query('from', 'from prop is required').isString(),
-  query('to', 'to prop is required').isString(),
+  // query('from', 'from prop is required').matches(regexForDate),
+  // query('to', 'to prop is required').matches(regexForDate),
 ]

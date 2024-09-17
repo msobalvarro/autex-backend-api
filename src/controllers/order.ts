@@ -17,6 +17,8 @@ import { getAllOrders, getAllOrdersByClientIdService, getOrderByIdService } from
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
 import { closeOrderService } from 'services/order/updateStatusOrder'
+import dayjs from 'dayjs'
+import { getReportOrderService } from 'services/order/getReport'
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
@@ -51,13 +53,31 @@ export const getAllOrdersController = async (req: Request, res: Response) => {
   }
 }
 
+export const getAllOrdersRangeReportController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new Error(String(message))
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { from, to } = req.query
+    if (!from || !to) throw new Error('from and to is required')
+
+    const startDate = dayjs(`${from}`).startOf('day').toDate()
+    const endDate = dayjs(`${to}`).endOf('day').toDate()
+
+    const data = await getReportOrderService({ from: startDate, to: endDate, workshopId })
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
 export const getAllOrdersByClientController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
     if (error) throw new CreateOrderServiceError(String(message))
 
-    const { clientId } = req.params    
-    const data = await getAllOrdersByClientIdService(clientId)
+    const { clientId } = req.params
+    const data = await getAllOrdersByClientIdService(new Types.ObjectId(clientId))
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
