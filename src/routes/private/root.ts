@@ -6,7 +6,9 @@ import { checkAssignUserToWorkshop, checkCreateWorkshop } from 'middlewares/para
 export const router = Router()
 
 // GET /
-router.get('/workshop/get/all', authUserAdminMiddleware, getAllWorkshopsController)
+router.get('/workshop/get/all',
+  authUserAdminMiddleware,
+  getAllWorkshopsController)
 
 // POST / 
 router.post('/workshop/create',

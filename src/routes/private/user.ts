@@ -1,6 +1,7 @@
 import {
   createUserAndAddToWorkshopController,
   createUserController,
+  getAllUserFromWorkshopController,
   updateUserController,
   updateUserStatusController
 } from 'controllers/user'
@@ -11,10 +12,38 @@ import {
   updateUserValidation
 } from 'middlewares/params'
 import { Router } from 'express'
+import { authUserRootMiddleware } from 'middlewares/auth'
 
 export const router = Router()
+// get
+router.get(
+  '/get/all',
+  authUserRootMiddleware,
+  getAllUserFromWorkshopController
+)
 
-router.post('/create', ...createUserValidation, createUserController)
-router.post('/create/workshop', ...createUserAndWorkshopIdValidation, createUserAndAddToWorkshopController)
-router.put('/update', ...updateUserValidation, updateUserController)
-router.put('/update/status', ...updateUserStatusValidation, updateUserStatusController)
+// actions
+router.post(
+  '/create',
+  authUserRootMiddleware,
+  ...createUserValidation,
+  createUserController
+)
+router.post(
+  '/create/workshop',
+  authUserRootMiddleware,
+  ...createUserAndWorkshopIdValidation,
+  createUserAndAddToWorkshopController
+)
+router.put(
+  '/update',
+  authUserRootMiddleware,
+  ...updateUserValidation,
+  updateUserController
+)
+router.put(
+  '/update/status',
+  authUserRootMiddleware,
+  ...updateUserStatusValidation,
+  updateUserStatusController
+)

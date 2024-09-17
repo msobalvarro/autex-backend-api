@@ -4,6 +4,7 @@ import { updateUserService } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
 import {
+  GenerateTokenFnProps,
   NewUserWithWorkshopIdProps,
   User,
   UserUpdateProps,
@@ -11,6 +12,7 @@ import {
 } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { UpdateUserStatus } from 'services/user/updateStatus'
+import { getAllUserFromWorkshopId } from 'services/user/getUser'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -72,6 +74,16 @@ export const updateUserStatusController = async (req: Request, res: Response) =>
     const { status, userId }: UserUpdateStatusProps = req.body
     await UpdateUserStatus(userId, status)
     res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getAllUserFromWorkshopController = async (req: Request, res: Response) => {
+  try {
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const users = await getAllUserFromWorkshopId(workshopId)
+    res.send(users)
   } catch (error) {
     res.status(500).send(`${error}`)
   }
