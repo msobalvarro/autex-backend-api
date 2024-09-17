@@ -30,3 +30,15 @@ export const authUserAdminMiddleware = (req: Request, res: Response, next: NextF
     res.status(401).send(`${error}`)
   }
 }
+
+export const authUserRootMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { isRoot }: GenerateTokenFnProps = req.cookies
+    if (!isRoot) {
+      throw new AuthorizationError('You do not have permissions for this action')
+    }
+    next()
+  } catch (error) {
+    res.status(401).send(`${error}`)
+  }
+}

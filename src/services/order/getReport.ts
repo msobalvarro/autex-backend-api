@@ -63,5 +63,6 @@ export const getReportOrderService = async ({ from, to, workshopId }: ReportProp
     predictive,
     preventive,
     service,
+    total: typesActivitiesIds.length
   }
 }
