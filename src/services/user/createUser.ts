@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 import { NewUserWithWorkshopIdProps, User } from 'interfaces'
 import { findUserByEmail } from 'services/user/findUser'
 import { UserModel } from 'models/user'
@@ -6,7 +6,7 @@ import { CreateUserError, CreateUserWorkshopError } from 'errors'
 import { createHash } from 'utils/jwt'
 import { WorkshopModel } from 'models/workshop'
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUserService = async (user: User): Promise<User> => {
   const currentUser = await findUserByEmail(user.email)
   const passwordEncripted = createHash(`${user.password}`)
 
@@ -20,6 +20,7 @@ export const createUser = async (user: User): Promise<User> => {
     password: passwordEncripted,
     ...(user.isAdmin ? { isAdmin: true } : {})
   })
+
   return userCreated
 }
 
@@ -29,7 +30,7 @@ export const createUserAndAssignToWorkshop = async (props: NewUserWithWorkshopId
 
   try {
     const { email, name, workshopId, password } = props
-    const user = await createUser({ email, name, password })
+    const user = await createUserService({ email, name, password })
     await WorkshopModel.updateOne({ _id: workshopId }, {
       $push: { users: user }
     })
@@ -46,10 +47,19 @@ export const createUserAndAssignToWorkshop = async (props: NewUserWithWorkshopId
 
 export const createUserAdminAndAssignToWorkshop = async (props: NewUserWithWorkshopIdProps): Promise<User> => {
   const { email, name, workshopId, password } = props
-  const user = await createUser({ email, name, password, isAdmin: true })
+  const user = await createUserService({ email, name, password, isAdmin: true })
   await WorkshopModel.updateOne({ _id: workshopId }, {
     $push: { administrators: user }
   })
 
   return user
+}
+
+export const assignUserToWorkshop = async (userId: Types.ObjectId, workshopId: Types.ObjectId) => {
+  const user = await UserModel.findById(userId)
+  if (!user) throw new CreateUserError('user not found')
+
+  await WorkshopModel.updateOne({ _id: workshopId }, {
+    $push: { users: user }
+  })
 }

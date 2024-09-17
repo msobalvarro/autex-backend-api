@@ -1,11 +1,10 @@
-import { createUser, createUserAndAssignToWorkshop } from 'services/user/createUser'
+import { assignUserToWorkshop, createUserService } from 'services/user/createUser'
 import { findUserById } from 'services/user/findUser'
 import { updateUserService } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
 import {
   GenerateTokenFnProps,
-  NewUserWithWorkshopIdProps,
   User,
   UserUpdateProps,
   UserUpdateStatusProps
@@ -13,32 +12,22 @@ import {
 import { existErrors } from 'middlewares/params'
 import { UpdateUserStatus } from 'services/user/updateStatus'
 import { getAllUserFromWorkshopId } from 'services/user/getUser'
+import { Types } from 'mongoose'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
+    const { error, message } = existErrors(req)
+    if (error) throw new CreateUserError(`${message}`)
+
     const dataParams: User = req.body
-    const { error, message } = existErrors(req)
-    if (error) {
-      throw new CreateUserError(`${message}`)
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const user = await createUserService(dataParams)
+
+    if (user) {
+      await assignUserToWorkshop(new Types.ObjectId(user._id), workshopId)
     }
-
-    const dataCreated = await createUser(dataParams)
-    res.send(dataCreated)
-  } catch (error) {
-    res.status(500).send(`${error}`)
-  }
-}
-
-export const createUserAndAddToWorkshopController = async (req: Request, res: Response) => {
-  try {
-    const dataParams: NewUserWithWorkshopIdProps = req.body
-    const { error, message } = existErrors(req)
-    if (error) {
-      throw new CreateUserError(`${message}`)
-    }
-
-    const dataCreated = await createUserAndAssignToWorkshop(dataParams)
-    res.send(dataCreated)
+    
+    res.send(user)
   } catch (error) {
     res.status(500).send(`${error}`)
   }
