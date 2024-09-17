@@ -1,13 +1,13 @@
 import {
-  CloseOrderController,
-  CreateAdditionalTaskListController,
-  UpdateFindingsListController,
-  UpdateObservationListController,
-  UpdateResumeController,
+  closeOrderController,
+  createAdditionalTaskListController,
+  getOrderActivitiesReportController,
+  updateFindingsListController,
+  updateObservationListController,
+  updateResumeController,
   createOrderController,
   getAllOrdersByClientController,
   getAllOrdersController,
-  getAllOrdersRangeReportController,
   getDetailByIdController
 } from 'controllers/order'
 import {
@@ -25,16 +25,16 @@ export const router = Router()
 
 // get api
 router.get('/all', getAllOrdersController)
-router.get('/all/report', getAllOrdersRangeReportController)
+router.get('/all/report', getOrderActivitiesReportController)
 router.get('/get/client/:clientId', ...getByClientProp, getAllOrdersByClientController)
 router.get('/detail/:_id', ...getDetailIdProp, getDetailByIdController)
 
 // creates
 router.post('/create', ...createOrderProps, createOrderController)
-router.post('/create/addtionalTask', ...updateAdditionalTaskListOrder, CreateAdditionalTaskListController)
+router.post('/create/addtionalTask', ...updateAdditionalTaskListOrder, createAdditionalTaskListController)
 
 // updates
-router.put('/closeOrder', ...checkUpdateStatusOrder, CloseOrderController)
-router.put('/update/resume', ...checkUpdateResume, UpdateResumeController)
-router.put('/update/observations', ...checkUpdateListOrder, UpdateObservationListController)
-router.put('/update/findings', ...checkUpdateListOrder, UpdateFindingsListController)
+router.put('/closeOrder', ...checkUpdateStatusOrder, closeOrderController)
+router.put('/update/resume', ...checkUpdateResume, updateResumeController)
+router.put('/update/observations', ...checkUpdateListOrder, updateObservationListController)
+router.put('/update/findings', ...checkUpdateListOrder, updateFindingsListController)

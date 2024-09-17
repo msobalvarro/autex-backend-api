@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { CreateOrderServiceError } from 'errors'
 import { Request, Response } from 'express'
 import {
@@ -17,7 +18,6 @@ import { getAllOrders, getAllOrdersByClientIdService, getOrderByIdService } from
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
 import { closeOrderService } from 'services/order/updateStatusOrder'
-import dayjs from 'dayjs'
 import { getReportOrderService } from 'services/order/getReport'
 
 export const createOrderController = async (req: Request, res: Response) => {
@@ -84,7 +84,7 @@ export const getAllOrdersByClientController = async (req: Request, res: Response
   }
 }
 
-export const UpdateFindingsListController = async (req: Request, res: Response) => {
+export const updateFindingsListController = async (req: Request, res: Response) => {
   try {
     const params: ListItemOrderFieldsProps = req.body
     await updateFindingsListService(params)
@@ -94,7 +94,7 @@ export const UpdateFindingsListController = async (req: Request, res: Response) 
   }
 }
 
-export const UpdateObservationListController = async (req: Request, res: Response) => {
+export const updateObservationListController = async (req: Request, res: Response) => {
   try {
     const params: ListItemOrderFieldsProps = req.body
     await updateObservationListService(params)
@@ -104,7 +104,7 @@ export const UpdateObservationListController = async (req: Request, res: Respons
   }
 }
 
-export const UpdateResumeController = async (req: Request, res: Response) => {
+export const updateResumeController = async (req: Request, res: Response) => {
   try {
     const params: UpdateResumeProps = req.body
     await updateResumeService(params)
@@ -114,7 +114,7 @@ export const UpdateResumeController = async (req: Request, res: Response) => {
   }
 }
 
-export const CreateAdditionalTaskListController = async (req: Request, res: Response) => {
+export const createAdditionalTaskListController = async (req: Request, res: Response) => {
   try {
     const props: ListItemOrderResumeFieldsProps = req.body
     const response = await createOrAddAdditionalTask(props.list, props.id)
@@ -124,11 +124,29 @@ export const CreateAdditionalTaskListController = async (req: Request, res: Resp
   }
 }
 
-export const CloseOrderController = async (req: Request, res: Response) => {
+export const closeOrderController = async (req: Request, res: Response) => {
   try {
     const { id }: UpdateServiceProps = req.body
     await closeOrderService(id)
     res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getOrderActivitiesReportController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new Error(String(message))
+    const { from, to } = req.query
+    if (!from || !to) throw new Error('from and to is required')
+
+    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const startDate = dayjs(`${from}`).startOf('day').toDate()
+    const endDate = dayjs(`${to}`).endOf('day').toDate()
+    const response = await getReportOrderService({ from: startDate, to: endDate, workshopId })
+
+    res.send(response)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

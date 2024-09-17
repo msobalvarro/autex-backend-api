@@ -16,7 +16,7 @@ const atentionType = new Schema<AttentionsProperties>(
     isRescue: Boolean,
   },
   {
-    timestamps: false,
+    timestamps: true,
     versionKey: false,
   }
 )
@@ -31,7 +31,7 @@ const preliminarManagment = new Schema<PreliminaryManagementProperties>(
     parked: Boolean,
   },
   {
-    timestamps: false,
+    timestamps: true,
     versionKey: false,
   },
 )
@@ -46,7 +46,7 @@ const serviceType = new Schema<ServicesTypesToDoOrderProperties>(
     isMultiple: Boolean,
   },
   {
-    timestamps: false,
+    timestamps: true,
     versionKey: false,
   },
 )
@@ -61,7 +61,7 @@ const typesActivitiesToDo = new Schema<AcivitiesProperties>(
     isService: Boolean,
   },
   {
-    timestamps: false,
+    timestamps: true,
     versionKey: false,
   },
 )

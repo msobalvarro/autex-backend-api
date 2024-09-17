@@ -435,7 +435,15 @@ export interface ReportResponsePropierties {
   count: number
 }
 
-
 export interface OrderDataReportProps {
   clientId: Types.ObjectId
+}
+
+export interface OrderDataReportResponsePropierties {
+  maintenance: number
+  service: number
+  minorMantenance: number
+  predictive: number
+  preventive: number
+  corrective: number  
 }
