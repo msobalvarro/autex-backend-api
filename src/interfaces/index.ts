@@ -47,6 +47,10 @@ export interface User {
   status?: SchemaDefinitionProperty<'active' | 'inactive' | 'blocked'>
 }
 
+export interface UserRequestProps extends User{
+  workshopId: Types.ObjectId
+}
+
 export interface NewUserWithWorkshopIdProps {
   workshopId: Types.ObjectId
   name: string

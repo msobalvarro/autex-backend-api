@@ -1,5 +1,6 @@
 import {
   createUserController,
+  createUserForRootController,
   getAllUserFromWorkshopController,
   updateUserController,
   updateUserStatusController
@@ -28,11 +29,21 @@ router.post(
   createUserController
 )
 
+
+// router for admin user
+router.post(
+  '/create',
+  authUserAdminMiddleware,
+  ...createUserValidation,
+  createUserController
+)
+
+// router for root user
 router.post(
   '/create/assignWorkshop',
   authUserRootMiddleware,
   ...createUserValidation,
-  createUserController
+  createUserForRootController
 )
 
 router.put(

@@ -6,6 +6,7 @@ import { Request, Response } from 'express'
 import {
   GenerateTokenFnProps,
   User,
+  UserRequestProps,
   UserUpdateProps,
   UserUpdateStatusProps
 } from 'interfaces'
@@ -26,7 +27,25 @@ export const createUserController = async (req: Request, res: Response) => {
     if (user) {
       await assignUserToWorkshop(new Types.ObjectId(user._id), workshopId)
     }
-    
+
+    res.send(user)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const createUserForRootController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new CreateUserError(`${message}`)
+
+    const dataParams: UserRequestProps = req.body
+    const user = await createUserService(dataParams)
+
+    if (user) {
+      await assignUserToWorkshop(new Types.ObjectId(user._id), dataParams.workshopId)
+    }
+
     res.send(user)
   } catch (error) {
     res.status(500).send(`${error}`)

@@ -24,6 +24,14 @@ export const createUserValidation = [
   check('isAdmin', 'admin prop is required').isBoolean(),
 ]
 
+export const createUserForRootValidation = [
+  check('name', 'Name is required').notEmpty(),
+  check('email', 'Email is required').notEmpty().isEmail(),
+  check('password', 'Password is required').notEmpty(),
+  check('isAdmin', 'admin prop is required').isBoolean(),
+  check('workshopId', 'admin prop is required').isMongoId(),
+]
+
 export const createUserAndWorkshopIdValidation = [
   check('workshopId', 'Workshop id is required').isMongoId(),
   check('name', 'Name is required').notEmpty(),
