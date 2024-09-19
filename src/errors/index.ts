@@ -206,3 +206,11 @@ export class CreateEstimationError extends Error {
     this.message = message
   }
 }
+
+export class CreateBillError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_BILL_ERROR
+    this.message = message
+  }
+}

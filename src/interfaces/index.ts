@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { SchemaDefinitionProperty, Types } from 'mongoose'
+import { ClientSession, SchemaDefinitionProperty, Types } from 'mongoose'
 
 export interface VehiculeBrands {
   _id: Types.ObjectId
@@ -291,6 +291,7 @@ export enum ErrosList {
   CREATE_USER_WORKSHOP = 'CREATE_USER_WORKSHOP',
   CREATE_ACTIVITIES_GROUP_ESTIMATE = 'CREATE_ACTIVITIES_GROUP_ESTIMATE',
   CREATE_ESTIMATION_ERROR = 'CREATE_ESTIMATION_ERROR',
+  CREATE_BILL_ERROR = 'CREATE_BILL_ERROR',
 }
 
 export interface GenerateErrorProps {
@@ -460,4 +461,10 @@ export interface BillPropierties {
   order: OrderServicePropierties
   tax?: number
   total: number
+}
+
+
+export interface BillCreateProps {
+  orderId: Types.ObjectId
+  sessionClient: ClientSession
 } 

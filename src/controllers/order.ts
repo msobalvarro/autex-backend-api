@@ -17,7 +17,7 @@ import { updateFindingsListService } from 'services/order/findingsListUpdate'
 import { getAllOrders, getAllOrdersByClientIdService, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
-import { closeOrderService } from 'services/order/updateStatusOrder'
+import { closeOrderAndGenerateBillService } from 'services/order/updateStatusOrder'
 import { getReportOrderService } from 'services/order/getReport'
 
 export const createOrderController = async (req: Request, res: Response) => {
@@ -127,8 +127,8 @@ export const createAdditionalTaskListController = async (req: Request, res: Resp
 export const closeOrderController = async (req: Request, res: Response) => {
   try {
     const { id }: UpdateServiceProps = req.body
-    await closeOrderService(id)
-    res.send(true)
+    const bill = await closeOrderAndGenerateBillService(id)
+    res.send(bill)
   } catch (error) {
     res.status(500).send(`${error}`)
   }
