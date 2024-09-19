@@ -38,6 +38,7 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
       typesActivitiesToDo,
       traveled,
       workshop,
+      estimationDate: order.estimationDate,
     })
 
     attentionType.save({ session })

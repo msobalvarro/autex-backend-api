@@ -56,6 +56,7 @@ const typesActivitiesToDo = new Schema<AcivitiesProperties>(
     isCorrective: Boolean,
     isMaintenance: Boolean,
     isMinorMantenance: Boolean,
+    isMajorMantenance: Boolean,
     isPredictive: Boolean,
     isPreventive: Boolean,
     isService: Boolean,
@@ -79,6 +80,7 @@ const orderService = new Schema<OrderServicePropierties>(
     findings: [String],
     observations: [String],
     workshop: { type: Types.ObjectId, ref: 'workshop' },
+    estimationDate: Date,
     status: {
       type: String,
       enum: ['pending', 'process', 'finished', 'canceled'],

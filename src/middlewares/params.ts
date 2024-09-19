@@ -1,11 +1,10 @@
 
 import { Request } from 'express'
-import { body, check, validationResult, query } from 'express-validator'
+import { body, check, validationResult } from 'express-validator'
 import { ErrorResultProps } from 'interfaces'
 
 // regex for MM-DD-YYY
-// eslint-disable-next-line no-useless-escape
-const regexForDate = `/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/`
+// const regexForDate = `/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/`
 
 export const existErrors = (req: Request): ErrorResultProps => {
   const errors = validationResult(req)
@@ -197,6 +196,7 @@ export const createOrderProps = [
   check('typesActivitiesToDo.isMaintenance', 'Types activities to do maintenance prop is not valid').isBoolean(),
   check('typesActivitiesToDo.isService', 'Types activities to do service prop is not valid').isBoolean(),
   check('typesActivitiesToDo.isMinorMantenance', 'Types activities to do minor mantenance prop is not valid').isBoolean(),
+  check('typesActivitiesToDo.isMajorMantenance', 'Types activities to do minor mantenance prop is not valid').isBoolean(),
   check('typesActivitiesToDo.isPredictive', 'Types activities to do predictive prop is not valid').isBoolean(),
   check('typesActivitiesToDo.isPreventive', 'Types activities to do preventive prop is not valid').isBoolean(),
   check('typesActivitiesToDo.isCorrective', 'Types activities to do corrective prop is not valid').isBoolean(),
@@ -208,6 +208,7 @@ export const createOrderProps = [
   check('serviceType.isExternal', 'Service type externa prop is not valid').isBoolean(),
   check('traveled.distance', 'distance prop is not valid').isNumeric(),
   check('traveled.type', 'distance traveled type is incorrect').isIn(['km', 'miles']),
+  check('estimationDate', 'estimation date prop is incorrect').isISO8601().toDate()  ,
 ]
 
 export const checkUpdateResume = [

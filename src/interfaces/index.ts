@@ -47,7 +47,7 @@ export interface User {
   status?: SchemaDefinitionProperty<'active' | 'inactive' | 'blocked'>
 }
 
-export interface UserRequestProps extends User{
+export interface UserRequestProps extends User {
   workshopId: Types.ObjectId
 }
 
@@ -74,6 +74,7 @@ export interface AcivitiesProperties {
   isMaintenance: boolean
   isService: boolean
   isMinorMantenance: boolean
+  isMajorMantenance: boolean
   isPredictive: boolean
   isPreventive: boolean
   isCorrective: boolean
@@ -235,6 +236,7 @@ export interface OrderServicePropierties {
   serviceType: ServicesTypesToDoOrderProperties
   additionalTask: ActivityWithCostToDoItemEstimate[]
   traveled: DistanceTraveledPropierties
+  estimationDate: Date
   findings: string[]
   observations: string[]
   resume: string
@@ -452,3 +454,10 @@ export interface OrderDataReportResponsePropierties {
   corrective: number
   total: number
 }
+
+export interface BillPropierties {
+  _id: Types.ObjectId
+  order: OrderServicePropierties
+  tax?: number
+  total: number
+} 
