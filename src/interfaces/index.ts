@@ -410,7 +410,7 @@ export interface ActivitiesGroupProps {
   activities: string[]
 }
 
-export interface GenerateTokenFnProps {
+export interface ReqHeaderAuthPropierties {
   id: Types.ObjectId
   isAdmin: boolean
   isRoot: boolean
@@ -459,6 +459,7 @@ export interface OrderDataReportResponsePropierties {
 export interface BillPropierties {
   _id: Types.ObjectId
   order: OrderServicePropierties
+  workshop: WorkshopPropierties
   tax?: number
   total: number
 }

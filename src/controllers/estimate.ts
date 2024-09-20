@@ -14,7 +14,7 @@ import {
   ActivitiesGroupPropierties,
   ActivitiesGroupProps,
   EstimateParamsPropierties,
-  GenerateTokenFnProps,
+  ReqHeaderAuthPropierties,
   PushItemCostFieldProps,
   UpdateItemCostFieldProps
 } from 'interfaces'
@@ -41,7 +41,7 @@ export const createEstimateController = async (req: Request, res: Response) => {
     const { error, message } = existErrors(req)
     if (error) throw new CreateEstimationError(String(message))
 
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const newEstimateParams: EstimateParamsPropierties = req.body
     const newEstimate = await createEstimateService(newEstimateParams, workshopId)
     res.send(newEstimate)
@@ -62,7 +62,7 @@ export const getEstimateDetailByIdController = async (req: Request, res: Respons
 
 export const getEstimateAndOrderDetailByIdController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const id = new Types.ObjectId(req.params.id)
     const estimate = await getDetailEstimateByIdService(id)
 
@@ -79,7 +79,7 @@ export const getEstimateAndOrderDetailByIdController = async (req: Request, res:
 
 export const getAllEstimatesController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const data = await getAllEstimatesService(workshopId)
     res.send(data)
   } catch (error) {
@@ -240,7 +240,7 @@ export const getAllEstimatesRangeDateController = async (req: Request, res: Resp
   try {
     const { error, message } = existErrors(req)
     if (error) throw new Error(String(message))
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const { from, to } = req.query
     if (!from || !to) throw new Error('from and to is required')
 

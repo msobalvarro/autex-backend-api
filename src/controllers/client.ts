@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { getClientByIdService, getAllClients, getAllClientsWithCars } from 'services/client/getClient'
-import { Client, GenerateTokenFnProps } from 'interfaces'
+import { Client, ReqHeaderAuthPropierties } from 'interfaces'
 import { createClient } from 'services/client/createClient'
 import { existErrors } from 'middlewares/params'
 import { CreateClientError } from 'errors'
@@ -8,7 +8,7 @@ import { Types } from 'mongoose'
 
 export const getAllClientsController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const data = await getAllClients(workshopId)
     res.send(data)
   } catch (error) {
@@ -18,7 +18,7 @@ export const getAllClientsController = async (req: Request, res: Response) => {
 
 export const getAllClientsWithCarController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const data = await getAllClientsWithCars(workshopId)
     res.send(data)
   } catch (error) {
@@ -38,7 +38,7 @@ export const getClientByIdController = async (req: Request, res: Response) => {
 
 export const createClientController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const { error, message } = existErrors(req)
     if (error) {
       throw new CreateClientError(`${message}`)

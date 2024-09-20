@@ -4,7 +4,7 @@ import { updateUserService } from 'services/user/updateUser'
 import { CreateUserError, UpdateUserError } from 'errors'
 import { Request, Response } from 'express'
 import {
-  GenerateTokenFnProps,
+  ReqHeaderAuthPropierties,
   User,
   UserRequestProps,
   UserUpdateProps,
@@ -21,7 +21,7 @@ export const createUserController = async (req: Request, res: Response) => {
     if (error) throw new CreateUserError(`${message}`)
 
     const dataParams: User = req.body
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const user = await createUserService(dataParams)
 
     if (user) {
@@ -89,7 +89,7 @@ export const updateUserStatusController = async (req: Request, res: Response) =>
 
 export const getAllUserFromWorkshopController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const users = await getAllUserFromWorkshopId(workshopId)
     res.send(users)
   } catch (error) {

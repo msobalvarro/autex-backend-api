@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { CreateOrderServiceError } from 'errors'
 import { Request, Response } from 'express'
 import {
-  GenerateTokenFnProps,
+  ReqHeaderAuthPropierties,
   ListItemOrderFieldsProps,
   ListItemOrderResumeFieldsProps,
   NewOrderServiceProps,
@@ -24,7 +24,7 @@ export const createOrderController = async (req: Request, res: Response) => {
   try {
     const { error, message } = existErrors(req)
     if (error) throw new CreateOrderServiceError(String(message))
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const params: NewOrderServiceProps = req.body
     const newOrder = await createOrder(params, workshopId)
     res.send(newOrder)
@@ -45,7 +45,7 @@ export const getDetailByIdController = async (req: Request, res: Response) => {
 
 export const getAllOrdersController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const data = await getAllOrders(workshopId)
     res.send(data)
   } catch (error) {
@@ -57,7 +57,7 @@ export const getAllOrdersRangeReportController = async (req: Request, res: Respo
   try {
     const { error, message } = existErrors(req)
     if (error) throw new Error(String(message))
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const { from, to } = req.query
     if (!from || !to) throw new Error('from and to is required')
 
@@ -126,8 +126,11 @@ export const createAdditionalTaskListController = async (req: Request, res: Resp
 
 export const closeOrderController = async (req: Request, res: Response) => {
   try {
+    const { error, message } = existErrors(req)
+    if (error) throw new Error(String(message))
     const { id }: UpdateServiceProps = req.body
-    const bill = await closeOrderAndGenerateBillService(id)
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const bill = await closeOrderAndGenerateBillService(id, workshopId)
     res.send(bill)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -141,7 +144,7 @@ export const getOrderActivitiesReportController = async (req: Request, res: Resp
     const { from, to } = req.query
     if (!from || !to) throw new Error('from and to is required')
 
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const startDate = dayjs(`${from}`).startOf('day').toDate()
     const endDate = dayjs(`${to}`).endOf('day').toDate()
     const response = await getReportOrderService({ from: startDate, to: endDate, workshopId })

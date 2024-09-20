@@ -1,6 +1,6 @@
 import { AuthorizationError } from 'errors'
 import { NextFunction, Response, Request } from 'express'
-import { GenerateTokenFnProps } from 'interfaces'
+import { ReqHeaderAuthPropierties } from 'interfaces'
 import { verifyToken } from 'utils/jwt'
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
@@ -21,7 +21,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
 export const authUserAdminMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { isAdmin }: GenerateTokenFnProps = req.cookies
+    const { isAdmin }: ReqHeaderAuthPropierties = req.cookies
     if (!isAdmin) {
       throw new AuthorizationError('You do not have permissions for this action')
     }
@@ -33,7 +33,7 @@ export const authUserAdminMiddleware = (req: Request, res: Response, next: NextF
 
 export const authUserRootMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { isRoot }: GenerateTokenFnProps = req.cookies
+    const { isRoot }: ReqHeaderAuthPropierties = req.cookies
     if (!isRoot) {
       throw new AuthorizationError('You do not have permissions for this action')
     }

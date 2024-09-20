@@ -10,7 +10,7 @@ import {
 import {
   AssignVehiculeToClientProps,
   CreateVehiculeProps,
-  GenerateTokenFnProps,
+  ReqHeaderAuthPropierties,
   NewMultipleModelsProps,
   NewVehiculeModelProps,
   VehiculeBrands,
@@ -146,7 +146,7 @@ export const createVehiculeController = async (req: Request, res: Response) => {
     }
 
     const params: CreateVehiculeProps = req.body
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const vehicule = await createVehiculeService(params, workshopId)
 
     await assignVehiculeToClientService({
@@ -162,7 +162,7 @@ export const createVehiculeController = async (req: Request, res: Response) => {
 
 export const getAllVehiculesController = async (req: Request, res: Response) => {
   try {
-    const { workshopId }: GenerateTokenFnProps = req.cookies
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const data = await getAllVehiculesService(workshopId)
     res.send(data)
   } catch (error) {

@@ -3,9 +3,10 @@ import { ActivityWithCostToDoItemEstimate, BillPropierties } from 'interfaces'
 import _ from 'lodash'
 import { BillModel } from 'models/bill'
 import { OrderServiceModel } from 'models/order'
+import { WorkshopModel } from 'models/workshop'
 import mongoose, { Types } from 'mongoose'
 
-export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId): Promise<BillPropierties> => {
+export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, workshopId: Types.ObjectId): Promise<BillPropierties> => {
   const session = await mongoose.startSession()
   session.startTransaction()
 
@@ -16,8 +17,7 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId):
       { session }
     )
 
-    const order = await OrderServiceModel.findById(orderId)
-      .populate('estimateProps')
+    const order = await OrderServiceModel.findById(orderId).populate('estimateProps')
     if (!order) throw new CreateBillError('order not found')
 
     const totalDetail = {
@@ -28,11 +28,13 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId):
       additionalTask: _.sumBy(order.additionalTask, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
     }
 
+    const workshop = await WorkshopModel.findById(workshopId)
     const total = _.sum(Object.values(totalDetail))
     const bill = new BillModel({
       tax: 0,
       total: total, // total + (total * 0.15)
       order,
+      workshop, //workshop
     })
 
     await bill.save({ session })

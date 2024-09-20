@@ -3,7 +3,8 @@ import { Schema, Types, model } from 'mongoose'
 
 const bill = new Schema<BillPropierties>(
   {
-    order: { ref: 'orderService', type: Types.ObjectId },
+    order: { ref: 'orderService', type: Types.ObjectId, required: true },
+    workshop: { ref: 'workshop', type: Types.ObjectId, required: true },
     tax: Number,
     total: Number,
   },
