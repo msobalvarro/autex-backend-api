@@ -240,6 +240,7 @@ export const checkCreateWorkshop = [
   check('phoneNumber', 'Phone Number prop is required').isString(),
   check('location', 'Location prop is required').isString(),
   check('ruc', 'RUC prop is required').isString(),
+  check('fixedFee', 'RUC prop is required').isString(),
 ]
 
 export const checkAssignUserToWorkshop = [
@@ -269,4 +270,13 @@ export const checkPushItemsFieldEstimate = [
 export const checkGetAllEstimateByRange = [
   // query('from', 'from prop is required').matches(regexForDate),
   // query('to', 'to prop is required').matches(regexForDate),
+]
+
+export const checkUpdateConfigurationWorkshop = [
+  check('workshopId',  'workshop id is required').isMongoId(),
+  check('configuration.fee', 'fee prop is not valid').isBoolean()
+]
+
+export const checkGetWorkshopConfig = [
+  check('workshopId',  'workshop id is required').isMongoId(),
 ]

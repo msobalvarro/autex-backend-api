@@ -301,7 +301,7 @@ export interface GenerateErrorProps {
 
 export interface ErrorResultProps {
   error: boolean
-  message?: string | null
+  message: string | null
 }
 
 export interface NewVehiculeModelProps {
@@ -376,6 +376,10 @@ export interface UpdateServiceProps {
   id: Types.ObjectId
 }
 
+export interface WorkshopConfigurationsPropierties {
+  fee: boolean
+}
+
 export interface WorkshopPropierties {
   _id: Types.ObjectId
   name: string
@@ -387,6 +391,7 @@ export interface WorkshopPropierties {
   ruc: string
   administrators?: User[]
   users?: User[]
+  configuration: WorkshopConfigurationsPropierties
 }
 
 export interface AssignUserToWorkshopProps {
@@ -464,8 +469,16 @@ export interface BillPropierties {
   total: number
 }
 
-
 export interface BillCreateProps {
   orderId: Types.ObjectId
   sessionClient: ClientSession
 } 
+
+export interface UpdateConfigurationWorkshopProps {
+  workshopId: Types.ObjectId
+  configuration: WorkshopConfigurationsPropierties
+}
+
+export interface GetWorkshopConfigurationRootProps {
+  workshopId: Types.ObjectId
+}

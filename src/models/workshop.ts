@@ -13,6 +13,13 @@ const workshop = new Schema<WorkshopPropierties>(
     phoneNumber: String,
     ruc: String,
     location: String,
+    configuration: {
+      fee: {
+        type: Boolean,
+        default: true,
+        required: true,
+      }
+    },
     administrators: [{
       type: Schema.Types.ObjectId,
       ref: 'user'

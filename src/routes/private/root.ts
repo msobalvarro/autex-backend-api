@@ -1,27 +1,63 @@
-import { assignUserAdminToWorkshopController, assignUserToWorkshopController, createWorkshopController, getAllWorkshopsController } from 'controllers/workshop'
 import { Router } from 'express'
-import { authUserAdminMiddleware } from 'middlewares/auth'
-import { checkAssignUserToWorkshop, checkCreateWorkshop } from 'middlewares/params'
+import {
+  assignUserAdminToWorkshopController,
+  assignUserToWorkshopController,
+  createWorkshopController,
+  getAllWorkshopsController,
+  getWorkshopConfigurationForRootController,
+  updateSettingWorkshopController
+} from 'controllers/workshop'
+import {
+  authUserRootMiddleware,
+} from 'middlewares/auth'
+import {
+  checkGetWorkshopConfig,
+  checkAssignUserToWorkshop,
+  checkCreateWorkshop,
+  checkUpdateConfigurationWorkshop
+} from 'middlewares/params'
 
 export const router = Router()
 
 // GET /
-router.get('/workshop/get/all',
-  authUserAdminMiddleware,
-  getAllWorkshopsController)
+router.get(
+  '/workshop/get/all',
+  authUserRootMiddleware,
+  getAllWorkshopsController
+)
+
+router.get(
+  '/workshop/get/configuration/:workshopId',
+  authUserRootMiddleware,
+  ...checkGetWorkshopConfig,
+  getWorkshopConfigurationForRootController
+)
 
 // POST / 
-router.post('/workshop/create',
+router.post(
+  '/workshop/create',
   ...checkCreateWorkshop,
-  authUserAdminMiddleware,
-  createWorkshopController)
+  authUserRootMiddleware,
+  createWorkshopController
+)
 
-router.post('/user/assign',
+router.post(
+  '/user/assign',
   ...checkAssignUserToWorkshop,
-  authUserAdminMiddleware,
-  assignUserToWorkshopController)
+  authUserRootMiddleware,
+  assignUserToWorkshopController
+)
 
-router.post('/admin/assign',
+router.post(
+  '/admin/assign',
   ...checkAssignUserToWorkshop,
-  authUserAdminMiddleware,
-  assignUserAdminToWorkshopController)
+  authUserRootMiddleware,
+  assignUserAdminToWorkshopController
+)
+
+router.post(
+  '/workshop/updateSettings',
+  ...checkUpdateConfigurationWorkshop,
+  authUserRootMiddleware,
+  updateSettingWorkshopController,
+)
