@@ -1,6 +1,6 @@
 
 import { Request } from 'express'
-import { body, check, validationResult } from 'express-validator'
+import { body, check, param, validationResult } from 'express-validator'
 import { ErrorResultProps } from 'interfaces'
 
 // regex for MM-DD-YYY
@@ -278,5 +278,9 @@ export const checkUpdateConfigurationWorkshop = [
 ]
 
 export const checkGetWorkshopConfig = [
-  check('workshopId',  'workshop id is required').isMongoId(),
+  param('workshopId',  'workshop id is required').isMongoId(),
+]
+
+export const checkGetBillId = [
+  param('orderId',  'workshop id is required').isMongoId(),
 ]

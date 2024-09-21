@@ -17,7 +17,7 @@ import { updateFindingsListService } from 'services/order/findingsListUpdate'
 import { getAllOrders, getAllOrdersByClientIdService, getOrderByIdService } from 'services/order/getOrder'
 import { updateObservationListService } from 'services/order/observationListUpdate'
 import { updateResumeService } from 'services/order/updateResume'
-import { closeOrderAndGenerateBillService } from 'services/order/updateStatusOrder'
+import { closeOrderAndGenerateBillService } from 'services/bill/closeOrderAndCreateBill'
 import { getReportOrderService } from 'services/order/getReport'
 
 export const createOrderController = async (req: Request, res: Response) => {

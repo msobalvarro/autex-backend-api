@@ -5,6 +5,7 @@ import { BillModel } from 'models/bill'
 import { OrderServiceModel } from 'models/order'
 import { WorkshopModel } from 'models/workshop'
 import mongoose, { Types } from 'mongoose'
+import { getOrderByIdService } from 'services/order/getOrder'
 
 export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, workshopId: Types.ObjectId): Promise<BillPropierties> => {
   const session = await mongoose.startSession()
@@ -17,7 +18,7 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, 
       { session }
     )
 
-    const order = await OrderServiceModel.findById(orderId).populate('estimateProps')
+    const order = await getOrderByIdService(orderId)
     if (!order) throw new CreateBillError('order not found')
 
     const totalDetail = {
@@ -30,11 +31,13 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, 
 
     const workshop = await WorkshopModel.findById(workshopId)
     const total = _.sum(Object.values(totalDetail))
+    const tax = workshop?.configuration.fee ? (total * 0.15) : 0
     const bill = new BillModel({
-      tax: 0,
-      total: total, // total + (total * 0.15)
+      subtotal: total,
+      tax,
+      total: total + tax,
       order,
-      workshop, //workshop
+      workshop,
     })
 
     await bill.save({ session })

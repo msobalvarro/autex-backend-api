@@ -465,6 +465,7 @@ export interface BillPropierties {
   _id: Types.ObjectId
   order: OrderServicePropierties
   workshop: WorkshopPropierties
+  subtotal: number
   tax?: number
   total: number
 }
@@ -482,3 +483,8 @@ export interface UpdateConfigurationWorkshopProps {
 export interface GetWorkshopConfigurationRootProps {
   workshopId: Types.ObjectId
 }
+
+export interface GetBillByOrderIdProps {
+  orderId: Types.ObjectId
+}
+
