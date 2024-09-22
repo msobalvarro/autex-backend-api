@@ -13,6 +13,28 @@ export const getBillByOrderIdService = async (orderId: string, workshopId: Types
     workshop: {
       _id: workshopId
     }
+  }).populate({
+    path: 'order',
+    populate: [
+      {
+        path: 'estimateProps',
+        populate: [
+          { path: 'client', select: '-vehicules' },
+          {
+            path: 'vehicule',
+            populate: [
+              { path: 'brand', select: '-models' },
+              { path: 'model', select: '-vehicules' },
+            ]
+          },
+          { path: 'activitiesToDo' },
+          { path: 'requiredParts' },
+          { path: 'otherRequirements' },
+          { path: 'externalActivities' },
+        ]
+      },
+      { path: 'additionalTask' }
+    ]
   })
 
   return bill

@@ -22,11 +22,11 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, 
     if (!order) throw new CreateBillError('order not found')
 
     const totalDetail = {
-      activities: _.sumBy(order.estimateProps?.activitiesToDo, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
-      parts: _.sumBy(order.estimateProps?.requiredParts, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
-      external: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
-      other: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
-      additionalTask: _.sumBy(order.additionalTask, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
+      activities: _.sumBy(order.estimateProps?.activitiesToDo, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
+      parts: _.sumBy(order.estimateProps?.requiredParts, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
+      external: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
+      other: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
+      additionalTask: _.sumBy(order.additionalTask, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
     }
 
     const workshop = await WorkshopModel.findById(workshopId)
