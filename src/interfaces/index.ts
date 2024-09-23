@@ -473,7 +473,7 @@ export interface BillPropierties {
 export interface BillCreateProps {
   orderId: Types.ObjectId
   sessionClient: ClientSession
-} 
+}
 
 export interface UpdateConfigurationWorkshopProps {
   workshopId: Types.ObjectId
@@ -486,5 +486,14 @@ export interface GetWorkshopConfigurationRootProps {
 
 export interface GetBillByOrderIdProps {
   orderId: Types.ObjectId
+}
+
+export interface IncomeReportResponse {
+  totalPartsCost: number
+  totalExternalCost: number
+  totalLaborCost: number
+  totalInputCost: number
+  totalTaxes: number
+  totalOtherServices: number
 }
 
