@@ -1,14 +1,26 @@
 import { GetVehiculeError } from 'errors'
-import { Vehicule } from 'interfaces'
+import { Vehicule, VehiculeWithClient } from 'interfaces'
 import { ClientModel } from 'models/client'
 import { vehiculeModel } from 'models/vehicule'
 import { Types } from 'mongoose'
 
-export const getAllVehiculesService = async (workshopId: Types.ObjectId): Promise<Vehicule[]> => {
+export const getAllVehiculesService = async (workshopId: Types.ObjectId): Promise<VehiculeWithClient[]> => {
   const data: Vehicule[] = await vehiculeModel.find({ workshop: { _id: workshopId } })
     .populate('brand', '-models')
     .populate('model')
-  return data
+
+  const vehiculeWithClient: VehiculeWithClient[] = []
+
+  for (const vehicule of data) {
+    const client = await ClientModel.findOne({ vehicules: { _id: vehicule._id } })
+
+    vehiculeWithClient.push({
+      ...vehicule,
+      client
+    })
+  }
+
+  return vehiculeWithClient
 }
 
 export const getClientAllVehiculeListService = async (clientId: string): Promise<Vehicule[]> => {
