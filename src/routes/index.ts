@@ -23,9 +23,9 @@ const mapFiles = async (fileName: string, path: string) => {
     const module = await import(`./${path}/${routeFile}`)
 
     if (path === PRIVATE) {
-      router.use(`/${routeFile}`, authMiddleware, module.router)
+      router.use(`/api/${routeFile}`, authMiddleware, module.router)
     } else {
-      router.use(`/${routeFile}`, module.router)
+      router.use(`/api/${routeFile}`, module.router)
     }
 
     totalAdded++
