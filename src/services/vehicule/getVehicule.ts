@@ -5,18 +5,19 @@ import { vehiculeModel } from 'models/vehicule'
 import { Types } from 'mongoose'
 
 export const getAllVehiculesService = async (workshopId: Types.ObjectId): Promise<VehiculeWithClient[]> => {
-  const data: Vehicule[] = await vehiculeModel.find({ workshop: { _id: workshopId } })
+  const data = await vehiculeModel.find({ workshop: { _id: workshopId } })
     .populate('brand', '-models')
     .populate('model')
 
   const vehiculeWithClient: VehiculeWithClient[] = []
 
   for (const vehicule of data) {
-    const client = await ClientModel.findOne({ vehicules: { _id: vehicule._id } })
+    const client = await ClientModel.findOne({ vehicules: { _id: vehicule._id } }).select('-vehicules')
 
+    const c = client?.toJSON()
     vehiculeWithClient.push({
-      ...vehicule,
-      client
+      ...vehicule.toJSON(),
+      client: c
     })
   }
 
