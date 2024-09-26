@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { sign, verify } from 'jsonwebtoken'
 import { ReqHeaderAuthPropierties } from 'interfaces'
 
-const SECRET_KEY: string = process.env.SECRET_KEY || ''
+const SECRET_KEY: string = (process.env.SECRET_KEY || '').replace('s', "$")
 
 export const createHash = (data: string): string => crypto.createHash('sha256').update(data).digest('hex')
 
