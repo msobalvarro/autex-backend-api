@@ -240,7 +240,7 @@ export const checkCreateWorkshop = [
   check('phoneNumber', 'Phone Number prop is required').isString(),
   check('location', 'Location prop is required').isString(),
   check('ruc', 'RUC prop is required').isString(),
-  check('fixedFee', 'RUC prop is required').isString(),
+  check('fixedFee', 'Fixed fee is required').isBoolean(),
 ]
 
 export const checkAssignUserToWorkshop = [
