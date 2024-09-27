@@ -17,7 +17,7 @@ export const router = Router()
 // get
 router.get(
   '/get/all',
-  authUserRootMiddleware,
+  authUserAdminMiddleware,
   getAllUserFromWorkshopController
 )
 
