@@ -16,7 +16,8 @@ import {
   EstimateParamsPropierties,
   ReqHeaderAuthPropierties,
   PushItemCostFieldProps,
-  UpdateItemCostFieldProps
+  UpdateItemCostFieldProps,
+  UpdateActivityParams
 } from 'interfaces'
 import {
   getActivitiesGroupService,
@@ -35,6 +36,7 @@ import {
   deleteOtherRequirementService,
   deleteRequiredPartService
 } from 'services/estimate/updateEstimate'
+import { updateActivityGroupService } from 'services/estimate/updateActivityGroup'
 
 export const createEstimateController = async (req: Request, res: Response) => {
   try {
@@ -107,7 +109,8 @@ export const createActivitiesGroupController = async (req: Request, res: Respons
     }
 
     const data: ActivitiesGroupProps = req.body
-    const acitivities: ActivitiesGroupPropierties = await createAcitivitiesGroupService(data)
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const acitivities: ActivitiesGroupPropierties = await createAcitivitiesGroupService({ data, workshopId })
 
     res.send(acitivities)
   } catch (error) {
@@ -250,6 +253,20 @@ export const getAllEstimatesRangeDateController = async (req: Request, res: Resp
 
     const data = await getReportEstimationByDateService({ from: startDate, to: endDate, workshopId })
     res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const updateActivitiesGroupController = async (req: Request, res: Response) => {
+  try {
+    const { error, message } = existErrors(req)
+    if (error) throw new UpdateEstimateError(String(message))
+
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const { activities, activityId }: UpdateActivityParams = req.body
+    const response = await updateActivityGroupService({ workshopId, activityId, activities })
+    res.send(response)
   } catch (error) {
     res.status(500).send(`${error}`)
   }

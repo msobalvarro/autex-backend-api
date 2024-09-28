@@ -501,3 +501,8 @@ export interface IncomeReportResponse {
 export interface VehiculeWithClient extends Vehicule {
   client?: Client | null
 }
+
+export interface UpdateActivityParams {
+  activityId: Types.ObjectId
+  activities: string[]
+}
