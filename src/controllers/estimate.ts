@@ -115,9 +115,10 @@ export const createActivitiesGroupController = async (req: Request, res: Respons
   }
 }
 
-export const getActivitiesGroupController = async (__: Request, res: Response) => {
+export const getActivitiesGroupController = async (req: Request, res: Response) => {
   try {
-    const acitivities: ActivitiesGroupPropierties[] = await getActivitiesGroupService()
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const acitivities: ActivitiesGroupPropierties[] = await getActivitiesGroupService(workshopId)
     res.send(acitivities)
   } catch (error) {
     res.status(500).send(`${error}`)

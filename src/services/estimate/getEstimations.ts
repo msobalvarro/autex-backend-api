@@ -75,8 +75,8 @@ export const getAllEstimatesByClientIdService = async (clientId: string): Promis
   return dataResult
 }
 
-export const getActivitiesGroupService = async (): Promise<ActivitiesGroupPropierties[]> => {
-  const data = await ActivitiesGroupModel.find()
+export const getActivitiesGroupService = async (workshopId: Types.ObjectId): Promise<ActivitiesGroupPropierties[]> => {
+  const data = await ActivitiesGroupModel.find({ workshop: { _id: workshopId } })
   return data
 }
 
@@ -100,7 +100,7 @@ export const getReportEstimationByDateService = async ({ from, to, workshopId }:
         count: { $sum: 1 }
       }
     },
-    { 
+    {
       $sort: { _id: 1 }
     }
 

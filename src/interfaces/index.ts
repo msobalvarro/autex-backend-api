@@ -408,6 +408,7 @@ export interface ActivitiesGroupPropierties {
   _id: Types.ObjectId
   name: string
   activities: string[]
+  workshop: WorkshopPropierties
 }
 
 export interface ActivitiesGroupProps {
