@@ -284,3 +284,9 @@ export const checkGetWorkshopConfig = [
 export const checkGetBillId = [
   param('orderId',  'workshop id is required').isMongoId(),
 ]
+
+export const checUpdateActivityGroup = [
+  body('activityId', 'activity id is required').isMongoId(),
+  body('activities', 'activities is required').isArray(),
+  body('activities.*', 'activities item is not valid').isString(),
+]

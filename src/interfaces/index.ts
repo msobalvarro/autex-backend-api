@@ -408,6 +408,7 @@ export interface ActivitiesGroupPropierties {
   _id: Types.ObjectId
   name: string
   activities: string[]
+  workshop: WorkshopPropierties
 }
 
 export interface ActivitiesGroupProps {
@@ -499,4 +500,9 @@ export interface IncomeReportResponse {
 
 export interface VehiculeWithClient extends Vehicule {
   client?: Client | null
+}
+
+export interface UpdateActivityParams {
+  activityId: Types.ObjectId
+  activities: string[]
 }

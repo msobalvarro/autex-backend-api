@@ -15,7 +15,8 @@ import {
   getAllEstimatesController,
   getAllEstimatesRangeDateController,
   getEstimateAndOrderDetailByIdController,
-  getEstimateDetailByIdController
+  getEstimateDetailByIdController,
+  updateActivitiesGroupController
 } from 'controllers/estimate'
 import {
   checkCreateAcitivitiesGroup,
@@ -23,7 +24,8 @@ import {
   checkDeleteItemsFieldEstimate,
   createEstimateProps,
   getDetailIdProp,
-  checkGetAllEstimateByRange
+  checkGetAllEstimateByRange,
+  checUpdateActivityGroup
 } from 'middlewares/params'
 
 export const router = Router()
@@ -51,3 +53,5 @@ router.post('/add/otherRequirement', ...checkPushItemsFieldEstimate, addOtherReq
 
 router.post('/delete/externalActivity', ...checkDeleteItemsFieldEstimate, deleteExternalActivityController)
 router.post('/add/externalActivity', ...checkPushItemsFieldEstimate, addExternalActivitiesController)
+
+router.get('/activitiesGroup/update', ...checUpdateActivityGroup, updateActivitiesGroupController)

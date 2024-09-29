@@ -1,5 +1,5 @@
 import { ActivitiesGroupPropierties } from 'interfaces'
-import { Schema, model } from 'mongoose'
+import { Schema, Types, model } from 'mongoose'
 
 const acitivitiesGroup = new Schema<ActivitiesGroupPropierties>(
   {
@@ -10,7 +10,8 @@ const acitivitiesGroup = new Schema<ActivitiesGroupPropierties>(
     name: {
       type: String,
       required: true,
-    }
+    },
+    workshop: { type: Types.ObjectId, ref: 'workshop' }
   },
   {
     timestamps: true,

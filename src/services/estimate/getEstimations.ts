@@ -7,7 +7,6 @@ import {
 } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
-import { WorkshopModel } from 'models/workshop'
 
 export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
@@ -75,12 +74,12 @@ export const getAllEstimatesByClientIdService = async (clientId: string): Promis
   return dataResult
 }
 
-export const getActivitiesGroupService = async (): Promise<ActivitiesGroupPropierties[]> => {
-  const data = await ActivitiesGroupModel.find()
+export const getActivitiesGroupService = async (workshopId: Types.ObjectId): Promise<ActivitiesGroupPropierties[]> => {
+  const data = await ActivitiesGroupModel.find({ workshop: { _id: workshopId } })
   return data
 }
 
-export const getReportEstimationByDateService = async ({ from, to, workshopId }: ReportProps): Promise<ReportResponsePropierties[]> => {
+export const getReportEstimationByDateService = async ({ from, to }: ReportProps): Promise<ReportResponsePropierties[]> => {
   // const workshop = await WorkshopModel.findById(workshopId)
 
   const result = await EstimateModel.aggregate([
@@ -100,7 +99,7 @@ export const getReportEstimationByDateService = async ({ from, to, workshopId }:
         count: { $sum: 1 }
       }
     },
-    { 
+    {
       $sort: { _id: 1 }
     }
 
