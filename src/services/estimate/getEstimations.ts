@@ -7,7 +7,6 @@ import {
 } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
-import { WorkshopModel } from 'models/workshop'
 
 export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
@@ -80,7 +79,7 @@ export const getActivitiesGroupService = async (workshopId: Types.ObjectId): Pro
   return data
 }
 
-export const getReportEstimationByDateService = async ({ from, to, workshopId }: ReportProps): Promise<ReportResponsePropierties[]> => {
+export const getReportEstimationByDateService = async ({ from, to }: ReportProps): Promise<ReportResponsePropierties[]> => {
   // const workshop = await WorkshopModel.findById(workshopId)
 
   const result = await EstimateModel.aggregate([
