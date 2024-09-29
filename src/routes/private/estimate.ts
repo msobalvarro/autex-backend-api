@@ -54,4 +54,4 @@ router.post('/add/otherRequirement', ...checkPushItemsFieldEstimate, addOtherReq
 router.post('/delete/externalActivity', ...checkDeleteItemsFieldEstimate, deleteExternalActivityController)
 router.post('/add/externalActivity', ...checkPushItemsFieldEstimate, addExternalActivitiesController)
 
-router.get('/activitiesGroup/update', ...checUpdateActivityGroup, updateActivitiesGroupController)
+router.post('/activitiesGroup/update', ...checUpdateActivityGroup, updateActivitiesGroupController)
