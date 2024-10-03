@@ -62,6 +62,15 @@ export const createClientValidationProps = [
   check('type', 'Client Type Incorrect').isIn(['company', 'person']),
 ]
 
+export const updateClientValidationProps = [
+  check('_id', 'id is required').isMongoId(),
+  check('name', 'Name is required').notEmpty().isString(),
+  check('email', 'Email is required').notEmpty().isEmail(),
+  check('phoneNumber', 'Phone Number required').notEmpty().isString(),
+  check('documentId', 'Document is required').notEmpty().isString(),
+  check('type', 'Client Type Incorrect').isIn(['company', 'person']),
+]
+
 export const createActivityToDoProps = [
   check('description', 'Description is required').notEmpty().isString(),
 ]

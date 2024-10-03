@@ -2,12 +2,12 @@ import { Client } from 'interfaces'
 import { ClientModel } from 'models/client'
 import { Types } from 'mongoose'
 
-export const getAllClients = async (workshopId: Types.ObjectId): Promise<Client[]> => {
+export const getAllClientsService = async (workshopId: Types.ObjectId): Promise<Client[]> => {
   const clients: Client[] = await ClientModel.find({ workshop: { _id: workshopId } }).sort({ createdAt: -1 })
   return clients
 }
 
-export const getAllClientsWithCars = async (workshopId: Types.ObjectId): Promise<Client[]> => {
+export const getAllClientsWithCarsService = async (workshopId: Types.ObjectId): Promise<Client[]> => {
   const clients: Client[] = await ClientModel.find({ workshop: { _id: workshopId } })
     .populate({
       path: 'vehicules',
@@ -33,13 +33,13 @@ export const getClientByIdService = async (id: Types.ObjectId): Promise<Client |
   return client
 }
 
-export const getAllClientByEmail = async (email: string): Promise<Client | null> => {
+export const getAllClientByEmailService = async (email: string): Promise<Client | null> => {
   const client: Client | null = await ClientModel.findOne({ email })
 
   return client
 }
 
-export const getAllClientById = async (id: Types.ObjectId): Promise<Client | null> => {
+export const getAllClientByIdService = async (id: Types.ObjectId): Promise<Client | null> => {
   const client: Client | null = await ClientModel.findById(id)
 
   return client

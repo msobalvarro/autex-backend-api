@@ -275,6 +275,7 @@ export enum ErrosList {
   IMPORT_MODULE_ERROR = 'IMPORT_MODULE_ERROR',
   AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR',
   CREATE_CLIENT_ERROR = 'CREATE_CLIENT_ERROR',
+  UPDATE_CLIENT_ERROR = 'UPDATE_CLIENT_ERROR',
   CREATE_ACTIVITY_TO_DO = 'CREATE_ACTIVITY_TO_DO',
   UPDATE_VEHICULE_BRAND = 'UPDATE_VEHICULE_BRAND',
   UPDATE_VEHICULE_CLIENT = 'UPDATE_VEHICULE_CLIENT',
@@ -505,4 +506,13 @@ export interface VehiculeWithClient extends Vehicule {
 export interface UpdateActivityParams {
   activityId: Types.ObjectId
   activities: string[]
+}
+
+export interface UpdateClientProps {
+  _id: Types.ObjectId
+  name: string
+  type: string
+  phoneNumber: string
+  email: string
+  documentId: string
 }
