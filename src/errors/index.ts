@@ -54,6 +54,14 @@ export class CreateClientError extends Error {
   }
 }
 
+export class UpdateClientError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.UPDATE_CLIENT_ERROR
+    this.message = message
+  }
+}
+
 export class CreateActivityToDoError extends Error {
   constructor(message: string) {
     super(message)

@@ -1,11 +1,15 @@
 import {
+  updateClientController,
   createClientController,
   getAllClientsController,
   getAllClientsWithCarController,
   getClientByIdController
 } from 'controllers/client'
 import { Router } from 'express'
-import { createClientValidationProps } from 'middlewares/params'
+import {
+  createClientValidationProps,
+  updateClientValidationProps
+} from 'middlewares/params'
 
 export const router = Router()
 
@@ -18,3 +22,4 @@ router.get('/get/:id', getClientByIdController)
 
 // create new client
 router.post('/create', ...createClientValidationProps, createClientController)
+router.put('/update', ...updateClientValidationProps, updateClientController)
