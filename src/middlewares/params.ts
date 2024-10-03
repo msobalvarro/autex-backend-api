@@ -63,7 +63,7 @@ export const createClientValidationProps = [
 ]
 
 export const updateClientValidationProps = [
-  check('id', 'id is required').isMongoId(),
+  check('_id', 'id is required').isMongoId(),
   check('name', 'Name is required').notEmpty().isString(),
   check('email', 'Email is required').notEmpty().isEmail(),
   check('phoneNumber', 'Phone Number required').notEmpty().isString(),
