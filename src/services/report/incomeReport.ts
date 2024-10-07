@@ -45,6 +45,9 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
   let totalInputCost: number = 0
   let totalTaxes: number = 0
   let totalOtherServices: number = 0
+  let totalEstimate: number = 0
+  let totalOrder: number = 0
+  const totalBill: number = _.sumBy(bills, bill => bill.total)
 
   for (const bill of bills) {
     const { order } = bill
@@ -58,6 +61,8 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     totalInputCost = totalInputCost + estimation.inputCost
     totalTaxes = totalTaxes + (Number(bill?.tax) | 0)
     totalOtherServices = totalOtherServices + aditionalTaskSum
+    totalEstimate = totalEstimate + bill.order.estimateProps.total
+    totalOrder = totalOrder + (bill.order.estimateProps.total + _.sumBy(bill.order.additionalTask, task => task?.total || 0))
   }
 
   return {
@@ -66,6 +71,9 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     totalLaborCost,
     totalInputCost,
     totalTaxes,
-    totalOtherServices
+    totalOtherServices,
+    totalBill,
+    totalEstimate,
+    totalOrder,
   }
 }
