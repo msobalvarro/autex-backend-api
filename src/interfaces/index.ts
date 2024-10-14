@@ -519,3 +519,8 @@ export interface UpdateClientProps {
   email: string
   documentId: string
 }
+
+
+export interface EstimatesResponseGetAll extends EstimatePropierties {
+  order?: OrderServicePropierties | null
+}
