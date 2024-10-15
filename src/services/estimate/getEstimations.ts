@@ -3,10 +3,12 @@ import {
   ActivitiesGroupPropierties,
   EstimatePropierties,
   ReportResponsePropierties,
-  ReportProps
+  ReportProps,
+  EstimatesResponseGetAll
 } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
+import { OrderServiceModel } from 'models/order'
 
 export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
   const dataResult = await EstimateModel.findById(id)
@@ -55,12 +57,21 @@ export const getDetailEstimateWithOrderByIdService = async (id: Types.ObjectId):
   return dataResult
 }
 
-export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promise<EstimatePropierties[]> => {
-  const dataResult = await EstimateModel.find({ workshop: { _id: workshopId } })
+export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promise<EstimatesResponseGetAll[]> => {
+  const etimates = await EstimateModel.find({ workshop: { _id: workshopId } })
     .populate('client')
     .populate('vehicule')
     .sort({ createdAt: -1 })
-  return dataResult
+
+  const data: EstimatesResponseGetAll[] = []
+
+  for (const estimate of etimates) {
+    const order = await OrderServiceModel.findOne({ estimateProps: estimate })
+    
+    data.push({ ...estimate.toJSON(), order: order?.toJSON() })
+  }
+
+  return data
 }
 
 export const getAllEstimatesByClientIdService = async (clientId: string): Promise<EstimatePropierties[]> => {

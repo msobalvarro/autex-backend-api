@@ -490,6 +490,30 @@ export interface GetBillByOrderIdProps {
   orderId: Types.ObjectId
 }
 
+interface CantFieldData {
+  sum: number
+  length: number
+}
+
+interface BillData {
+  total: number
+  totalTaxes: number
+  totalBill: number
+}
+
+interface OrderData {
+  completeOrClose: CantFieldData
+  processOrPending: CantFieldData
+  total: CantFieldData
+}
+
+interface ReceiptsData {
+  mantMajor: CantFieldData
+  mantMenor: CantFieldData
+  servMenor: CantFieldData
+  servMajor: CantFieldData
+}
+
 export interface IncomeReportResponse {
   totalPartsCost: number
   totalExternalCost: number
@@ -497,9 +521,10 @@ export interface IncomeReportResponse {
   totalInputCost: number
   totalTaxes: number
   totalOtherServices: number
-  totalBill: number
-  totalOrder: number
   totalEstimate: number
+  receipts: ReceiptsData
+  bill: BillData
+  order: OrderData
 }
 
 export interface VehiculeWithClient extends Vehicule {
@@ -518,4 +543,9 @@ export interface UpdateClientProps {
   phoneNumber: string
   email: string
   documentId: string
+}
+
+
+export interface EstimatesResponseGetAll extends EstimatePropierties {
+  order?: OrderServicePropierties | null
 }
