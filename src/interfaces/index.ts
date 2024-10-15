@@ -264,6 +264,7 @@ export interface UserUpdateProps {
   _id: Types.ObjectId
   email: string
   name: string
+  isAdmin: boolean
 }
 
 export enum ErrosList {

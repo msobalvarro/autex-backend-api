@@ -42,6 +42,7 @@ export const updateUserValidation = [
   check('_id', 'ID is required').isMongoId(),
   check('name', 'Name is required').notEmpty(),
   check('email', 'Email is required').notEmpty().isEmail(),
+  check('isAdmin', 'is admin check is required').isBoolean(),
 ]
 
 export const updateUserStatusValidation = [

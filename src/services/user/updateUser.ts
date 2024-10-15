@@ -18,6 +18,7 @@ export const updateUserService = async (user: UserUpdateProps) => {
       {
         email: user.email,
         name: user.name,
+        isAdmin: user.isAdmin,
       }
     )
     return userCreated
