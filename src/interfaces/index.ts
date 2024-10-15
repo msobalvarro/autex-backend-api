@@ -502,9 +502,9 @@ interface BillData {
 }
 
 interface OrderData {
-  completeOrClose: number
-  processOrPending: number
-  total: number
+  completeOrClose: CantFieldData
+  processOrPending: CantFieldData
+  total: CantFieldData
 }
 
 interface ReceiptsData {

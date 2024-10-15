@@ -45,7 +45,7 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     ]
   })
 
-  const orders = await OrderServiceModel.find({ workshop: { _id: workshopId } })
+  // const orders = await OrderServiceModel.find({ workshop: { _id: workshopId } })
 
   let totalPartsCost = 0
   let totalExternalCost = 0
@@ -56,16 +56,24 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
   let totalEstimate = 0
   let totalOrder = 0
   const ordersData = {
-    completeOrClose: 0,
-    processOrPending: 0,
-    total: orders.length,
+    completeOrClose: {
+      length: 0,
+      sum: 0,
+    },
+    processOrPending: {
+      length: 0,
+      sum: 0,
+    },
+    total: {
+      length: 0,
+      sum: 0,
+    },
   }
   const billsData = {
     total: bills.length,
     totalTaxes: sumBy(bills, bill => bill.tax || 0),
     totalBill: sumBy(bills, bill => bill.total)
   }
-
   const receipts = {
     mantMajor: {
       length: 0,
@@ -85,16 +93,6 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     },
   }
 
-  for (const order of orders) {
-    if (order.status === 'pending' || order.status === 'process') {
-      ordersData.processOrPending += 1
-    }
-
-    if (order.status === 'finished' || order.status === 'canceled') {
-      ordersData.completeOrClose += 1
-    }
-  }
-
   for (const bill of bills) {
     const { order } = bill
     const { estimateProps: estimation } = order
@@ -110,14 +108,24 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     totalEstimate = totalEstimate + bill.order.estimateProps.total
     totalOrder = totalOrder + (bill.order.estimateProps.total + sumBy(bill.order.additionalTask, task => task?.total || 0))
 
+    if (order.status === 'pending' || order.status === 'process') {
+      ordersData.processOrPending.length += 1
+      ordersData.processOrPending.sum += bill.total
+    }
+
+    if (order.status === 'finished' || order.status === 'canceled') {
+      ordersData.completeOrClose.length += 1
+      ordersData.completeOrClose.sum += bill.total
+    }
+
     if (order.typesActivitiesToDo.isMaintenance && order.typesActivitiesToDo.isMajorMantenance) {
-      receipts.mantMajor.sum = receipts.mantMajor.sum + bill.total
-      receipts.mantMajor.length = receipts.mantMajor.length + 1
+      receipts.mantMajor.sum += bill.total
+      receipts.mantMajor.length += 1
     }
 
     if (order.typesActivitiesToDo.isMaintenance && order.typesActivitiesToDo.isMinorMantenance) {
-      receipts.mantMenor.sum = receipts.mantMenor.sum + bill.total
-      receipts.mantMenor.length = receipts.mantMenor.length + 1
+      receipts.mantMenor.sum += bill.total
+      receipts.mantMenor.length += 1
     }
 
     if (order.typesActivitiesToDo.isService && order.typesActivitiesToDo.isMajorMantenance) {
@@ -126,8 +134,8 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     }
 
     if (order.typesActivitiesToDo.isService && order.typesActivitiesToDo.isMinorMantenance) {
-      receipts.servMenor.sum = receipts.servMenor.sum + bill.total
-      receipts.servMenor.length = receipts.servMenor.length + 1
+      receipts.servMenor.sum += bill.total
+      receipts.servMenor.length += 1
     }
   }
 
