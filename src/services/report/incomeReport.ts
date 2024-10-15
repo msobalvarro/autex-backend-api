@@ -45,7 +45,7 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     ]
   })
 
-  // const orders = await OrderServiceModel.find({ workshop: { _id: workshopId } })
+  const orders = await OrderServiceModel.find({ workshop: { _id: workshopId } })
 
   let totalPartsCost = 0
   let totalExternalCost = 0
@@ -93,6 +93,18 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     },
   }
 
+  for (const order of orders) {
+    if (order.status === 'pending' || order.status === 'process') {
+      ordersData.processOrPending.length += 1
+      // ordersData.processOrPending.sum += bill.total
+    }
+
+    if (order.status === 'finished' || order.status === 'canceled') {
+      ordersData.completeOrClose.length += 1
+      // ordersData.completeOrClose.sum += bill.total
+    }
+  }
+
   for (const bill of bills) {
     const { order } = bill
     const { estimateProps: estimation } = order
@@ -103,20 +115,10 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     totalExternalCost = totalExternalCost + estimation.externalCost
     totalLaborCost = totalLaborCost + estimation.laborCost
     totalInputCost = totalInputCost + estimation.inputCost
-    totalTaxes = totalTaxes + (Number(bill?.tax) | 0)
+    totalTaxes = totalTaxes + (bill?.tax || 0)
     totalOtherServices = totalOtherServices + aditionalTaskSum
     totalEstimate = totalEstimate + bill.order.estimateProps.total
     totalOrder = totalOrder + (bill.order.estimateProps.total + sumBy(bill.order.additionalTask, task => task?.total || 0))
-
-    if (order.status === 'pending' || order.status === 'process') {
-      ordersData.processOrPending.length += 1
-      ordersData.processOrPending.sum += bill.total
-    }
-
-    if (order.status === 'finished' || order.status === 'canceled') {
-      ordersData.completeOrClose.length += 1
-      ordersData.completeOrClose.sum += bill.total
-    }
 
     if (order.typesActivitiesToDo.isMaintenance && order.typesActivitiesToDo.isMajorMantenance) {
       receipts.mantMajor.sum += bill.total
