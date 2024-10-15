@@ -67,7 +67,7 @@ export const updateUserController = async (req: Request, res: Response) => {
     }
 
     // is diferent email
-    if (userFinded.email !== dataParams.email || userFinded.name !== dataParams.name) {
+    if (userFinded.email !== dataParams.email || userFinded.name !== dataParams.name || userFinded.isAdmin !== dataParams.isAdmin) {
       await updateUserService(dataParams)
     }
 

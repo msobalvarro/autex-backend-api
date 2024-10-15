@@ -33,7 +33,8 @@ export const getBillByOrderIdService = async (orderId: string, workshopId: Types
           { path: 'externalActivities' },
         ]
       },
-      { path: 'additionalTask' }
+      { path: 'additionalTask' },
+      { path: 'traveled' },
     ]
   })
 
