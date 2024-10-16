@@ -12,7 +12,7 @@ export const createBillService = async ({ orderId }: BillCreateProps): Promise<B
   const totalDetail = {
     activities: _.sumBy(order.estimateProps?.activitiesToDo, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
     parts: _.sumBy(order.estimateProps?.requiredParts, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
-    external: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
+    external: _.sumBy(order.estimateProps?.externalActivities, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
     other: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
     additionalTask: _.sumBy(order.additionalTask, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)) || 0,
   }
