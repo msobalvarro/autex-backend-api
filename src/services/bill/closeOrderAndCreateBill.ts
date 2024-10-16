@@ -24,7 +24,7 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, 
     const totalDetail = {
       activities: _.sumBy(order.estimateProps?.activitiesToDo, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
       parts: _.sumBy(order.estimateProps?.requiredParts, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
-      external: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
+      external: _.sumBy(order.estimateProps?.externalActivities, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
       other: _.sumBy(order.estimateProps?.otherRequirements, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
       additionalTask: _.sumBy(order.additionalTask, (e: ActivityWithCostToDoItemEstimate) => Number(e.total)),
     }
