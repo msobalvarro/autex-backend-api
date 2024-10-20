@@ -96,12 +96,16 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
   for (const order of orders) {
     if (order.status === 'pending' || order.status === 'process') {
       ordersData.processOrPending.length += 1
-      // ordersData.processOrPending.sum += bill.total
+
+      const bill = await BillModel.findOne({ order })
+      ordersData.processOrPending.sum += bill?.total || 0
     }
 
     if (order.status === 'finished' || order.status === 'canceled') {
       ordersData.completeOrClose.length += 1
-      // ordersData.completeOrClose.sum += bill.total
+
+      const bill = await BillModel.findOne({ order })
+      ordersData.completeOrClose.sum += bill?.total || 0
     }
   }
 
