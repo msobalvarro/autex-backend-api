@@ -47,23 +47,43 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
 
   const orders = await OrderServiceModel.find({ workshop: { _id: workshopId } })
 
+  // total part cost from estimate
   let totalPartsCost = 0
+
+  // total external activities cost from estimate
   let totalExternalCost = 0
+
+  // total activities planned to be carried out
   let totalLaborCost = 0
+
+  // other requirements total cost
   let totalInputCost = 0
+
+  // total taxes
   let totalTaxes = 0
+
+  // total other services
   let totalOtherServices = 0
+
+  // total all estimations
   let totalEstimate = 0
+
+  // total order, sum adittional tasks
   let totalOrder = 0
   const ordersData = {
+    // order complete or closed
     completeOrClose: {
       length: 0,
       sum: 0,
     },
+
+    // order in process or pending
     processOrPending: {
       length: 0,
       sum: 0,
     },
+
+    // total orders
     total: {
       length: 0,
       sum: 0,
@@ -96,12 +116,16 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
   for (const order of orders) {
     if (order.status === 'pending' || order.status === 'process') {
       ordersData.processOrPending.length += 1
-      // ordersData.processOrPending.sum += bill.total
+
+      const bill = await BillModel.findOne({ order })
+      ordersData.processOrPending.sum += bill?.total || 0
     }
 
     if (order.status === 'finished' || order.status === 'canceled') {
       ordersData.completeOrClose.length += 1
-      // ordersData.completeOrClose.sum += bill.total
+
+      const bill = await BillModel.findOne({ order })
+      ordersData.completeOrClose.sum += bill?.total || 0
     }
   }
 
@@ -111,14 +135,16 @@ export const incomeReportService = async ({ workshopId, from, to }: Props): Prom
     const aditionalTaskSum = sumBy(order.additionalTask, task => Number(task.total) || 0)
 
     // report for parts requireds
-    totalPartsCost = totalPartsCost + estimation.partsCost
-    totalExternalCost = totalExternalCost + estimation.externalCost
-    totalLaborCost = totalLaborCost + estimation.laborCost
-    totalInputCost = totalInputCost + estimation.inputCost
-    totalTaxes = totalTaxes + (bill?.tax || 0)
+    totalPartsCost += estimation.partsCost
+    totalExternalCost += estimation.externalCost
+    totalLaborCost += estimation.laborCost
+    totalInputCost += estimation.inputCost
+    totalTaxes += (bill?.tax || 0)
     totalOtherServices = totalOtherServices + aditionalTaskSum
-    totalEstimate = totalEstimate + bill.order.estimateProps.total
-    totalOrder = totalOrder + (bill.order.estimateProps.total + sumBy(bill.order.additionalTask, task => task?.total || 0))
+    totalEstimate += bill.order.estimateProps.total
+
+    const totalAdditionalTask = sumBy(bill.order.additionalTask, task => task?.total || 0)
+    totalOrder = totalOrder + (bill.order.estimateProps.total + totalAdditionalTask)
 
     if (order.typesActivitiesToDo.isMaintenance && order.typesActivitiesToDo.isMajorMantenance) {
       receipts.mantMajor.sum += bill.total
