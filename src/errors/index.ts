@@ -222,3 +222,12 @@ export class CreateBillError extends Error {
     this.message = message
   }
 }
+
+export class CreateOrUpdateInventoryStock extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.CREATE_OR_UPDATE_STOCK
+    this.message = message
+  }
+}
+
