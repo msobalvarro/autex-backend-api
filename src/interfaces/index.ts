@@ -565,3 +565,9 @@ export interface InventoryPropierties {
   category: InventoryCategory[]
   workshop: WorkshopPropierties
 }
+
+
+export interface CreateOrUpdateInventaryCategory {
+  description: string
+  workshopId: Types.ObjectId
+}
