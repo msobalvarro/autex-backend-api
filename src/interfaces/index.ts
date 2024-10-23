@@ -566,8 +566,17 @@ export interface InventoryPropierties {
   workshop: WorkshopPropierties
 }
 
-
 export interface CreateOrUpdateInventaryCategory {
   description: string
   workshopId: Types.ObjectId
+}
+
+export interface UpdateWorkshopProps {
+  workshopId: Types.ObjectId
+  name: string
+  slogan: string
+  representative: string
+  phoneNumber: string
+  ruc: string
+  location: string
 }
