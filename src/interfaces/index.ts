@@ -294,6 +294,7 @@ export enum ErrosList {
   CREATE_ACTIVITIES_GROUP_ESTIMATE = 'CREATE_ACTIVITIES_GROUP_ESTIMATE',
   CREATE_ESTIMATION_ERROR = 'CREATE_ESTIMATION_ERROR',
   CREATE_BILL_ERROR = 'CREATE_BILL_ERROR',
+  CREATE_OR_UPDATE_STOCK = 'CREATE_OR_UPDATE_STOCK',
 }
 
 export interface GenerateErrorProps {
@@ -546,7 +547,27 @@ export interface UpdateClientProps {
   documentId: string
 }
 
-
 export interface EstimatesResponseGetAll extends EstimatePropierties {
   order?: OrderServicePropierties | null
+}
+
+export interface InventoryCategory {
+  _id: Types.ObjectId
+  description: string
+  workshop: WorkshopPropierties
+}
+
+export interface InventoryPropierties {
+  _id: Types.ObjectId
+  name: string
+  stock: number
+  unitPrice: number
+  category: InventoryCategory[]
+  workshop: WorkshopPropierties
+}
+
+
+export interface CreateOrUpdateInventaryCategory {
+  description: string
+  workshopId: Types.ObjectId
 }
