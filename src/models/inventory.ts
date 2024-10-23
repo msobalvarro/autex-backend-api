@@ -15,7 +15,7 @@ export const Category = new Schema<InventoryCategory>(
   }
 )
 
-export const Inventory = new Schema<InventoryPropierties>(
+const Inventory = new Schema<InventoryPropierties>(
   {
     name: { type: String, required: true },
     stock: { type: Number, required: true },
