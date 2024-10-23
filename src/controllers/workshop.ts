@@ -5,6 +5,7 @@ import {
   WorkshopPropierties,
   UpdateConfigurationWorkshopProps,
   UpdateWorkshopProps,
+  ReqHeaderAuthPropierties,
 } from 'interfaces'
 import { existErrors } from 'middlewares/params'
 import { Types } from 'mongoose'
@@ -79,8 +80,9 @@ export const updateWorkshopController = async (req: Request, res: Response) => {
     const { error, message } = existErrors(req)
     if (error) throw String(message)
 
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
     const params: UpdateWorkshopProps = req.body
-    const response = await updateWorkshopService(params)
+    const response = await updateWorkshopService({ ...params, workshopId })
     res.send(response)
   } catch (error) {
     res.status(500).send(`${error}`)

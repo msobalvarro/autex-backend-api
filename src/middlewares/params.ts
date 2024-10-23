@@ -302,7 +302,6 @@ export const checUpdateActivityGroup = [
 ]
 
 export const checkUpdateWorkshop = [
-  check('workshopId', 'workshop id is required').isMongoId(),
   check('name', 'Name prop is required').isString(),
   check('slogan', 'Slogan prop is required').isString(),
   check('representative', 'Representative name prop is required').isString(),
