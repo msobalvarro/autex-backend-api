@@ -5,7 +5,8 @@ import {
   createWorkshopController,
   getAllWorkshopsController,
   getWorkshopConfigurationForRootController,
-  updateSettingWorkshopController
+  updateSettingWorkshopController,
+  updateWorkshopController
 } from 'controllers/workshop'
 import {
   authUserRootMiddleware,
@@ -14,7 +15,8 @@ import {
   checkGetWorkshopConfig,
   checkAssignUserToWorkshop,
   checkCreateWorkshop,
-  checkUpdateConfigurationWorkshop
+  checkUpdateConfigurationWorkshop,
+  checkUpdateWorkshop
 } from 'middlewares/params'
 
 export const router = Router()
@@ -60,4 +62,11 @@ router.post(
   ...checkUpdateConfigurationWorkshop,
   authUserRootMiddleware,
   updateSettingWorkshopController,
+)
+
+router.put(
+  '/workshop/update',
+  ...checkUpdateWorkshop,
+  authUserRootMiddleware,
+  updateWorkshopController,
 )

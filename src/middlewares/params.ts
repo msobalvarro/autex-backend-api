@@ -218,7 +218,7 @@ export const createOrderProps = [
   check('serviceType.isExternal', 'Service type externa prop is not valid').isBoolean(),
   check('traveled.distance', 'distance prop is not valid').isNumeric(),
   check('traveled.type', 'distance traveled type is incorrect').isIn(['km', 'miles']),
-  check('estimationDate', 'estimation date prop is incorrect').isISO8601().toDate()  ,
+  check('estimationDate', 'estimation date prop is incorrect').isISO8601().toDate(),
 ]
 
 export const checkUpdateResume = [
@@ -283,20 +283,30 @@ export const checkGetAllEstimateByRange = [
 ]
 
 export const checkUpdateConfigurationWorkshop = [
-  check('workshopId',  'workshop id is required').isMongoId(),
+  check('workshopId', 'workshop id is required').isMongoId(),
   check('configuration.fee', 'fee prop is not valid').isBoolean()
 ]
 
 export const checkGetWorkshopConfig = [
-  param('workshopId',  'workshop id is required').isMongoId(),
+  param('workshopId', 'workshop id is required').isMongoId(),
 ]
 
 export const checkGetBillId = [
-  param('orderId',  'workshop id is required').isMongoId(),
+  param('orderId', 'workshop id is required').isMongoId(),
 ]
 
 export const checUpdateActivityGroup = [
   body('activityId', 'activity id is required').isMongoId(),
   body('activities', 'activities is required').isArray(),
   body('activities.*', 'activities item is not valid').isString(),
+]
+
+export const checkUpdateWorkshop = [
+  check('workshopId', 'workshop id is required').isMongoId(),
+  check('name', 'Name prop is required').isString(),
+  check('slogan', 'Slogan prop is required').isString(),
+  check('representative', 'Representative name prop is required').isString(),
+  check('phoneNumber', 'Phone Number prop is required').isString(),
+  check('location', 'Location prop is required').isString(),
+  check('ruc', 'RUC prop is required').isString()
 ]
