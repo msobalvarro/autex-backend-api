@@ -10,6 +10,7 @@ import {
   updateWorkshopController
 } from 'controllers/workshop'
 import {
+  authUserAdminMiddleware,
   authUserRootMiddleware,
 } from 'middlewares/auth'
 import {
@@ -71,9 +72,10 @@ router.post(
   updateSettingWorkshopController,
 )
 
+// validate token for user admin
 router.put(
   '/workshop/update',
   ...checkUpdateWorkshop,
-  authUserRootMiddleware,
+  authUserAdminMiddleware,
   updateWorkshopController,
 )
