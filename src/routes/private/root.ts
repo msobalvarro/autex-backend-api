@@ -5,6 +5,7 @@ import {
   createWorkshopController,
   getAllWorkshopsController,
   getWorkshopConfigurationForRootController,
+  getWorkshopsController,
   updateSettingWorkshopController,
   updateWorkshopController
 } from 'controllers/workshop'
@@ -26,6 +27,12 @@ router.get(
   '/workshop/get/all',
   authUserRootMiddleware,
   getAllWorkshopsController
+)
+
+router.get(
+  '/workshop/get',
+  // authUserRootMiddleware,
+  getWorkshopsController
 )
 
 router.get(

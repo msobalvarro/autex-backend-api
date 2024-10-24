@@ -13,7 +13,7 @@ import { updateAdminUserService } from 'services/user/updateUser'
 import { assignUserAdminToWorkshopService, assignUserToWorkshopService } from 'services/workshop/assignUserToWorkshop'
 import { createWorkshopService } from 'services/workshop/createWorkshop'
 import { getWorkshopConfigurationService } from 'services/workshop/getWorkshopConfiguration'
-import { getAllWorkshops } from 'services/workshop/getWorkshops'
+import { getAllWorkshops, getWorkshop } from 'services/workshop/getWorkshops'
 import { updateSettingsWorkshopService } from 'services/workshop/updateSettingsWokshop'
 import { updateWorkshopService } from 'services/workshop/updateWorkshop'
 
@@ -33,6 +33,16 @@ export const createWorkshopController = async (req: Request, res: Response) => {
 export const getAllWorkshopsController = async (req: Request, res: Response) => {
   try {
     const worksops = await getAllWorkshops()
+    res.send(worksops)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getWorkshopsController = async (req: Request, res: Response) => {
+  try {
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const worksops = await getWorkshop(workshopId)
     res.send(worksops)
   } catch (error) {
     res.status(500).send(`${error}`)
