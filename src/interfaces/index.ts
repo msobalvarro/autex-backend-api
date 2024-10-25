@@ -568,8 +568,11 @@ export interface InventoryPropierties {
 
 export interface CreateOrUpdateInventaryCategory {
   description: string
+  categoryId?: Types.ObjectId
   workshopId: Types.ObjectId
 }
+
+
 
 export interface UpdateWorkshopProps {
   workshopId: Types.ObjectId
@@ -579,4 +582,12 @@ export interface UpdateWorkshopProps {
   phoneNumber: string
   ruc: string
   location: string
+}
+
+export interface UpdateOrNewInventoryProps {
+  inventoryId: Types.ObjectId
+  name: string
+  stock: number
+  unitPrice: number
+  category: Types.ObjectId[]
 }

@@ -3,7 +3,7 @@ import { InventoryCategoryModel } from 'models/inventory'
 import { Types } from 'mongoose'
 
 interface Props extends CreateOrUpdateInventaryCategory {
-  categoryId: Types.ObjectId
+  categoryId?: Types.ObjectId
   workshopId: Types.ObjectId
 }
 
