@@ -381,6 +381,7 @@ export interface UpdateServiceProps {
 
 export interface WorkshopConfigurationsPropierties {
   fee: boolean
+  lowStock: number
 }
 
 export interface WorkshopPropierties {
@@ -568,6 +569,7 @@ export interface InventoryPropierties {
 
 export interface CreateOrUpdateInventaryCategory {
   description: string
+  categoryId?: Types.ObjectId
   workshopId: Types.ObjectId
 }
 
@@ -579,4 +581,19 @@ export interface UpdateWorkshopProps {
   phoneNumber: string
   ruc: string
   location: string
+}
+
+export interface UpdateOrNewInventoryProps {
+  inventoryId: Types.ObjectId
+  name: string
+  stock: number
+  unitPrice: number
+  category: Types.ObjectId[]
+}
+
+export interface InventoryResponse {
+  totalItems: number
+  totalValue: number
+  lowStock: number
+  items: InventoryPropierties[]
 }

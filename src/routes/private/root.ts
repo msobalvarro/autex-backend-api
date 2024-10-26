@@ -5,10 +5,12 @@ import {
   createWorkshopController,
   getAllWorkshopsController,
   getWorkshopConfigurationForRootController,
+  getWorkshopsController,
   updateSettingWorkshopController,
   updateWorkshopController
 } from 'controllers/workshop'
 import {
+  authUserAdminMiddleware,
   authUserRootMiddleware,
 } from 'middlewares/auth'
 import {
@@ -26,6 +28,12 @@ router.get(
   '/workshop/get/all',
   authUserRootMiddleware,
   getAllWorkshopsController
+)
+
+router.get(
+  '/workshop/get',
+  // authUserRootMiddleware,
+  getWorkshopsController
 )
 
 router.get(
@@ -64,9 +72,10 @@ router.post(
   updateSettingWorkshopController,
 )
 
+// validate token for user admin
 router.put(
   '/workshop/update',
   ...checkUpdateWorkshop,
-  authUserRootMiddleware,
+  authUserAdminMiddleware,
   updateWorkshopController,
 )

@@ -18,7 +18,12 @@ const workshop = new Schema<WorkshopPropierties>(
         type: Boolean,
         default: true,
         required: true,
-      }
+      },
+      lowStock: {
+        type: Number,
+        default: 5,
+        required: true,
+      },
     },
     administrators: [{
       type: Schema.Types.ObjectId,
