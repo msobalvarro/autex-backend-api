@@ -310,7 +310,26 @@ export const checkUpdateWorkshop = [
   check('ruc', 'RUC prop is required').isString()
 ]
 
+export const checkCreateCategory = [
+  body('description', 'description is required').isString(),
+]
+
+export const checkUpdateCategory = [
+  body('categoryId', 'category id is required').isMongoId(),
+  body('description', 'description is required').isString(),
+]
+
 export const checkCreateInventory = [
+  body('name', 'name is required').isString(),
+  body('stock', 'stock is required').isNumeric(),
+  body('unitPrice', 'unit price is required').isNumeric(),
+  body('category', 'category is not valid').isArray(),
+  body('category.*', 'category id is not valid').isMongoId(),
+]
+
+export const checkUpdateInventory = [
+  body('inventoryId', 'inventory id is not valid').isMongoId(),
+  body('name', 'name is required').isString(),
   body('name', 'name is required').isString(),
   body('stock', 'stock is required').isNumeric(),
   body('unitPrice', 'unit price is required').isNumeric(),
