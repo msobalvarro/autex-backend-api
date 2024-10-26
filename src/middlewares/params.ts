@@ -309,3 +309,11 @@ export const checkUpdateWorkshop = [
   check('location', 'Location prop is required').isString(),
   check('ruc', 'RUC prop is required').isString()
 ]
+
+export const checkCreateInventory = [
+  body('name', 'name is required').isString(),
+  body('stock', 'stock is required').isNumeric(),
+  body('unitPrice', 'unit price is required').isNumeric(),
+  body('category', 'category is not valid').isArray(),
+  body('category.*', 'category id is not valid').isMongoId(),
+]

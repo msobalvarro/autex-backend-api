@@ -5,11 +5,16 @@ import {
   updateCategoryController
 } from 'controllers/inventory'
 import { Router } from 'express'
+import { checkCreateInventory } from 'middlewares/params'
 
 export const router = Router()
 
+// get
 router.get('/', getStockController)
 
-router.post('/create/inventory', createInventaryController)
+// post
+router.post('/create/inventory', ...checkCreateInventory, createInventaryController)
 router.post('/create/category', createCategoryController)
+
+// put
 router.put('/update/category', updateCategoryController)
