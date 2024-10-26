@@ -30,4 +30,4 @@ const Inventory = new Schema<InventoryPropierties>(
 )
 
 export const InventoryCategoryModel = model('inventoryCategory', Category)
-export const InvetoryModel = model('inventory', Inventory)
+export const InventoryModel = model('inventory', Inventory)

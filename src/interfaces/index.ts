@@ -381,6 +381,7 @@ export interface UpdateServiceProps {
 
 export interface WorkshopConfigurationsPropierties {
   fee: boolean
+  lowStock: number
 }
 
 export interface WorkshopPropierties {
@@ -572,8 +573,6 @@ export interface CreateOrUpdateInventaryCategory {
   workshopId: Types.ObjectId
 }
 
-
-
 export interface UpdateWorkshopProps {
   workshopId: Types.ObjectId
   name: string
@@ -590,4 +589,11 @@ export interface UpdateOrNewInventoryProps {
   stock: number
   unitPrice: number
   category: Types.ObjectId[]
+}
+
+export interface InventoryResponse {
+  totalItems: number
+  totalValue: number
+  lowStock: number
+  items: InventoryPropierties[]
 }
