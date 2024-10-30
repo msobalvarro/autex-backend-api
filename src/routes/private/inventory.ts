@@ -1,6 +1,7 @@
 import {
   createCategoryController,
   createInventaryController,
+  getCategoriesController,
   getStockController,
   updateCategoryController,
   updateInventaryController
@@ -17,6 +18,7 @@ export const router = Router()
 
 // get
 router.get('/', getStockController)
+router.get('/categories', getCategoriesController)
 
 // post
 router.post('/create', ...checkCreateInventory, createInventaryController)

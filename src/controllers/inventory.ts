@@ -8,7 +8,7 @@ import {
 import { existErrors } from 'middlewares/params'
 import { createInventaryCategoryService } from 'services/inventory/createCategory'
 import { CreateStockService } from 'services/inventory/createStock'
-import { getInventoryDataService } from 'services/inventory/getInventory'
+import { getCategoriesService, getInventoryDataService } from 'services/inventory/getInventory'
 import { updateInvetaryCategoryService } from 'services/inventory/updateCategory'
 import { updateStockInventaryService } from 'services/inventory/updateStock'
 
@@ -19,6 +19,16 @@ export const getStockController = async (req: Request, res: Response) => {
     const { workshopId }: ReqHeaderAuthPropierties = req.cookies
 
     const data = await getInventoryDataService({ workshopId, categoryId: req.query.category && `${req.query.category}` })
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const getCategoriesController = async (req: Request, res: Response) => {
+  try {
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const data = await getCategoriesService(workshopId)
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
