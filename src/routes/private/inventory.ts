@@ -6,7 +6,12 @@ import {
   updateInventaryController
 } from 'controllers/inventory'
 import { Router } from 'express'
-import { checkCreateCategory, checkCreateInventory, checkUpdateCategory, checkUpdateInventory } from 'middlewares/params'
+import {
+  checkCreateCategory,
+  checkCreateInventory,
+  checkUpdateCategory,
+  checkUpdateInventory
+} from 'middlewares/params'
 
 export const router = Router()
 
@@ -14,9 +19,9 @@ export const router = Router()
 router.get('/', getStockController)
 
 // post
+router.post('/create', ...checkCreateInventory, createInventaryController)
 router.post('/create/category', ...checkCreateCategory, createCategoryController)
-router.post('/create/inventory', ...checkCreateInventory, createInventaryController)
 
 // put
-router.put('/update/inventory', ...checkUpdateInventory, updateInventaryController)
+router.put('/update', ...checkUpdateInventory, updateInventaryController)
 router.put('/update/category', ...checkUpdateCategory, updateCategoryController)
