@@ -284,7 +284,8 @@ export const checkGetAllEstimateByRange = [
 
 export const checkUpdateConfigurationWorkshop = [
   check('workshopId', 'workshop id is required').isMongoId(),
-  check('configuration.fee', 'fee prop is not valid').isBoolean()
+  check('configuration.fee', 'fee prop is not valid').isBoolean(),
+  check('configuration.lowStock', 'low Stock number is not valid').isInt()
 ]
 
 export const checkGetWorkshopConfig = [
