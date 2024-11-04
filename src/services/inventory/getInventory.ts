@@ -22,7 +22,7 @@ export const getInventoryDataService = async ({ workshopId, categoryId }: Props)
     })
   })
 
-  const lowStock = filter(items, (item: InventoryPropierties) => item.stock > (workshop.configuration.lowStock || 5)).length
+  const lowStock = filter(items, (item: InventoryPropierties) => item.stock < (workshop.configuration.lowStock || 5)).length
   const totalValue = sumBy(items, (item: InventoryPropierties) => (item.stock * item.unitPrice))
 
   return {
