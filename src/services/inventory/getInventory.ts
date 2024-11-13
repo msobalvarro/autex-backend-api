@@ -1,5 +1,5 @@
 import { sumBy, filter } from 'lodash'
-import { InventoryCategory, InventoryPropierties, InventoryResponse } from 'interfaces'
+import { InventoryCategory, InventoryMinimalPropierties, InventoryPropierties, InventoryResponse } from 'interfaces'
 import { InventoryCategoryModel, InventoryModel } from 'models/inventory'
 import { Types } from 'mongoose'
 import { WorkshopModel } from 'models/workshop'
@@ -31,6 +31,19 @@ export const getInventoryDataService = async ({ workshopId, categoryId }: Props)
     lowStock,
     totalValue,
   }
+}
+
+export const getMinimalInventoryDataService = async ({ workshopId, categoryId }: Props): Promise<InventoryMinimalPropierties[]> => {
+  const items = await InventoryModel.find({
+    workshop: { _id: workshopId },
+    ...(categoryId && {
+      category: {
+        _id: new Types.ObjectId(categoryId)
+      }
+    })
+  })
+
+  return items.map((item) => ({ name: item.name, _id: item._id }))
 }
 
 export const getCategoriesService = async (workshopId: Types.ObjectId): Promise<InventoryCategory[]> => {

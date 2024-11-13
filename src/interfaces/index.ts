@@ -597,3 +597,8 @@ export interface InventoryResponse {
   lowStock: number
   items: InventoryPropierties[]
 }
+
+export interface InventoryMinimalPropierties {
+  _id: Types.ObjectId
+  name: string
+}
