@@ -43,7 +43,12 @@ export const getMinimalInventoryDataService = async ({ workshopId, categoryId }:
     })
   })
 
-  return items.map((item) => ({ name: item.name, _id: item._id }))
+  return items.map((item) => ({
+    _id: item._id,
+    name: item.name,
+    stock: item.stock,
+    unitPrice: item.unitPrice
+  }))
 }
 
 export const getCategoriesService = async (workshopId: Types.ObjectId): Promise<InventoryCategory[]> => {

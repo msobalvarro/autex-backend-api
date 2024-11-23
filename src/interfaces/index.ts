@@ -196,6 +196,11 @@ export interface DiagnosticProps extends DiagnosticPropierties {
   vehiculeId: Types.ObjectId
 }
 
+export interface InventoryPartsCounter {
+  inventory?: InventoryPropierties | null
+  count: number
+}
+
 export interface EstimatePropierties {
   _id: Types.ObjectId,
   estimateNumber?: number
@@ -203,6 +208,7 @@ export interface EstimatePropierties {
   client: Client
   activitiesToDo: ActivityWithCostToDoItemEstimate[]
   requiredParts: ActivityWithCostToDoItemEstimate[]
+  requiredPartsInventory?: InventoryPartsCounter[]
   otherRequirements: ActivityWithCostToDoItemEstimate[]
   externalActivities: ActivityWithCostToDoItemEstimate[]
   traveled: DistanceTraveledPropierties
@@ -432,9 +438,15 @@ export interface UpdateItemCostFieldProps {
   estimateId: Types.ObjectId
 }
 
+interface InventoryPartsProps {
+  id: Types.ObjectId
+  count: number
+}
+
 export interface PushItemCostFieldProps {
   estimateId: Types.ObjectId
   activities: ActivityWithCostToDoItemEstimate[]
+  inventory: InventoryPartsProps[]
 }
 
 export interface ListClientDataReportProps {
@@ -601,4 +613,6 @@ export interface InventoryResponse {
 export interface InventoryMinimalPropierties {
   _id: Types.ObjectId
   name: string
+  stock: number
+  unitPrice: number
 }

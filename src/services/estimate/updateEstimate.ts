@@ -1,9 +1,10 @@
 import mongoose, { Types } from 'mongoose'
 import _ from 'lodash'
 import { UpdateEstimateError } from 'errors'
-import { ActivityWithCostToDoItemEstimate } from 'interfaces'
+import { ActivityWithCostToDoItemEstimate, InventoryPartsCounter, PushItemCostFieldProps } from 'interfaces'
 import { EstimateModel, ItemWithCostEstimatedFieldModel } from 'models/estimate'
 import { getOrderByEstimateId } from 'services/order/getOrder'
+import { InventoryModel } from 'models/inventory'
 
 export const deleteActivityToDoService = async (acitivityId: Types.ObjectId, estimateId: Types.ObjectId): Promise<boolean> => {
   const session = await mongoose.startSession()
@@ -97,7 +98,8 @@ export const deleteRequiredPartService = async (requiredPartId: Types.ObjectId, 
   }
 }
 
-export const addRequiredPartsService = async (activities: ActivityWithCostToDoItemEstimate[], estimateId: Types.ObjectId): Promise<boolean> => {
+export const addRequiredPartsService = async (props: PushItemCostFieldProps): Promise<boolean> => {
+  const { activities, estimateId, inventory } = props
   const session = await mongoose.startSession()
   session.startTransaction()
   try {
@@ -108,12 +110,23 @@ export const addRequiredPartsService = async (activities: ActivityWithCostToDoIt
 
     const items = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
     const totalAcum = _.sumBy(activities, (a) => Number(a.total))
+    const partInventory: InventoryPartsCounter[] = []
+
+    for (const itemInventory of inventory) {
+      const inventoryStock = await InventoryModel.findById(itemInventory.id)
+
+      partInventory.push({
+        count: itemInventory.count,
+        inventory: inventoryStock
+      })
+    }
 
     await EstimateModel.updateOne(
       { _id: estimateId },
       {
         $push: { requiredParts: items },
-        total: (estimate.total + totalAcum)
+        total: (estimate.total + totalAcum),
+        requiredPartsInventory: partInventory
       }
     )
 
