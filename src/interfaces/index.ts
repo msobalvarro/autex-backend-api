@@ -617,3 +617,10 @@ export interface InventoryMinimalPropierties {
   stock: number
   unitPrice: number
 }
+
+export interface FilePropierties {
+  fileName: string
+  originalName: string
+  type: string
+  size: number
+}
