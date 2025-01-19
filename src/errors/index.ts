@@ -231,3 +231,11 @@ export class CreateOrUpdateInventoryStock extends Error {
   }
 }
 
+export class UploadFileError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = ErrosList.UPLOAD_FILE
+    this.message = message
+  }
+}
+
