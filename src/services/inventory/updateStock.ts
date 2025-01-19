@@ -7,10 +7,11 @@ interface Props {
   name: string
   stock: number
   unitPrice: number
+  code: string
   workshopId: Types.ObjectId
 }
 
-export const updateStockInventaryService = async ({ inventoryId, categories, name, stock, unitPrice, workshopId }: Props): Promise<void> => {
+export const updateStockInventaryService = async ({ inventoryId, categories, name, stock, unitPrice, workshopId, code }: Props): Promise<void> => {
   const item = await InventoryModel.findById(inventoryId)
   if (!item) throw new Error('item not found')
   if (item.workshop._id !== workshopId) throw new Error('not authorized')
@@ -21,6 +22,6 @@ export const updateStockInventaryService = async ({ inventoryId, categories, nam
   }
 
   if (item?.name !== name || item?.unitPrice !== unitPrice || item?.stock !== stock) {
-    await InventoryModel.updateOne({ _id: inventoryId }, { name, stock, unitPrice })
+    await InventoryModel.updateOne({ _id: inventoryId }, { name, stock, unitPrice, code })
   }
 }

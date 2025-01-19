@@ -563,6 +563,7 @@ export interface InventoryPropierties {
   name: string
   stock: number
   unitPrice: number
+  code: string
   category: InventoryCategory[]
   workshop: WorkshopPropierties
 }
@@ -588,6 +589,7 @@ export interface UpdateOrNewInventoryProps {
   name: string
   stock: number
   unitPrice: number
+  code: string
   category: Types.ObjectId[]
 }
 

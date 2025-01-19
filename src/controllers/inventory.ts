@@ -68,8 +68,17 @@ export const createInventaryController = async (req: Request, res: Response) => 
     const { error, message } = existErrors(req)
     if (error) throw new CreateOrUpdateInventoryStock(String(message))
     const { workshopId }: ReqHeaderAuthPropierties = req.cookies
-    const { category, name, stock, unitPrice }: UpdateOrNewInventoryProps = req.body
-    const data = await CreateStockService({ categoryIds: category, name, stock, unitPrice, workshopId })
+    const { category, name, stock, unitPrice, code }: UpdateOrNewInventoryProps = req.body
+    const data = await CreateStockService({
+      categoryIds:
+        category,
+      name,
+      stock,
+      unitPrice,
+      workshopId,
+      code
+    })
+
     res.send(data)
   } catch (error) {
     res.status(500).send(`${error}`)
@@ -81,13 +90,14 @@ export const updateInventaryController = async (req: Request, res: Response) => 
     const { error, message } = existErrors(req)
     if (error) throw new CreateOrUpdateInventoryStock(String(message))
     const { workshopId }: ReqHeaderAuthPropierties = req.cookies
-    const { category, name, stock, unitPrice, inventoryId }: UpdateOrNewInventoryProps = req.body
+    const { category, name, stock, unitPrice, inventoryId, code }: UpdateOrNewInventoryProps = req.body
     await updateStockInventaryService({
       name,
       stock,
       unitPrice,
       workshopId,
       categories: category,
+      code,
       inventoryId
     })
     res.send(true)
