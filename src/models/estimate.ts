@@ -44,6 +44,10 @@ const estimatedCosts = new Schema<EstimatePropierties>(
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'
     }],
+    requiredPartsInventory: [{
+      inventory: { type: Types.ObjectId, ref: 'inventory' },
+      count: Number
+    }],
     otherRequirements: [{
       type: Types.ObjectId,
       ref: 'itemWithCostEstimatedField'

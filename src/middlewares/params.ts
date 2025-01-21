@@ -279,6 +279,9 @@ export const checkPushItemsFieldEstimate = [
   check('acitivities.*.unitCost', 'Activity unit cost prop is incorrect').isFloat(),
   check('acitivities.*.quantity', 'Activity quantity prop is incorrect').isFloat(),
   check('acitivities.*.total', 'Activity total prop is incorrect').isFloat(),
+  check('inventory', 'Inventory list prop is incorrect').isArray(),
+  check('inventory.*.id', 'Inventory id prop is incorrect').isMongoId(),
+  check('inventory.*.count', 'Inventory quantity prop is incorrect').isInt(),
 ]
 
 export const checkGetAllEstimateByRange = [

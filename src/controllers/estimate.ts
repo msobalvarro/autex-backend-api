@@ -176,7 +176,7 @@ export const addRequiredPartsControllers = async (req: Request, res: Response) =
     if (error) throw new UpdateEstimateError(String(message))
 
     const params: PushItemCostFieldProps = req.body
-    await addRequiredPartsService(params.activities, params.estimateId)
+    await addRequiredPartsService(params)
 
     res.send(true)
   } catch (error) {
