@@ -1,6 +1,7 @@
 import {
   createUserController,
   createUserForRootController,
+  deleteUserStatusController,
   getAllUserFromWorkshopController,
   updateUserController,
   updateUserStatusController
@@ -52,9 +53,17 @@ router.put(
   ...updateUserValidation,
   updateUserController
 )
+
 router.put(
   '/update/status',
   authUserRootMiddleware,
   ...updateUserStatusValidation,
   updateUserStatusController
+)
+
+router.delete(
+  '/',
+  authUserRootMiddleware,
+  ...updateUserStatusValidation,
+  deleteUserStatusController
 )

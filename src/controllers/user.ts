@@ -14,6 +14,7 @@ import { existErrors } from 'middlewares/params'
 import { UpdateUserStatus } from 'services/user/updateStatus'
 import { getAllUserFromWorkshopId } from 'services/user/getUser'
 import { Types } from 'mongoose'
+import { deleteUserService } from 'services/user/deleteUser'
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
@@ -81,6 +82,15 @@ export const updateUserStatusController = async (req: Request, res: Response) =>
   try {
     const { status, userId }: UserUpdateStatusProps = req.body
     await UpdateUserStatus(userId, status)
+    res.send(true)
+  } catch (error) {
+    res.status(500).send(`${error}`)
+  }
+}
+
+export const deleteUserStatusController = async (req: Request, res: Response) => {
+  try {
+    await deleteUserService(String(req.query?.id))
     res.send(true)
   } catch (error) {
     res.status(500).send(`${error}`)
