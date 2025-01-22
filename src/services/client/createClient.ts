@@ -4,6 +4,7 @@ import { CreateClientError } from 'errors'
 import { getAllClientByEmailService } from './getClient'
 import { Types } from 'mongoose'
 import { WorkshopModel } from 'models/workshop'
+import { redisClient } from 'utils/redis'
 
 export const createClient = async (client: Client, workshopId: Types.ObjectId): Promise<Client> => {
   const clienFindedByEmail = await getAllClientByEmailService(client.email)
@@ -15,5 +16,6 @@ export const createClient = async (client: Client, workshopId: Types.ObjectId): 
   if (!workshop) throw new CreateClientError('workshop not found')
 
   const dataCreated = await ClientModel.create({ ...client, workshop })
+  await redisClient.del(`clients-${workshopId}`)
   return dataCreated
 }

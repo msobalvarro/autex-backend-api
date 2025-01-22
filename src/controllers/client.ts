@@ -59,7 +59,8 @@ export const updateClientController = async (req: Request, res: Response) => {
     if (error) throw new UpdateClientError(`${message}`)
 
     const dataParams: UpdateClientProps = req.body
-    const dataCreated = await updateClientService(dataParams)
+    const { workshopId }: ReqHeaderAuthPropierties = req.cookies
+    const dataCreated = await updateClientService(dataParams, workshopId)
     res.send(dataCreated)
   } catch (error) {
     res.status(500).send(`${error}`)

@@ -6,6 +6,7 @@ import { OrderServiceModel } from 'models/order'
 import { WorkshopModel } from 'models/workshop'
 import mongoose, { Types } from 'mongoose'
 import { getOrderByIdService } from 'services/order/getOrder'
+import { redisClient } from 'utils/redis'
 
 export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, workshopId: Types.ObjectId): Promise<BillPropierties> => {
   const session = await mongoose.startSession()
@@ -42,6 +43,8 @@ export const closeOrderAndGenerateBillService = async (orderId: Types.ObjectId, 
 
     await bill.save({ session })
     await session.commitTransaction()
+    await redisClient.del(`orders-${workshopId}`)
+    await redisClient.del(`estimations-${workshopId}`)
     return bill
   } catch (error) {
     await session.abortTransaction()

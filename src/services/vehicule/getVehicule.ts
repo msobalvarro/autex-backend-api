@@ -3,8 +3,15 @@ import { Vehicule, VehiculeWithClient } from 'interfaces'
 import { ClientModel } from 'models/client'
 import { vehiculeModel } from 'models/vehicule'
 import { Types } from 'mongoose'
+import { redisClient } from 'utils/redis'
 
 export const getAllVehiculesService = async (workshopId: Types.ObjectId): Promise<VehiculeWithClient[]> => {
+  const reply = await redisClient.get(`vehicules-${workshopId}`)
+
+  if (reply) {
+    return JSON.parse(reply)
+  }
+
   const data = await vehiculeModel.find({ workshop: { _id: workshopId } })
     .populate('brand', '-models')
     .populate('model')
@@ -20,6 +27,8 @@ export const getAllVehiculesService = async (workshopId: Types.ObjectId): Promis
       client: c
     })
   }
+
+  await redisClient.set(`vehicules-${workshopId}`, JSON.stringify(vehiculeWithClient))
 
   return vehiculeWithClient
 }
