@@ -4,10 +4,11 @@ import path from 'path'
 import { router } from './routes'
 import { dbConnection } from './config/mongo'
 import { PORT } from 'utils/enviroments'
+import { redisClient } from 'utils/redis'
 
 const app = express()
-dbConnection().then(() => {
-  app.use(express.static(path.join(__dirname, '../dist')))
+
+const main = async () => {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
   })
@@ -19,5 +20,16 @@ dbConnection().then(() => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'));
   })
   // app.use()
+
+  try {
+    await dbConnection()
+    await redisClient.connect()
+  } catch (error) {
+    console.error('Error connecting to database:', error)
+    // process.exit(1)
+  }
+
   app.listen(PORT, () => console.log(`ready into port ${PORT}`))
-}).catch(err => console.log(`database connection error: ${err}`))
+}
+
+main()

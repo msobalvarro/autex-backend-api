@@ -2,8 +2,15 @@ import { OrderServicePropierties } from 'interfaces'
 import { EstimateModel } from 'models/estimate'
 import { OrderServiceModel } from 'models/order'
 import { Types } from 'mongoose'
+import { redisClient } from 'utils/redis'
 
 export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderServicePropierties[]> => {
+  const reply = await redisClient.get('orders')
+
+  if (reply) {
+    return JSON.parse(reply)
+  }
+
   const order = await OrderServiceModel.find({ workshop: { _id: workshopId } })
     .populate('attentionType')
     .populate({
@@ -17,6 +24,9 @@ export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderSer
     .populate('serviceType')
     .populate('typesActivitiesToDo')
     .sort({ createdAt: -1 })
+
+  await redisClient.set('orders', JSON.stringify(order))
+
   return order
 }
 
