@@ -5,7 +5,7 @@ import { Types } from 'mongoose'
 import { redisClient } from 'utils/redis'
 
 export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderServicePropierties[]> => {
-  const reply = await redisClient.get('orders')
+  const reply = await redisClient.get(`orders-${workshopId}`)
 
   if (reply) {
     return JSON.parse(reply)
@@ -25,7 +25,7 @@ export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderSer
     .populate('typesActivitiesToDo')
     .sort({ createdAt: -1 })
 
-  await redisClient.set('orders', JSON.stringify(order))
+  await redisClient.set(`orders-${workshopId}`, JSON.stringify(order))
 
   return order
 }

@@ -14,6 +14,7 @@ import { CreateOrderServiceError } from 'errors'
 import { getDetailEstimateByIdService } from 'services/estimate/getEstimations'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { WorkshopModel } from 'models/workshop'
+import { redisClient } from 'utils/redis'
 
 export const createOrder = async (order: NewOrderServiceProps, workshopId: Types.ObjectId): Promise<OrderServicePropierties> => {
   const session = await mongoose.startSession()
@@ -49,6 +50,7 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
     traveled.save({ session })
 
     await session.commitTransaction()
+    await redisClient.del(`orders-${workshopId}`)
     return dataCreated
   } catch (error) {
     await session.abortTransaction()

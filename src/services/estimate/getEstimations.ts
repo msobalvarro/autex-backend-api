@@ -9,8 +9,10 @@ import {
 import { EstimateModel } from 'models/estimate'
 import { ActivitiesGroupModel } from 'models/groups'
 import { OrderServiceModel } from 'models/order'
+import { redisClient } from 'utils/redis'
 
 export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<EstimatePropierties | null> => {
+
   const dataResult = await EstimateModel.findById(id)
     .populate('activitiesToDo')
     .populate('client')
@@ -58,6 +60,12 @@ export const getDetailEstimateWithOrderByIdService = async (id: Types.ObjectId):
 }
 
 export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promise<EstimatesResponseGetAll[]> => {
+  const reply = await redisClient.get(`estimations-${workshopId}`)
+
+  if (reply) {
+    return JSON.parse(reply)
+  }
+
   const etimates = await EstimateModel.find({ workshop: { _id: workshopId } })
     .populate('client')
     .populate('vehicule')
@@ -67,9 +75,11 @@ export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promis
 
   for (const estimate of etimates) {
     const order = await OrderServiceModel.findOne({ estimateProps: estimate })
-    
+
     data.push({ ...estimate.toJSON(), order: order?.toJSON() })
   }
+
+  await redisClient.set(`estimations-${workshopId}`, JSON.stringify(data))
 
   return data
 }
