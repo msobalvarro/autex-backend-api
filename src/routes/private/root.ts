@@ -10,6 +10,7 @@ import {
   updateWorkshopController
 } from 'controllers/workshop'
 import {
+  authMiddleware,
   authUserAdminMiddleware,
   authUserRootMiddleware,
 } from 'middlewares/auth'
@@ -28,12 +29,6 @@ router.get(
   '/workshop/get/all',
   authUserRootMiddleware,
   getAllWorkshopsController
-)
-
-router.get(
-  '/workshop/get',
-  // authUserRootMiddleware,
-  getWorkshopsController
 )
 
 router.get(
