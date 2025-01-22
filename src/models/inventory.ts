@@ -20,6 +20,7 @@ const Inventory = new Schema<InventoryPropierties>(
     name: { type: String, required: true },
     stock: { type: Number, required: true },
     unitPrice: { type: Number, required: true },
+    code: { type: String },
     category: [{ type: Types.ObjectId, ref: 'inventoryCategory' }],
     workshop: { type: Types.ObjectId, ref: 'workshop' }
   },

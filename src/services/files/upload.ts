@@ -1,10 +1,11 @@
-import { UploadFileError } from 'errors'
 import multer from 'multer'
 import fs from 'fs'
 import path from 'path'
+import { UploadFileError } from 'errors'
+import { PUBLIC_FOLDER } from 'utils/enviroments'
 
 // outside of project directory
-const externalStoragePath = path.join(__dirname, '../../../../', '/upload')
+const externalStoragePath = path.join(__dirname, PUBLIC_FOLDER)
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -23,7 +24,7 @@ const storage = multer.diskStorage({
 export const uploadFileService = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // max: 5MB
+    fileSize: 2 * 1024 * 1024, // max: 5MB
   },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png/

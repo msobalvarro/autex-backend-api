@@ -7,11 +7,12 @@ interface Props {
   name: string
   unitPrice: number
   stock: number
+  code: string
   categoryIds: Types.ObjectId[]
   workshopId: Types.ObjectId
 }
 
-export const CreateStockService = async ({ name, stock, unitPrice, workshopId, categoryIds }: Props): Promise<InventoryPropierties> => {
+export const CreateStockService = async ({ name, stock, code, unitPrice, workshopId, categoryIds }: Props): Promise<InventoryPropierties> => {
   const categories = await InventoryCategoryModel.find({ _id: { $in: categoryIds } })
   const workshop = await WorkshopModel.findById(workshopId)
 
@@ -20,6 +21,7 @@ export const CreateStockService = async ({ name, stock, unitPrice, workshopId, c
     stock,
     unitPrice,
     category: categories,
+    code,
     workshop,
   })
 }

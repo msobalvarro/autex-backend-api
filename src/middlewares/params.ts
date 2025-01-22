@@ -50,6 +50,10 @@ export const updateUserStatusValidation = [
   check('status', 'status is required').isIn(['active', 'inactive', 'blocked']),
 ]
 
+export const deleteUserStatusValidation = [
+  check('_id', 'ID is required').isMongoId(),
+]
+
 export const loginValidationProps = [
   check('password').notEmpty(),
   check('email').notEmpty().isEmail()
@@ -326,6 +330,7 @@ export const checkUpdateCategory = [
 export const checkCreateInventory = [
   body('name', 'name is required').isString(),
   body('stock', 'stock is required').isNumeric(),
+  body('code', 'code is required').isString(),
   body('unitPrice', 'unit price is required').isNumeric(),
   body('category', 'category is not valid').isArray(),
   body('category.*', 'category id is not valid').isMongoId(),
@@ -335,6 +340,7 @@ export const checkUpdateInventory = [
   body('inventoryId', 'inventory id is not valid').isMongoId(),
   body('name', 'name is required').isString(),
   body('name', 'name is required').isString(),
+  body('code', 'code is required').isString(),
   body('stock', 'stock is required').isNumeric(),
   body('unitPrice', 'unit price is required').isNumeric(),
   body('category', 'category is not valid').isArray(),

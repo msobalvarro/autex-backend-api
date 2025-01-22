@@ -1,11 +1,10 @@
-import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import { router } from './routes'
 import { dbConnection } from './config/mongo'
+import { PORT } from 'utils/enviroments'
 
-const PORT = process.env.PORT
 const app = express()
 dbConnection().then(() => {
   app.use(express.static(path.join(__dirname, '../dist')))
