@@ -106,31 +106,50 @@ export const addRequiredPartsService = async (props: PushItemCostFieldProps): Pr
     const estimate = await EstimateModel.findById(estimateId)
     if (!estimate) throw new Error('estimate not found')
     const order = await getOrderByEstimateId(estimateId)
-    if (order) throw String('Could not be update, because existing order')
+    if (order) throw new Error('Could not be update, because existing order')
 
-    const items = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
-    const totalAcum = _.sumBy(activities, (a) => Number(a.total))
+    const newPartsRequirements = await activities.map(a => new ItemWithCostEstimatedFieldModel(a))
+    const totalNewParts = _.sumBy(activities, (a) => Number(a.total))
     const partInventory: InventoryPartsCounter[] = []
+    let totalNewPartsInvetory = 0
 
     for (const itemInventory of inventory) {
       const inventoryStock = await InventoryModel.findById(itemInventory.id)
+
+      if (!inventoryStock) throw new Error('inventory not found')
+      if (inventoryStock.stock === 0) throw new Error(`no stock found for ${inventoryStock.name}`)
 
       partInventory.push({
         count: itemInventory.count,
         inventory: inventoryStock
       })
+
+      // sum total price of inventory
+      totalNewPartsInvetory += (itemInventory.count * inventoryStock.unitPrice)
+
+      // update stock
+      // await InventoryModel.updateOne(
+      //   { _id: itemInventory.id },
+      //   {
+      //     stock: (inventoryStock.stock - itemInventory.count)
+      //   },
+      //   { session }
+      // )
     }
 
     await EstimateModel.updateOne(
       { _id: estimateId },
       {
-        $push: { requiredParts: items },
-        total: (estimate.total + totalAcum),
-        requiredPartsInventory: partInventory
-      }
+        $push: {
+          requiredParts: newPartsRequirements,
+          requiredPartsInventory: partInventory
+        },
+        total: (estimate.total + totalNewParts + totalNewPartsInvetory),
+      },
+      { session }
     )
 
-    await items.map(a => a.save({ session }))
+    await newPartsRequirements.forEach(a => a.save({ session }))
     await session.commitTransaction()
     return true
   } catch (error) {

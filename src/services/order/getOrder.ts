@@ -17,6 +17,7 @@ export const getAllOrders = async (workshopId: Types.ObjectId): Promise<OrderSer
     .populate('serviceType')
     .populate('typesActivitiesToDo')
     .sort({ createdAt: -1 })
+
   return order
 }
 

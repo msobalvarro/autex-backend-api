@@ -30,6 +30,14 @@ export const getDetailEstimateByIdService = async (id: Types.ObjectId): Promise<
     .populate('otherRequirements')
     .populate('externalActivities')
     .populate('activitiesGroup')
+    .populate({
+      path: 'requiredPartsInventory',
+      populate: [
+        {
+          path: 'inventory'
+        }
+      ],
+    })
 
   return dataResult
 }
@@ -67,7 +75,7 @@ export const getAllEstimatesService = async (workshopId: Types.ObjectId): Promis
 
   for (const estimate of etimates) {
     const order = await OrderServiceModel.findOne({ estimateProps: estimate })
-    
+
     data.push({ ...estimate.toJSON(), order: order?.toJSON() })
   }
 

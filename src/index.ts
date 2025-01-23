@@ -6,8 +6,8 @@ import { dbConnection } from './config/mongo'
 import { PORT } from 'utils/enviroments'
 
 const app = express()
-dbConnection().then(() => {
-  app.use(express.static(path.join(__dirname, '../dist')))
+
+const main = async () => {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
   })
@@ -15,9 +15,18 @@ dbConnection().then(() => {
   app.use(cors())
   app.use(express.json())
   app.use(router)
+
   app.get('*', (__, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'));
   })
-  // app.use()
+
+  try {
+    await dbConnection()
+  } catch (error) {
+    console.error('Error connecting to database:', error)
+  }
+
   app.listen(PORT, () => console.log(`ready into port ${PORT}`))
-}).catch(err => console.log(`database connection error: ${err}`))
+}
+
+main()
