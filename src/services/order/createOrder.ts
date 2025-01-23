@@ -14,14 +14,15 @@ import { CreateOrderServiceError } from 'errors'
 import { getDetailEstimateByIdService } from 'services/estimate/getEstimations'
 import { vehiculeDistanceModel } from 'models/vehicule'
 import { WorkshopModel } from 'models/workshop'
+import { InventoryModel } from 'models/inventory'
 
 export const createOrder = async (order: NewOrderServiceProps, workshopId: Types.ObjectId): Promise<OrderServicePropierties> => {
   const session = await mongoose.startSession()
   session.startTransaction()
 
   try {
-    const estimateProps = await getDetailEstimateByIdService(order.estimateId)
-    if (!estimateProps) throw String('Estimate Service not found')
+    const estimation = await getDetailEstimateByIdService(order.estimateId)
+    if (!estimation) throw String('Estimate Service not found')
     const workshop = await WorkshopModel.findById(workshopId)
     if (!workshop) throw String('Workshop not found')
 
@@ -32,7 +33,7 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
     const traveled = new vehiculeDistanceModel(order.traveled)
     const dataCreated = new OrderServiceModel({
       attentionType,
-      estimateProps,
+      estimateProps: estimation,
       preliminarManagment,
       serviceType,
       typesActivitiesToDo,
@@ -40,6 +41,21 @@ export const createOrder = async (order: NewOrderServiceProps, workshopId: Types
       workshop,
       estimationDate: order.estimationDate,
     })
+
+    for (const partsOfInventort of estimation.requiredPartsInventory || []) {
+      const stock = await InventoryModel.findOne({ _id: partsOfInventort.inventory?._id })
+
+      if (!stock) throw String('Inventory not found')
+
+      // update stock
+      await InventoryModel.updateOne(
+        { _id: partsOfInventort.inventory?._id },
+        {
+          stock: (stock.stock - partsOfInventort.count)
+        },
+        { session }
+      )
+    }
 
     attentionType.save({ session })
     preliminarManagment.save({ session })

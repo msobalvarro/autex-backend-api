@@ -128,13 +128,13 @@ export const addRequiredPartsService = async (props: PushItemCostFieldProps): Pr
       totalNewPartsInvetory += (itemInventory.count * inventoryStock.unitPrice)
 
       // update stock
-      await InventoryModel.updateOne(
-        { _id: itemInventory.id },
-        {
-          stock: (inventoryStock.stock - itemInventory.count)
-        },
-        { session }
-      )
+      // await InventoryModel.updateOne(
+      //   { _id: itemInventory.id },
+      //   {
+      //     stock: (inventoryStock.stock - itemInventory.count)
+      //   },
+      //   { session }
+      // )
     }
 
     await EstimateModel.updateOne(
@@ -145,10 +145,11 @@ export const addRequiredPartsService = async (props: PushItemCostFieldProps): Pr
           requiredPartsInventory: partInventory
         },
         total: (estimate.total + totalNewParts + totalNewPartsInvetory),
-      }
+      },
+      { session }
     )
 
-    await newPartsRequirements.map(a => a.save({ session }))
+    await newPartsRequirements.forEach(a => a.save({ session }))
     await session.commitTransaction()
     return true
   } catch (error) {
